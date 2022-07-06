@@ -132,12 +132,14 @@ $totalPage = ceil($userCount / $perPage);
     <div class="container">
       <div class="row">
         <div class="col-md-2 d-flex">
-          <label for="">顯示筆數</label>
-          <select class="form-select" name="perPage" id="">
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-          </select>
+          <form action="users.php" method="post">
+            <label for="">顯示筆數</label>
+            <select class="form-select" name="perPage" id="">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+            </select>
+          </form>
         </div>
         <div class="col-md-2">
           <div class="py-2">

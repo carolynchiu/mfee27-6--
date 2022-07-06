@@ -92,28 +92,46 @@ $userCount = $result->num_rows;
         </div>
         <table class="table">
           <tr>
-            <th>id</th>
+            <th>會員編號</th>
             <td><?= $row["id"]
                 ?></td>
           </tr>
           <tr>
-            <th>Account</th>
+            <th>帳號</th>
             <td><?= $row["account"]
                 ?></td>
           </tr>
           <tr>
-            <th>Name</th>
+            <th>姓名</th>
             <td><?= $row["name"]
                 ?></td>
           </tr>
           <tr>
-            <th>Phone</th>
+            <th>生日</th>
+            <td><?= $row["birthday"]
+                ?></td>
+          </tr>
+          <tr>
+            <th>性別</th>
+            <td><?php if ($row["gender"] == 0) {
+                  echo "<i class='fa-solid fa-mars text-info'></i>";
+                } else {
+                  echo "<i class='fa-solid fa-venus text-danger'></i>";
+                } ?></td>
+          </tr>
+          <tr>
+            <th>電話</th>
             <td><?= $row["phone"]
                 ?></td>
           </tr>
           <tr>
             <th>Email</th>
             <td><?= $row["email"]
+                ?></td>
+          </tr>
+          <tr>
+            <th>住址</th>
+            <td><?= $row["address"]
                 ?></td>
           </tr>
           <tr>

@@ -175,6 +175,7 @@ $totalPage = ceil($userCount / $perPage);
             <th>編號</th>
             <th>帳號</th>
             <th>姓名</th>
+            <th>性別</th>
             <th>電話</th>
             <th>Email</th>
             <th></th>
@@ -188,9 +189,14 @@ $totalPage = ceil($userCount / $perPage);
               <td><?= $row["id"] ?></td>
               <td><?= $row["account"] ?></td>
               <td><?= $row["name"] ?></td>
+              <td><?php if ($row["gender"] == 0) {
+                    echo "<i class='fa-solid fa-mars text-info'></i>";
+                  } else {
+                    echo "<i class='fa-solid fa-venus text-danger'></i>";
+                  } ?></td>
               <td><?= $row["phone"] ?></td>
               <td><?= $row["email"] ?></td>
-              <td class="text-end">
+              <td class="text-center">
                 <a href="user.php?id=<?= $row["id"] ?>" class="btn btn-primary">詳細資料</a>
                 <a href="" class="btn btn-warning">修改</a>
                 <a href="" class="btn btn-danger">刪除</a>

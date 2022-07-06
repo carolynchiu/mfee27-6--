@@ -11,6 +11,9 @@ $password = $_POST["password"];
 $repassword = $_POST["repassword"];
 $phone = $_POST["phone"];
 $email = $_POST["email"];
+$gender = $_POST["gender"];
+$birthday = $_POST["birthday"];
+$address = $_POST["address"];
 
 //後端擋 -> 後端驗證(沒接觸資料庫)
 if (empty($account)) {
@@ -47,7 +50,7 @@ if ($userCount > 0) {
 
 //寫入資料庫
 $now = date('Y-m-d H:i:s');
-$sqlCreate = "INSERT INTO users (name, account, password, phone, email, create_time, valid) VALUES ('$name', '$account', '$password', '$phone', '$email', '$now',1)";
+$sqlCreate = "INSERT INTO users (name, account, password, gender, birthday, phone, email, address, create_time, valid) VALUES ('$name', '$account', '$password', '$gender', '$birthday', '$phone', '$email', '$address', '$now',1)";
 
 if ($conn->query($sqlCreate) === TRUE) {
   echo "新資料輸入成功";

@@ -40,6 +40,27 @@
         <label for="">Email</label>
         <input type="email" class="form-control" name="email">
       </div>
+      <div class="mb-2">
+        <div>
+          <label class="me-2" for="">性別</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="0">
+          <label class="form-check-label" for="inlineRadio1">男</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="1">
+          <label class="form-check-label" for="inlineRadio2">女</label>
+        </div>
+      </div>
+      <div class="mb-2">
+        <label for="">生日</label>
+        <input type="date" class="form-control" name="birthday">
+      </div>
+      <div class="mb-2">
+        <label for="">地址</label>
+        <input type="text" class="form-control" name="address">
+      </div>
       <button type="submit" class="btn btn-info">送出</button>
     </form>
   </div>

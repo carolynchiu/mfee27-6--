@@ -105,8 +105,8 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
               <td><?=$row["product_id"]?></td>
               <td><?=$row["comment"]?></td>
               <td><?=$row["status"]?></td>
-              <td class="text-center"><a class="btn btn-info " href="product.php?id=<?=$row["id"]?>">顯示</a>
-              <a class="btn btn-info " href="product.php?id=<?=$row["id"]?>">隱藏</a></td>
+              <td class="text-center"><a class="btn btn-info my-2" href="product.php?id=<?=$row["id"]?>">顯示</a>
+              <a class="btn btn-info my-2 " href="product.php?id=<?=$row["id"]?>">隱藏</a></td>
               
             </tr>
             <?php endforeach;?>

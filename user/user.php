@@ -88,7 +88,7 @@ $userCount = $result->num_rows;
       <div class="container">
         <!-- 回到使用者列表頁 -->
         <div class="py-2">
-          <a href="users.php" class="btn btn-info">Users List</a>
+          <a href="users.php" class="btn btn-info">回到所有使用者</a>
         </div>
         <table class="table">
           <tr>

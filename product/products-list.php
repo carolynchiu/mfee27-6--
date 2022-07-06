@@ -78,9 +78,6 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
     .table{
       table-layout:fixed;
     }
-    th{
-
-    }
   </style>
 </head>
 
@@ -89,6 +86,9 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="container table-responsive">
+    <div class="py-2">
+      <a class="btn btn-info" href="product-add.php">新增商品</a>
+    </div>
         <table class="table table-bordered  table-hover mt-5">
           <thead>
             <tr>

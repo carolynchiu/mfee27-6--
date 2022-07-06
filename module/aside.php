@@ -24,10 +24,10 @@
         <div class="collapse" id="collapseProducts">
           <ul class="list-unstyled">
             <li class="border-bottom ps-4">
-              <a href="product/product-2.php">所有商品</a>
+              <a href="../product/products-list.php">所有商品</a>
             </li>
             <li class="border-bottom ps-4">
-              <a href="">商品評論</a>
+              <a href="../product/product-comments.php">商品評論</a>
             </li>
           </ul>
         </div>

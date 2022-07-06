@@ -92,7 +92,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
         <table class="table table-bordered  table-hover mt-5">
           <thead>
             <tr>
-              <th>id</th>
+              <th>商品編號</th>
               <th>商品名稱</th>
               <th>商品簡介</th>
               <th>商品類別</th>

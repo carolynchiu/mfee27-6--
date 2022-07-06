@@ -99,7 +99,7 @@ $resultHide=$conn->query($sqlHide);
         <form action="doUpdate.php">
             <table class="table">
                 <tr>
-                    <th>id</th>
+                    <th>商品編號</th>
                     <td><?=$row["id"]?></td>
                 </tr>
                 <tr>

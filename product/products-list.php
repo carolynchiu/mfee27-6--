@@ -1,5 +1,14 @@
 <?php
 require("../db-connect.php");
+//設定如果有抓到頁數 則$page=該頁數
+//若無則假設$page為第1頁
+// if(isset($_GET["page"])){
+//   $page=$_GET["page"];
+//   echo "yes";
+// }else{
+//   echo "no";
+//   $page=1;
+// }
 
 if (isset($_GET["category"])){
   $category = $_GET["category"];
@@ -16,9 +25,23 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
 
 $sqlCategory="SELECT * FROM product_category";
 $resultCategory=$conn->query($sqlCategory);
-$rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC)
+$rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 
+ 
+$perPage=4; //每頁有4項產品
+$start=($page-1)*$perPage;
+$sqlPage="SELECT * FROM products  
+LIMIT $start, 4";
 
+$resultPage= $conn->query($sqlPage);
+$pageUserCount=$resultPage->num_rows;
+
+//開始 
+$startItem=($page-1)*$perPage+1;
+//結尾
+$endItem=$page*$perPage;
+if($endItem>$userCount)$endItem=$userCount;
+$totalPage=ceil($userCount/$perPage);//無條件進位
 
 ?>
 <!doctype html>
@@ -96,6 +119,15 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC)
 <body>
   <?php require("../module/header.php"); ?>
   <?php require("../module/aside.php"); ?>
+
+ <? if(isset($_GET["page"])){
+  $page=$_GET["page"];
+  echo "yes";
+}else{
+  echo "no";
+  $page=1;
+}
+?>
   <main class="main-content p-4">
   <div class="container table-responsive">
     <ul class="nav nav-pills">
@@ -154,7 +186,24 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC)
           </tbody>
         </table>
       </div>
+      <div class="py-2">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
+            <?php for($i=1;$i<=$totalPage;$i++): ?>
+              <li class="page-item
+              <?php
+              if($page==$i)echo "active";
+              ?>
+              "><a class="page-link" href="users.php?page=<?=$i?>&order=<?=$order?>"><?=$i?></a></li>
+            <?php endfor;?>
+            <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
+          </ul>
+        </nav>
+        </div>
+      </div>
   </main>
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 

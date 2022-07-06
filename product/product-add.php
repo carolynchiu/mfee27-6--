@@ -1,13 +1,5 @@
 <?php
 require("../db-connect.php");
-
-$sql="SELECT products.*  FROM products  ";
-// 想辦法把product.category_id=category.name
-$result=$conn->query($sql);
-$rows=$result->fetch_all(MYSQLI_ASSOC);
-
-
-
 ?>
 <!doctype html>
 <html lang="en">

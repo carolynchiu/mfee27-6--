@@ -1,19 +1,11 @@
 <?php
 require("../db-connect.php");
-
-$sql="SELECT products.*  FROM products  ";
-// 想辦法把product.category_id=category.name
-$result=$conn->query($sql);
-$rows=$result->fetch_all(MYSQLI_ASSOC);
-
-
-
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
-  <title>Product</title>
+  <title>新增商品</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

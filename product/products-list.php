@@ -13,7 +13,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
 <html lang="en">
 
 <head>
-  <title>Product</title>
+  <title>所有商品</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

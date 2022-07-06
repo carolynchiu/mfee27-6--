@@ -18,7 +18,9 @@ $productCount=$result->num_rows;
 <html lang="en">
 
 <head>
-  <title>Product</title>
+<?php if($productCount>0):
+$row=$result->fetch_assoc();?>
+  <title>商品: <?=$row["name"]?></title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -95,8 +97,7 @@ $productCount=$result->num_rows;
             <a class="btn btn-info" href="products-list.php">回到商品頁面</a>
         </div>
         <div class="py-2">
-        <?php if($productCount>0):
-                    $row=$result->fetch_assoc();?>
+        
             <table class="table">
                 <tr>
                     <th>商品編號</th>

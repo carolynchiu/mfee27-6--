@@ -1,7 +1,7 @@
 <?php
 require("../db-connect.php");
 
-$sql="SELECT *  FROM products  ";
+$sql="SELECT *  FROM product_comments ";
 // 想辦法把product.category_id=category.name
 $result=$conn->query($sql);
 $rows=$result->fetch_all(MYSQLI_ASSOC);
@@ -86,37 +86,27 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="container table-responsive">
-    <div class="py-2">
-      <a class="btn btn-info" href="product-add.php">新增商品</a>
-    </div>
         <table class="table table-bordered  table-hover mt-5">
           <thead>
             <tr>
-              <th>id</th>
-              <th>商品名稱</th>
-              <th>商品簡介</th>
-              <th>商品類別</th>
-              <th>商品價格</th>
-              <th>商品庫存</th>
-              <th>商品圖片</th>
-              <th>商品上下架時間</th>
-              <th>商品上下架狀態</th>
-              <th>查看商品資訊</th>
+              <th>評論編號</th>
+              <th>使用者</th>
+              <th>商品</th>
+              <th>評論內容</th>
+              <th>評論狀態</th>
+              <th>隱藏</th>
             </tr>
           </thead>
           <tbody >
             <?php foreach($rows as $row):?>
             <tr>
               <td><?=$row["id"]?></td>
-              <td><?=$row["name"]?></td>
-              <td><?=$row["description"]?></td>
-              <td><?=$row["category_id"]?></td>
-              <td><?=$row["price"]?></td>
-              <td><?=$row["stock_in_inventory"]?></td>
-              <td><?=$row["image"]?></td>
-              <td><?=$row["launch_time"]."<br>";?>~<?=$row["discontinue_time"]?></td>
+              <td><?=$row["user_id"]?></td>
+              <td><?=$row["product_id"]?></td>
+              <td><?=$row["comment"]?></td>
               <td><?=$row["status"]?></td>
-              <td class="text-center"><a class="btn btn-info " href="product.php?id=<?=$row["id"]?>">查看</a></td>
+              <td class="text-center"><a class="btn btn-info " href="product.php?id=<?=$row["id"]?>">顯示</a>
+              <a class="btn btn-info " href="product.php?id=<?=$row["id"]?>">隱藏</a></td>
               
             </tr>
             <?php endforeach;?>

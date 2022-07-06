@@ -7,10 +7,9 @@ $id=$_GET["id"];
 require("../db-connect.php");
 
 
-$sql="SELECT * FROM products WHERE id=$id";
+$sql="SELECT * FROM products WHERE id=$id ";
 $result=$conn->query($sql);
 $productCount=$result->num_rows;
-
 
 
 ?>
@@ -18,7 +17,9 @@ $productCount=$result->num_rows;
 <html lang="en">
 
 <head>
-  <title>Product</title>
+<?php if($productCount>0):
+$row=$result->fetch_assoc();?>
+  <title>商品: <?=$row["name"]?></title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -95,11 +96,10 @@ $productCount=$result->num_rows;
             <a class="btn btn-info" href="products-list.php">回到商品頁面</a>
         </div>
         <div class="py-2">
-        <?php if($productCount>0):
-                    $row=$result->fetch_assoc();?>
+        
             <table class="table">
                 <tr>
-                    <th>id</th>
+                    <th>商品編號</th>
                     <td><?=$row["id"]?></td>
                 </tr>
                 <tr>
@@ -112,7 +112,21 @@ $productCount=$result->num_rows;
                 </tr>
                 <tr>
                     <th>商品類別</th>
-                    <td><?=$row["category_id"]?></td>
+                    <td><?php 
+                    switch($row["category_id"]):
+                      case 1:
+                        echo "器材";
+                        break;
+                      case 2:
+                        echo "服飾";
+                        break;
+                      case 3:
+                        echo "食品";
+                        break;
+                      default:
+                        echo "";
+                    ?>
+                    // <?php endswitch;?></td>
                 </tr>
                 <tr>
                     <th>商品價格</th>
@@ -132,7 +146,12 @@ $productCount=$result->num_rows;
                 </tr>
                 <tr>
                     <th>商品上下架狀態</th>
-                    <td><?=$row["status"]?></td>
+                    <td><?php if($row["status"]==1){
+                      echo "上架";
+                    }else{
+                      echo "下架";
+                    }
+                    ?></td>
                 </tr>
             </table>
             <div class="py-2">

@@ -1,10 +1,22 @@
 <?php
 require("../db-connect.php");
 
-$sql="SELECT products.*  FROM products  ";
+if (isset($_GET["category"])){
+  $category = $_GET["category"];
+  $sqlWhere="WHERE product.category_id=$category";
+}else{
+  $category="";
+  $sqlWhere="";
+}
+
+$sql="SELECT products.* , product_category.name AS category_name  FROM products JOIN product_category ON products.category_id = product_category.id ";
 // 想辦法把product.category_id=category.name
 $result=$conn->query($sql);
 $rows=$result->fetch_all(MYSQLI_ASSOC);
+
+$sqlCategory="SELECT * FROM product_category";
+$resultCategory=$conn->query($sqlCategory);
+$rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC)
 
 
 
@@ -86,19 +98,29 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="container table-responsive">
-    <div class="py-2">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link  <?php if($category=="") echo "active"?>" aria-current="page" href="products-list.php">全部</a>
+      </li>
+      <?php foreach ($rowsCategory as $row):?>
+      <li>
+        <a class="nav-link <?php if($category==$row["id"]) echo "active"?> "  href="products-list.php?category=<?=$row["id"]?>"><?=$row["name"]?></a>
+      </li>
+      <?php endforeach;?>
+    </ul>
+    <div class="py-2 text-end">
       <a class="btn btn-info" href="product-add.php">新增商品</a>
     </div>
         <table class="table table-bordered  table-hover mt-5">
           <thead>
             <tr>
               <th>商品編號</th>
+              <th>商品圖片</th>
               <th>商品名稱</th>
               <th>商品簡介</th>
               <th>商品類別</th>
               <th>商品價格</th>
               <th>商品庫存</th>
-              <th>商品圖片</th>
               <th>商品上下架時間</th>
               <th>商品上下架狀態</th>
               <th>查看商品資訊</th>
@@ -108,14 +130,23 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
             <?php foreach($rows as $row):?>
             <tr>
               <td><?=$row["id"]?></td>
+              <td>
+                <figure>
+                  <img class="object-cover" src="../product_image/<?=$row["image"]?>" alt="">
+                </figure>
+              </td>
               <td><?=$row["name"]?></td>
               <td><?=$row["description"]?></td>
-              <td><?=$row["category_id"]?></td>
+              <td><?=$row["category_name"]?></td>
               <td><?=$row["price"]?></td>
               <td><?=$row["stock_in_inventory"]?></td>
-              <td><?=$row["image"]?></td>
               <td><?=$row["launch_time"]."<br>";?>~<?=$row["discontinue_time"]?></td>
-              <td><?=$row["status"]?></td>
+              <td><?php if($row["status"]==1){
+                echo "上架";
+              }else{
+                echo "下架";
+              }
+              ?></td>
               <td class="text-center"><a class="btn btn-info " href="product.php?id=<?=$row["id"]?>">查看</a></td>
               
             </tr>

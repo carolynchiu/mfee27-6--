@@ -7,10 +7,9 @@ $id=$_GET["id"];
 require("../db-connect.php");
 
 
-$sql="SELECT * FROM products WHERE id=$id";
+$sql="SELECT * FROM products WHERE id=$id ";
 $result=$conn->query($sql);
 $productCount=$result->num_rows;
-
 
 
 ?>
@@ -113,7 +112,21 @@ $row=$result->fetch_assoc();?>
                 </tr>
                 <tr>
                     <th>商品類別</th>
-                    <td><?=$row["category_id"]?></td>
+                    <td><?php 
+                    switch($row["category_id"]):
+                      case 1:
+                        echo "器材";
+                        break;
+                      case 2:
+                        echo "服飾";
+                        break;
+                      case 3:
+                        echo "食品";
+                        break;
+                      default:
+                        echo "";
+                    ?>
+                    // <?php endswitch;?></td>
                 </tr>
                 <tr>
                     <th>商品價格</th>
@@ -133,7 +146,12 @@ $row=$result->fetch_assoc();?>
                 </tr>
                 <tr>
                     <th>商品上下架狀態</th>
-                    <td><?=$row["status"]?></td>
+                    <td><?php if($row["status"]==1){
+                      echo "上架";
+                    }else{
+                      echo "下架";
+                    }
+                    ?></td>
                 </tr>
             </table>
             <div class="py-2">

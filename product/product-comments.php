@@ -1,8 +1,16 @@
 <?php
 require("../db-connect.php");
 
-$sql="SELECT *  FROM product_comments ";
-// 想辦法把product.category_id=category.name
+//待處理
+//1.
+//將users.id帶入product_comments.user_id 和products.id 帶入product_comments.product_id
+//然後用users和products的id個別帶入他們的name
+// $sql="SELECT product_comments.* ,users.name AS users_name, products.name AS products_name  FROM product_comments JOIN users ,products ON product_comments.user_id= users.id,product_comments.product_id=products.id";
+
+//2.頁數
+//3.搜尋
+
+$sql="SELECT * FROM product_comments";
 $result=$conn->query($sql);
 $rows=$result->fetch_all(MYSQLI_ASSOC);
 
@@ -104,7 +112,13 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
               <td><?=$row["user_id"]?></td>
               <td><?=$row["product_id"]?></td>
               <td><?=$row["comment"]?></td>
-              <td><?=$row["status"]?></td>
+              <td><?php if($row["status"]==1){
+                echo "顯示";
+              }else{
+                echo "隱藏";
+              }
+              ?>   
+              </td>
               <td class="text-center"><a class="btn btn-info my-2" href="product.php?id=<?=$row["id"]?>">顯示</a>
               <a class="btn btn-info my-2 " href="product.php?id=<?=$row["id"]?>">隱藏</a></td>
               

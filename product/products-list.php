@@ -1,14 +1,18 @@
 <?php
+//待處理
+//1.搜尋
+//2.頁數
+//3.排序
+
+
 require("../db-connect.php");
 //設定如果有抓到頁數 則$page=該頁數
-//若無則假設$page為第1頁
-// if(isset($_GET["page"])){
-//   $page=$_GET["page"];
-//   echo "yes";
-// }else{
-//   echo "no";
-//   $page=1;
-// }
+//若無則假設$page為1
+if(isset($_GET["page"])){
+  $page=$_GET["page"];
+}else{
+  $page=1;
+}
 
 if (isset($_GET["category"])){
   $category = $_GET["category"];
@@ -18,30 +22,34 @@ if (isset($_GET["category"])){
   $sqlWhere="";
 }
 
+//sql product所有的欄位和 product_category的名子並生出category_name
+//使用join 將product.category_id和 category.id掛勾
 $sql="SELECT products.* , product_category.name AS category_name  FROM products JOIN product_category ON products.category_id = product_category.id ";
-// 想辦法把product.category_id=category.name
+
 $result=$conn->query($sql);
 $rows=$result->fetch_all(MYSQLI_ASSOC);
 
+
+//給篩選器的
 $sqlCategory="SELECT * FROM product_category";
 $resultCategory=$conn->query($sqlCategory);
 $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 
  
-$perPage=4; //每頁有4項產品
-$start=($page-1)*$perPage;
-$sqlPage="SELECT * FROM products  
-LIMIT $start, 4";
+// $perPage=4; //每頁有4項產品
+// $start=($page-1)*$perPage;
+// $sqlPage="SELECT * FROM products  
+// LIMIT $start, 4";
 
-$resultPage= $conn->query($sqlPage);
-$pageUserCount=$resultPage->num_rows;
+// $resultPage= $conn->query($sqlPage);
+// $pageUserCount=$resultPage->num_rows;
 
-//開始 
-$startItem=($page-1)*$perPage+1;
-//結尾
-$endItem=$page*$perPage;
-if($endItem>$userCount)$endItem=$userCount;
-$totalPage=ceil($userCount/$perPage);//無條件進位
+// //開始 
+// $startItem=($page-1)*$perPage+1;
+// //結尾
+// $endItem=$page*$perPage;
+// if($endItem>$userCount)$endItem=$userCount;
+// $totalPage=ceil($userCount/$perPage);//無條件進位
 
 ?>
 <!doctype html>
@@ -119,15 +127,6 @@ $totalPage=ceil($userCount/$perPage);//無條件進位
 <body>
   <?php require("../module/header.php"); ?>
   <?php require("../module/aside.php"); ?>
-
- <? if(isset($_GET["page"])){
-  $page=$_GET["page"];
-  echo "yes";
-}else{
-  echo "no";
-  $page=1;
-}
-?>
   <main class="main-content p-4">
   <div class="container table-responsive">
     <ul class="nav nav-pills">

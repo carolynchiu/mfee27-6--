@@ -24,11 +24,11 @@
         <div class="collapse" id="collapseProducts">
           <ul class="list-unstyled">
             <li class="border-bottom ps-4">
-              <a href="/mfee27-6--/product/products-list.php
+              <a href="http://localhost/mfee27-group6/product/products-list.php
               ">所有商品</a>
             </li>
             <li class="border-bottom ps-4">
-              <a href="../product/product-comments.php">商品評論</a>
+              <a href="http://localhost/mfee27-group6/product/product-comments.php">商品評論</a>
             </li>
           </ul>
         </div>

@@ -115,26 +115,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                     <a href="order-list.php" class="btn btn-info">回所有訂單列表</a>
                 <?php endif; ?>
             </div>
-            <div class="py-2">
-                <form action="">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-                            <input type="date" class="form-control" name="start" required value="<?php
-                                                                                                    if (isset($_GET["start"])) echo $_GET["start"];
-                                                                                                    ?>">
-                        </div>
-                        ~
-                        <div class="col-auto">
-                            <input type="date" class="form-control" name="end" required value="<?php
-                                                                                                if (isset($_GET["end"])) echo $_GET["end"];
-                                                                                                ?>">
-                        </div>
-                        <div class="col-auto">
-                            <button class="btn btn-info" type="submit">送出</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+
 
 
             <table class="table table-bordered">
@@ -144,7 +125,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         <th>課程名稱</th>
                         <th>建立日期</th>
                         <th>操作</th>
-                        <th></th>
+                        <th>上/下架</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -158,7 +139,11 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                             <a class="btn btn-info" href="edit-course.php?id=<?= $row["id"] ?>">編輯</a>
                                 <button class="btn btn-danger">刪除</button>
                             </td>
-                            <td></td>
+                            <td>
+                                <?php if($row["valid"]==1){
+                                    echo "上架中";
+                                }else echo "下架中"; ?>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

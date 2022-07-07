@@ -1,7 +1,5 @@
 <?php
 //待處理
-//1.搜尋
-//2.頁數
 //3.排序
 
 
@@ -135,8 +133,8 @@ $totalPage=ceil($productsCount/$perPage);//無條件進位
 </head>
 
 <body>
-  <?php //require("../module/header.php"); ?>
-  <?php// require("../module/aside.php"); ?>
+  <?php require("../module/header.php"); ?>
+  <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="container table-responsive">
     <div>
@@ -159,7 +157,6 @@ $totalPage=ceil($productsCount/$perPage);//無條件進位
                 echo "第1筆 ,";
                 break;
             case ($productsCount < $endItem):
-                //echo $productsCount;
                 echo "第$startItem ~ $productsCount 筆 ,";
                 break;
             case($productsCount >= $endItem ):
@@ -207,7 +204,6 @@ $totalPage=ceil($productsCount/$perPage);//無條件進位
               }
               ?></td>
               <td class="text-center"><a class="btn btn-info " href="product.php?id=<?=$row["id"]?>">查看</a></td>
-              
             </tr>
             <?php endforeach;?>
           </tbody>
@@ -216,7 +212,7 @@ $totalPage=ceil($productsCount/$perPage);//無條件進位
         <?php endif; ?>
         </table>
         <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
+      <ul class="pagination justify-content-center <?php if($productsCount==0) echo "d-none";?>">
         <li class="page-item <?php if($page==1)echo "disabled";?>   ">
           <a class="page-link" href="product-search.php?search=<?=$search?>&page=<?=$page-1?>"><</a>
         </li>

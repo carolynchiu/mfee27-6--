@@ -1,8 +1,10 @@
 <?php
 //待處理
-//1.搜尋
-//2.頁數
+//價錢篩選器
+//時間篩選器
 //3.排序
+//要排序的項目:上下架
+
 
 
 require("../db-connect.php");
@@ -16,7 +18,7 @@ if(isset($_GET["page"])){
 
 if (isset($_GET["category"])){
   $category = $_GET["category"];
-  $sqlWhere="WHERE product.category_id=$category";
+  $sqlWhere="WHERE products.category_id=$category";
 }else{
   $category="";
   $sqlWhere="";
@@ -25,7 +27,7 @@ if (isset($_GET["category"])){
 
 //sql product所有的欄位和 product_category的名子並生出category_name
 //使用join 將product.category_id和 category.id掛勾finished
-$sqlAll="SELECT products.* , product_category.name AS category_name  FROM products JOIN product_category ON products.category_id = product_category.id";
+$sqlAll="SELECT products.* , product_category.name AS category_name  FROM products JOIN product_category ON products.category_id = product_category.id $sqlWhere";
  //選取所有產品
 $resultAll= $conn->query($sqlAll);
 //產品的總數
@@ -35,9 +37,7 @@ $productsCount=$resultAll->num_rows;
 $perPage=5; //每頁有5項產品
 $start=($page-1)*$perPage; //起始頁能顯示的產品數
 //每頁產品
-$sqlPage="SELECT products.* , product_category.name AS category_name  FROM products JOIN product_category ON products.category_id = product_category.id LIMIT $start, 5";
-
-
+$sqlPage="SELECT products.* , product_category.name AS category_name  FROM products JOIN product_category ON products.category_id = product_category.id $sqlWhere LIMIT $start, 5 ";
 $resultPage=$conn->query($sqlPage);
 $pageProductCount=$resultPage->num_rows;
 
@@ -47,6 +47,7 @@ $startItem=($page-1)*$perPage+1;
 $endItem=$page*$perPage;
 // if($endItem>$userCount)$endItem=$userCount;
 $totalPage=ceil($productsCount/$perPage);//無條件進位
+
 //給篩選器的finished
 $sqlCategory="SELECT * FROM product_category";
 $resultCategory=$conn->query($sqlCategory);
@@ -126,8 +127,8 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
-  <?php require("../module/header.php"); ?>
-  <?php require("../module/aside.php"); ?>
+  <?php //require("../module/header.php"); ?>
+  <?php //require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="container table-responsive">
     <div>
@@ -153,20 +154,43 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
     
     <div class="py-2 d-flex justify-content-between align-items-center ">
       <!-- 頁數切換 & 新增商品 -->
-      <div class="py-2">第 <?=$startItem?>-<?php if($endItem != $productsCount) echo $productsCount; ?>筆, 共 <?=$productsCount?> 筆資料</div>
+      <?php switch($productsCount){
+            case 0:
+                echo "";
+                break;
+            case 1:
+                echo "第1筆 ,";
+                break;
+            case ($productsCount < $endItem):
+                echo "第$startItem ~ $productsCount 筆 ,";
+                break;
+            case($productsCount >= $endItem ):
+                echo "第 $startItem ~ $endItem 筆 ,";
+                break;
+            default;
+        }?>
+       共 <?=$productsCount?> 筆資料</div>
     <nav aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item <?php if($page==1)echo "disabled";?>   ">
-          <a class="page-link" href="products-list.php?page=<?=$page-1?>"><</a>
+          <a class="page-link" href="products-list.php?category=<?=$category?>&page=<?=$page-1?>"><</a>
         </li>
         <?php for($i=1;$i<=$totalPage;$i++):?>
         <li class="page-item">
           <a class="page-link 
-          <?php if($page==$i)echo "active"; ?>" href="products-list.php?page=<?=$i?>"><?=$i?></a>
+          <?php if($page==$i)echo "active"; ?>" href="
+          <?php if(isset($_GET["category"])){
+            echo "products-list.php?category=<?=$category?>&page=<?=$i?>";
+          }else{
+            echo "products-list.php?page=$i";
+          }
+          ?>
+          ">
+          <?=$i?></a>
         </li>
         <?php endfor;?>
         <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
-          <a class="page-link" href="products-list.php?page=<?=$page+1?>">></a>
+          <a class="page-link" href="products-list.php?category=<?=$category?>&page=<?=$page+1?>">></a>
         </li>
       </ul>
     </nav>

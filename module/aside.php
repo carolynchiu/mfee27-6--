@@ -24,7 +24,8 @@
         <div class="collapse" id="collapseProducts">
           <ul class="list-unstyled">
             <li class="border-bottom ps-4">
-              <a href="../product/products-list.php">所有商品</a>
+              <a href="/mfee27-6--/product/products-list.php
+              ">所有商品</a>
             </li>
             <li class="border-bottom ps-4">
               <a href="../product/product-comments.php">商品評論</a>

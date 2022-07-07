@@ -1,8 +1,8 @@
 <aside class="dashboard-control position-fixed bg-light start-0 top-0 vh-100 border-end overflow-auto">
   <nav>
     <div class="py-4 px-3 text-primary">
-      <?php if (isset($_SESSION["user"])) : ?>
-        Hi, <?= $_SESSION["user"]["name"] ?>
+      <?php if (isset($_SESSION["admin"])) : ?>
+        Hi, <?= $_SESSION["admin"]["name"] ?>
       <?php endif; ?>
     </div>
     <ul class="list-unstyled side-menu">

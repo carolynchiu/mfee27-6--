@@ -8,6 +8,13 @@
 require("../db-connect.php");
 //設定如果有抓到頁數 則$page=該頁數
 //若無則假設$page為1
+
+if(isset($_GET["search"])){
+    echo "success";
+}else{
+    echo "fail";
+}
+
 if(isset($_GET["page"])){
   $page=$_GET["page"];
 }else{
@@ -57,7 +64,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 <html lang="en">
 
 <head>
-  <title>所有商品</title>
+  <title>商品-搜尋" "的結果</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -126,51 +133,22 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
-  <?php require("../module/header.php"); ?>
-  <?php require("../module/aside.php"); ?>
+  <?php //require("../module/header.php"); ?>
+  <?php// require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="container table-responsive">
     <div>
-      <ul class="nav nav-pills">
-        <li class="nav-item">
-          <a class="nav-link  <?php if($category=="") echo "active"?>" aria-current="page" href="products-list.php">全部</a>
-        </li>
-        <?php foreach ($rowsCategory as $row):?>
-        <li>
-          <a class="nav-link <?php if($category==$row["id"]) echo "active"?> "  href="products-list.php?category=<?=$row["id"]?>"><?=$row["name"]?></a>
-        </li>
-        <?php endforeach;?>
-      </ul>
-      <form action="product-search.php" method="get">
+        <div><a class="btn btn-info" href="products-list.php">回產品清單頁面</a></div>
+        <form action="product-search.php" method="get">
         <div class="input-group">
             <input type="text" name="search" class="form-control">
             <button type="submit" class="btn btn-info">搜尋</button>
         </div>
       </form>
     </div>
-      
-      
-    
-    <div class="py-2 d-flex justify-content-between align-items-center ">
+    <div class="py-2  ">
       <!-- 頁數切換 & 新增商品 -->
       <div class="py-2">第 <?=$startItem?>-<?=$endItem?>筆, 共 <?=$productsCount?> 筆資料</div>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item <?php if($page==1)echo "disabled";?>   ">
-          <a class="page-link" href="products-list.php?page=<?=$page-1?>"><</a>
-        </li>
-        <?php for($i=1;$i<=$totalPage;$i++):?>
-        <li class="page-item">
-          <a class="page-link 
-          <?php if($page==$i)echo "active"; ?>" href="products-list.php?page=<?=$i?>"><?=$i?></a>
-        </li>
-        <?php endfor;?>
-        <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
-          <a class="page-link" href="products-list.php?page=<?=$page+1?>">></a>
-        </li>
-      </ul>
-    </nav>
-      <a class="btn btn-info " href="product-add.php">新增商品</a>
     </div>
     <?php if($pageProductCount>0): ?>
         <table class="table table-bordered  table-hover mt-5">
@@ -217,6 +195,22 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
           <?php else: ?>
             目前沒有資料
         <?php endif; ?>
+        <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item <?php if($page==1)echo "disabled";?>   ">
+          <a class="page-link" href="product-search.php?page=<?=$page-1?>"><</a>
+        </li>
+        <?php for($i=1;$i<=$totalPage;$i++):?>
+        <li class="page-item">
+          <a class="page-link 
+          <?php if($page==$i)echo "active"; ?>" href="product-search.php?page=<?=$i?>"><?=$i?></a>
+        </li>
+        <?php endfor;?>
+        <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
+          <a class="page-link" href="product-search.php?page=<?=$page+1?>">></a>
+        </li>
+      </ul>
+    </nav>
         </table>
       </div>
   </main>

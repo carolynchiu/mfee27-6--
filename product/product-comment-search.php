@@ -1,11 +1,45 @@
 <?php
+//待處理
+//3.排序
+
+
 require("../db-connect.php");
+//設定如果有抓到頁數 則$page=該頁數
+//若無則假設$page為1
+
+if(!isset($_GET["search"])){
+    $search="";
+    $pageProductCount=0;
+}else{
+    $search=$_GET["search"];
+    $sql="SELECT product_comments.* ,users.name AS users_name , products.name AS product_name FROM product_comments
+    JOIN users ON product_comments.user_id =users.id
+    JOIN products ON product_comments.product_id = products.id WHERE users_name, LIKE '%$search%'";
+    $result=$conn->query($sql);
+    $commentsCount=$result->num_rows;
+}
+
+if(isset($_GET["page"])){
+  $page=$_GET["page"];
+}else{
+  $page=1;
+}
+
+if (isset($_GET["category"])){
+  $category = $_GET["category"];
+  $sqlWhere="WHERE product.category_id=$category";
+}else{
+  $category="";
+  $sqlWhere="";
+}
+
+
 
 //將users.id帶入product_comments.user_id 和products.id 帶入product_comments.product_id
 //然後用users和products的id個別帶入他們的name
 $sql="SELECT product_comments.* ,users.name AS users_name , products.name AS product_name FROM product_comments
 JOIN users ON product_comments.user_id =users.id
-JOIN products ON product_comments.product_id = products.id";
+JOIN products ON product_comments.product_id = products.id WHERE users.name LIKE '%$search%'";
 
 $result=$conn->query($sql);
 $commentsCount=$result->num_rows;
@@ -30,21 +64,14 @@ $endItem=$page*$perPage;
 // if($endItem>$userCount)$endItem=$userCount;
 $totalPage=ceil($commentsCount/$perPage);//無條件進位
 
-//變更評論/隱藏
-if(isset($_GET["id"])){
-  echo $_GET["id"];
-}else{
-  echo "false";
-}
-// $sqlReveal="UPDATE product_comments SET status =1 WHERE id='$id'";
-// $sqlHide="UPDATE product_comments SET status =0 WHERE id='$id'";
 
+//3.搜尋
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
-  <title>商品評論</title>
+  <title>商品-搜尋" "的結果</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -113,17 +140,23 @@ if(isset($_GET["id"])){
 </head>
 
 <body>
-  <?php //require("../module/header.php"); ?>
-  <?php //require("../module/aside.php"); ?>
+  <?php require("../module/header.php"); ?>
+  <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
-  <div class="">
-  <form action="product-comment-search.php" method="get">
+  <div class="container table-responsive">
+    <div>
+        <div><a class="btn btn-info" href="product-comments.php">回產品評論清單頁面</a></div>
+        <form action="product-search.php" method="get">
         <div class="input-group">
             <input type="text" name="search" class="form-control">
             <button type="submit" class="btn btn-info">搜尋</button>
         </div>
       </form>
-  <?php switch($commentsCount){
+    </div>
+    <div class="py-2  ">
+      <!-- 頁數切換 & 新增商品 -->
+      <div class="py-2">
+        <?php switch($commentsCount){
             case 0:
                 echo "";
                 break;
@@ -139,59 +172,21 @@ if(isset($_GET["id"])){
             default;
         }?>
        共 <?=$commentsCount?> 筆資料</div>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
-        <li class="page-item <?php if($page==1)echo "disabled";?>   ">
-          <a class="page-link" href="
-          <?php if(isset($_GET["category"])){
-            echo "products-list.php?category=<?=$category?>&page=<?=$page?>";
-          }else{
-            $previousPage=$page-1;
-            echo "products-list.php?page=$previousPage";
-            }
-            ?>
-          "><</a>
-        </li>
-        <?php for($i=1;$i<=$totalPage;$i++):?>
-        <li class="page-item">
-          <a class="page-link 
-          <?php if($page==$i)echo "active"; ?>" href="
-          <?php if(isset($_GET["category"])){
-            echo "products-list.php?category=<?=$category?>&page=<?=$i?>";
-          }else{
-            echo "products-list.php?page=$i";
-            }
-            ?>"><?=$i?></a>
-        </li>
-        <?php endfor;?>
-        <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
-          <a class="page-link" href="
-          <?php if(isset($_GET["category"])){
-            echo "products-list.php?&category=<?=$category?>&page=<?=$page?>";
-          }else{
-            $nextPage=$page+1;
-            echo "products-list.php?page=$nextPage";
-            }
-            ?>">></a>
-        </li>
-      </ul>
-    </nav>
-  </div>
-
-  <div class="container table-responsive">
+    </div>
+    <?php if($pageCommentCount>0): ?>
         <table class="table table-bordered  table-hover mt-5">
           <thead>
             <tr>
-              <th>評論編號</th>
-              <th>使用者</th>
-              <th>商品</th>
-              <th>評論內容</th>
-              <th>評論狀態</th>
-              <th>隱藏</th>
+                <th>評論編號</th>
+                <th>使用者</th>
+                <th>商品</th>
+                <th>評論內容</th>
+                <th>評論狀態</th>
+                <th>隱藏</th>
             </tr>
           </thead>
           <tbody >
-            <?php foreach($rows as $row):?>
+          <?php foreach($rows as $row):?>
             <tr>
               <td><?=$row["id"]?></td>
               <td><?=$row["users_name"]?></td>
@@ -204,15 +199,35 @@ if(isset($_GET["id"])){
               }
               ?>   
               </td>
-              <td class="text-center"><button type="submit" class="btn btn-info my-2" href="product-comments.php?id=<?=$row["id"]?>">顯示</button>
-              <button type="submit" class="btn btn-info my-2 " href="product-comments.php?id=<?=$row["id"]?>">隱藏</button></td>
+              <td class="text-center"><a class="btn btn-info my-2" href="product.php?id=<?=$row["id"]?>">顯示</a>
+              <a class="btn btn-info my-2 " href="product.php?id=<?=$row["id"]?>">隱藏</a></td>
               
             </tr>
             <?php endforeach;?>
           </tbody>
+          <?php else: ?>
+            目前沒有資料
+        <?php endif; ?>
         </table>
+        <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center <?php if($productsCount==0) echo "d-none";?>">
+        <li class="page-item <?php if($page==1)echo "disabled";?>   ">
+          <a class="page-link" href="product-search.php?search=<?=$search?>&page=<?=$page-1?>"><</a>
+        </li>
+        <?php for($i=1;$i<=$totalPage;$i++):?>
+        <li class="page-item">
+          <a class="page-link 
+          <?php if($page==$i)echo "active"; ?>" href="product-search.php?search=<?=$search?>&page=<?=$i?>"><?=$i?></a>
+        </li>
+        <?php endfor;?>
+        <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
+          <a class="page-link" href="product-search.php?search=<?=$search?>&page=<?=$page+1?>">></a>
+        </li>
+      </ul>
+    </nav>
       </div>
   </main>
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 

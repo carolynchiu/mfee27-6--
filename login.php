@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_SESSION["user"])) {
+if (isset($_SESSION["admin"])) {
   header("location: homepage.php");
 }
 ?>
@@ -54,6 +54,7 @@ if (isset($_SESSION["user"])) {
 </head>
 
 <body>
+  <?php var_dump($_SESSION) ?>
   <div class="vh-100 d-flex justify-content-center align-items-center">
     <div class="sign-up-panel">
       <?php if (isset($_SESSION["error"]) && $_SESSION["error"]["times"] > 5) : ?>

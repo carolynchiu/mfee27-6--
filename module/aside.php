@@ -7,14 +7,14 @@
     </div>
     <ul class="list-unstyled side-menu">
       <li class="border-bottom">
-        <a href="../homepage.php"><i class="fa-solid fa-house fa-fw me-2"></i>首頁</a>
+        <a href="http://localhost/mfee27-group6/homepage.php"><i class="fa-solid fa-house fa-fw me-2"></i>首頁</a>
       </li>
       <li class="border-bottom">
         <a href="" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseExample"><i class="fa-solid fa-users fa-fw me-2"></i>會員管理</a>
         <div class="collapse" id="collapseUsers">
           <ul class="list-unstyled">
             <li class="border-bottom ps-4">
-              <a href="user/users.php">所有會員</a>
+              <a href="http://localhost/mfee27-group6/user/users.php">所有會員</a>
             </li>
           </ul>
         </div>

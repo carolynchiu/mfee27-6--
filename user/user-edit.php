@@ -93,7 +93,7 @@ $userCount = $result->num_rows;
           <input type="hidden" name="id" value=" <?= $row["id"] ?>">
           <table class="table">
             <tr>
-              <th>id</th>
+              <th>會員編號</th>
               <td>
                 <?= $row["id"] ?>
                 <!-- <input class="form-control-plaintext" type="text" readonly value="" name="id"> -->
@@ -101,20 +101,36 @@ $userCount = $result->num_rows;
               <!-- 不能讓使用者修改 -->
             </tr>
             <tr>
-              <th>Account</th>
+              <th>帳號</th>
               <td><?= $row["account"] ?></td>
             </tr>
             <tr>
-              <th>Name</th>
+              <th>姓名</th>
               <td><input type="text" class="form-control" value="<?= $row["name"] ?>" name="name"></td>
             </tr>
             <tr>
-              <th>Phone</th>
+              <th>生日</th>
+              <td><input type="date" class="form-control" value="<?= $row["birthday"] ?>" name="birthday"></td>
+            </tr>
+            <tr>
+              <th>性別</th>
+              <td><?php if ($row["gender"] == 0) {
+                    echo "<i class='fa-solid fa-mars text-info'></i>";
+                  } else {
+                    echo "<i class='fa-solid fa-venus text-danger'></i>";
+                  } ?></td>
+            </tr>
+            <tr>
+              <th>電話</th>
               <td><input type="tel" class="form-control" value="<?= $row["phone"] ?>" name="phone"></td>
             </tr>
             <tr>
               <th>Email</th>
               <td><input type="email" class="form-control" value="<?= $row["email"] ?>" name="email"></td>
+            </tr>
+            <tr>
+              <th>住址</th>
+              <td><input type="text" class="form-control" value="<?= $row["address"] ?>" name="address"></td>
             </tr>
           </table>
           <div class="py-2">

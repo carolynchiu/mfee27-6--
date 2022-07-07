@@ -131,12 +131,22 @@ $totalPage = ceil($userCount / $perPage);
     </div>
     <div class="container">
       <div class="row">
-        <div class="col-auto">
+        <div class="col-md-2 d-flex">
+          <form action="users.php" method="post">
+            <label for="">顯示筆數</label>
+            <select class="form-select" name="perPage" id="">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+            </select>
+          </form>
+        </div>
+        <div class="col-md-2">
           <div class="py-2">
             <a href="create-user.php" class="btn btn-primary"><i class="fa-solid fa-circle-plus"></i> 新增使用者</a>
           </div>
         </div>
-        <div class="col-auto">
+        <div class="col-md-4">
           <div class="py-2 d-flex justify-content-end align-items-center">
             <div class="me-2">排序</div>
             <div class="btn-group">
@@ -151,7 +161,7 @@ $totalPage = ceil($userCount / $perPage);
             </div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="py-2">
             <form action="user-search.php" method="get">
               <div class="input-group">
@@ -175,6 +185,7 @@ $totalPage = ceil($userCount / $perPage);
             <th>編號</th>
             <th>帳號</th>
             <th>姓名</th>
+            <th>性別</th>
             <th>電話</th>
             <th>Email</th>
             <th></th>
@@ -188,9 +199,14 @@ $totalPage = ceil($userCount / $perPage);
               <td><?= $row["id"] ?></td>
               <td><?= $row["account"] ?></td>
               <td><?= $row["name"] ?></td>
+              <td><?php if ($row["gender"] == 0) {
+                    echo "<i class='fa-solid fa-mars text-info'></i>";
+                  } else {
+                    echo "<i class='fa-solid fa-venus text-danger'></i>";
+                  } ?></td>
               <td><?= $row["phone"] ?></td>
               <td><?= $row["email"] ?></td>
-              <td class="text-end">
+              <td class="text-center">
                 <a href="user.php?id=<?= $row["id"] ?>" class="btn btn-primary">詳細資料</a>
                 <a href="" class="btn btn-warning">修改</a>
                 <a href="" class="btn btn-danger">刪除</a>

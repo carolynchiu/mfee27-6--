@@ -115,12 +115,12 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
 
 
-            <form action="" method="get">
+            <form action="doCreate.php" method="post">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>課程名稱name</th>
-                            <th>課程內容</th>
+                            <th>課程內容description</th>
                             <th>影音連結url</th>
                         </tr>
                     </thead>
@@ -131,11 +131,11 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                             </td>
 
                             <td>
-                                <input type="text" name="name">
+                                <input type="textarea" name="description">
                             </td>
 
                             <td>
-                                <input type="text" name="url">
+                                <textarea name="url" id="" cols="20" rows="3"></textarea>
                             </td>
                         </tr>
                     </tbody>

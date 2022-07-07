@@ -78,6 +78,7 @@ require("../db-connect.php");
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="container">
+    <div class="py-2"><a class="btn btn-info" href="products-list.php">回產品清單頁面</a></div>
         <form action="do-create.php" method="post">
             <div class="mb-2">
                 <label for="">商品名稱</label>

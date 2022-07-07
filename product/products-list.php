@@ -153,7 +153,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
     
     <div class="py-2 d-flex justify-content-between align-items-center ">
       <!-- 頁數切換 & 新增商品 -->
-      <div class="py-2">第 <?=$startItem?>-<?=$endItem?>筆, 共 <?=$productsCount?> 筆資料</div>
+      <div class="py-2">第 <?=$startItem?>-<?php if($endItem != $productsCount) echo $productsCount; ?>筆, 共 <?=$productsCount?> 筆資料</div>
     <nav aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item <?php if($page==1)echo "disabled";?>   ">

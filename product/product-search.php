@@ -9,10 +9,16 @@ require("../db-connect.php");
 //設定如果有抓到頁數 則$page=該頁數
 //若無則假設$page為1
 
-if(isset($_GET["search"])){
-    echo "success";
+if(!isset($_GET["search"])){
+    $search="";
+    $pageProductCount=0;
 }else{
-    echo "fail";
+    $search=$_GET["search"];
+    $sqlAll="SELECT products.* , product_category.name AS category_name  FROM products  JOIN product_category ON products.category_id = product_category.id WHERE products.name LIKE '%$search%'";
+    //選取所有產品
+    $resultAll= $conn->query($sqlAll);
+    //產品的總數
+    $productsCount=$resultAll->num_rows;
 }
 
 if(isset($_GET["page"])){
@@ -32,7 +38,7 @@ if (isset($_GET["category"])){
 
 //sql product所有的欄位和 product_category的名子並生出category_name
 //使用join 將product.category_id和 category.id掛勾finished
-$sqlAll="SELECT products.* , product_category.name AS category_name  FROM products JOIN product_category ON products.category_id = product_category.id";
+$sqlAll="SELECT products.* , product_category.name AS category_name  FROM products  JOIN product_category ON products.category_id = product_category.id WHERE products.name LIKE '%$search%'";
  //選取所有產品
 $resultAll= $conn->query($sqlAll);
 //產品的總數
@@ -42,7 +48,7 @@ $productsCount=$resultAll->num_rows;
 $perPage=5; //每頁有5項產品
 $start=($page-1)*$perPage; //起始頁能顯示的產品數
 //每頁產品
-$sqlPage="SELECT products.* , product_category.name AS category_name  FROM products JOIN product_category ON products.category_id = product_category.id LIMIT $start, 5";
+$sqlPage="SELECT products.* , product_category.name AS category_name  FROM products JOIN product_category ON products.category_id = product_category.id WHERE products.name LIKE '%$search%' LIMIT $start, 5";
 
 
 $resultPage=$conn->query($sqlPage);
@@ -54,10 +60,6 @@ $startItem=($page-1)*$perPage+1;
 $endItem=$page*$perPage;
 // if($endItem>$userCount)$endItem=$userCount;
 $totalPage=ceil($productsCount/$perPage);//無條件進位
-//給篩選器的finished
-$sqlCategory="SELECT * FROM product_category";
-$resultCategory=$conn->query($sqlCategory);
-$rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 
 ?>
 <!doctype html>
@@ -148,7 +150,24 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
     </div>
     <div class="py-2  ">
       <!-- 頁數切換 & 新增商品 -->
-      <div class="py-2">第 <?=$startItem?>-<?=$endItem?>筆, 共 <?=$productsCount?> 筆資料</div>
+      <div class="py-2">
+        <?php switch($productsCount){
+            case 0:
+                echo "";
+                break;
+            case 1:
+                echo "第1筆 ,";
+                break;
+            case ($productsCount < $endItem):
+                //echo $productsCount;
+                echo "第$startItem ~ $productsCount 筆 ,";
+                break;
+            case($productsCount >= $endItem ):
+                echo "第 $startItem ~ $endItem 筆 ,";
+                break;
+            default;
+        }?>
+       共 <?=$productsCount?> 筆資料</div>
     </div>
     <?php if($pageProductCount>0): ?>
         <table class="table table-bordered  table-hover mt-5">
@@ -195,23 +214,23 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
           <?php else: ?>
             目前沒有資料
         <?php endif; ?>
+        </table>
         <nav aria-label="Page navigation example">
-      <ul class="pagination">
+      <ul class="pagination justify-content-center">
         <li class="page-item <?php if($page==1)echo "disabled";?>   ">
-          <a class="page-link" href="product-search.php?page=<?=$page-1?>"><</a>
+          <a class="page-link" href="product-search.php?search=<?=$search?>&page=<?=$page-1?>"><</a>
         </li>
         <?php for($i=1;$i<=$totalPage;$i++):?>
         <li class="page-item">
           <a class="page-link 
-          <?php if($page==$i)echo "active"; ?>" href="product-search.php?page=<?=$i?>"><?=$i?></a>
+          <?php if($page==$i)echo "active"; ?>" href="product-search.php?search=<?=$search?>&page=<?=$i?>"><?=$i?></a>
         </li>
         <?php endfor;?>
         <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
-          <a class="page-link" href="product-search.php?page=<?=$page+1?>">></a>
+          <a class="page-link" href="product-search.php?search=<?=$search?>&page=<?=$page+1?>">></a>
         </li>
       </ul>
     </nav>
-        </table>
       </div>
   </main>
   

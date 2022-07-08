@@ -1,4 +1,5 @@
 <?php
+session_start();
 require("../db-connect.php");
 
 if (isset($_GET["page"])) {
@@ -12,7 +13,7 @@ $resultAll = $conn->query($sqlAll);
 $adminCount = $resultAll->num_rows; //所有的使用者
 
 // $page = 3;
-$perPage = 10;
+$perPage = 5;
 $start = ($page - 1) * $perPage;
 
 // $order = $_GET["order"];
@@ -130,13 +131,61 @@ $totalPage = ceil($adminCount / $perPage);
       </div>
     </div>
     <div class="container">
-      <div class="row">
-        <div class="col-auto">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-md-3">
           <div class="py-2">
-            <a href="create-admin.php" class="btn btn-primary"><i class="fa-solid fa-circle-plus"></i>新增管理員</a>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              <i class="fa-solid fa-user-plus me-2"></i>新增管理員帳號
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">新增管理員帳號</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container">
+                      <form action="doCreate.php" method="post">
+                        <div class="mb-2">
+                          <label for="">姓名</label>
+                          <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-2">
+                          <label for="">帳號</label>
+                          <input type="text" class="form-control" name="account" required>
+                        </div>
+                        <div class="mb-2">
+                          <label for="">密碼</label>
+                          <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <div class="mb-2">
+                          <label for="">再輸入一次密碼</label>
+                          <input type="password" class="form-control" name="repassword" required>
+                        </div>
+                        <div class="mb-2">
+                          <label for="">聯絡電話</label>
+                          <input type="tel" class="form-control" name="phone" required>
+                        </div>
+                        <div class="mb-2">
+                          <label for="">Email</label>
+                          <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <button type="submit" class="btn btn-info">送出</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <a href="create-admin.php" class="btn btn-primary"><i class="fa-solid fa-circle-plus"></i>新增管理員</a> -->
           </div>
         </div>
-        <div class="col-auto">
+        <div class="col-md-4">
           <div class="py-2 d-flex justify-content-end align-items-center">
             <div class="me-2">排序</div>
             <div class="btn-group">
@@ -177,7 +226,7 @@ $totalPage = ceil($adminCount / $perPage);
               <td><?= $row["account"] ?></td>
               <td><?= $row["name"] ?></td>
               <td class="text-center">
-                <a href="" class="btn btn-warning">修改</a>
+                <a href="admin.php?id=<?= $row["id"] ?>" class="btn btn-warning">修改</a>
                 <a href="" class="btn btn-danger">刪除</a>
               </td>
               <!-- 連結資料 -->

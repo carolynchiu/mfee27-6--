@@ -9,6 +9,8 @@ $name = $_POST["name"];
 $account = $_POST["account"];
 $password = $_POST["password"];
 $repassword = $_POST["repassword"];
+$phone = $_POST["phone"];
+$email = $_POST["email"];
 
 //後端擋 -> 後端驗證(沒接觸資料庫)
 if (empty($account)) {
@@ -25,6 +27,14 @@ if (empty($repassword)) {
 }
 if ($password != $repassword) {
   echo "前後密碼不一致";
+  exit;
+}
+if (empty($phone)) {
+  echo "沒有填phone";
+  exit;
+}
+if (empty($email)) {
+  echo "沒有填email";
   exit;
 }
 //加密，現在也不用md5了，因為太好破解了，實務上不會使用
@@ -45,7 +55,7 @@ if ($adminCount > 0) {
 
 //寫入資料庫
 $now = date('Y-m-d H:i:s');
-$sqlCreate = "INSERT INTO admins (name, account, password, create_time, valid) VALUES ('$name', '$account', '$password', '$now',1)";
+$sqlCreate = "INSERT INTO admins (name, account, password, phone, email, create_time, valid) VALUES ('$name', '$account', '$password', '$phone', '$email', '$now',1)";
 
 if ($conn->query($sqlCreate) === TRUE) {
   echo "新資料輸入成功";

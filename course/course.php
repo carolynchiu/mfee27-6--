@@ -32,7 +32,7 @@ if (isset($_GET["start"])) {
 
 //ORDER BY 日期排序 降冪 新的日期在前面比較好
 // $sql = "SELECT user_order.*, product.name AS product_name, product.price, users.name AS user_name FROM user_order JOIN product ON user_order.product_id = product.id JOIN users ON user_order.user_id = users.id $sqlWhere ORDER BY user_order.order_date DESC";
-$sql = "SELECT * FROM course WHERE course.valid=0 || course.valid=1 ORDER BY course.create_time DESC";
+$sql = "SELECT * FROM course JOIN course_content ON course.id=course_content.id WHERE course.valid=0 || course.valid=1 ORDER BY course.create_time DESC";
 $result = $conn->query($sql);
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 
@@ -123,6 +123,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                     <tr>
                         <th>課程編號</th>
                         <th>課程名稱</th>
+                        <th>課程圖片</th>
                         <th>建立日期</th>
                         <th>操作</th>
                         <th>狀態</th>
@@ -134,8 +135,8 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         <tr>
                             <td><?= $row["id"] ?></td>
                             <td><?= $row["name"] ?></td>
+                            <td><img src="<?= $row["image"] ?>" class="w-50" alt=""></td>                            
                             <td><?= $row["create_time"] ?></td>
-                            <!-- <td class="text-end"><?= $row["url"] ?></td>                             -->
                             <td>
                             <a class="btn btn-info" href="edit-course.php?id=<?= $row["id"] ?>">編輯</a>
                             
@@ -164,7 +165,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                     <?php endforeach; ?>
                 </tbody>
             </table>
-
+                                
             
         </div>
     </main>

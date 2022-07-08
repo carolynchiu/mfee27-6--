@@ -127,7 +127,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         </div>
                         <div class="mb-3">
                             <!-- type改file 變選擇檔案 -->
-                            <input class="form-control" type="file" name="myFile">
+                            <input class="form-control" type="file" name="file">
                         </div>
                         <button class="btn btn-info" type="submit">送出</button>
                         <a class="btn btn-secondary" href="course.php">取消</a>

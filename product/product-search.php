@@ -135,9 +135,15 @@ $totalPage=ceil($productsCount/$perPage);//無條件進位
   <main class="main-content p-4">
   <div class="container table-responsive">
     <div>
-        <div><a class="btn btn-info" href="products-list.php">回產品清單頁面</a></div>
+        <div><a class="btn btn-info my-2" href="products-list.php">回產品清單頁面</a></div>
         <form action="product-search.php" method="get">
         <div class="input-group">
+            <select class="form-select" name="search-category" id="">
+              <option disabled selected value=""></option>
+              <option value="1">依使用者</option>
+              <option value="2">依商品名稱</option>
+              <option value="3">依商品狀態</option>
+            </select>
             <input type="text" name="search" class="form-control">
             <button type="submit" class="btn btn-info">搜尋</button>
         </div>

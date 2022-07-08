@@ -160,9 +160,15 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
           </div>
         </div>
       <form action="product-search.php" method="get">
-        <div class="input-group">
-          <input type="text" name="search" class="form-control">
-          <button type="submit" class="btn btn-info">搜尋</button>
+        <div class="input-group row">
+          <!-- <select class="form-select" name="search-category" id="">
+            <option disabled selected value=""></option>
+            <option value="1">依使用者</option>
+            <option value="2">依商品名稱</option>
+            <option value="3">依商品狀態</option>
+          </select> -->
+          <input class=" form-control  " type="text" name="search" class="form-control">
+          <button class=" form-control  btn btn-info " type="submit" class="btn btn-info">搜尋</button>
         </div>
       </form>
     

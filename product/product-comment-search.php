@@ -5,7 +5,6 @@
 
 require("../db-connect.php");
 
-
 if(!isset($_GET["search"])){
     $search="";
     $pageProductCount=0;
@@ -13,7 +12,7 @@ if(!isset($_GET["search"])){
     $search=$_GET["search"];
     $sql="SELECT product_comments.* ,users.name AS users_name , products.name AS product_name FROM product_comments
     JOIN users ON product_comments.user_id =users.id
-    JOIN products ON product_comments.product_id = products.id WHERE users_name, LIKE '%$search%'";
+    JOIN products ON product_comments.product_id = products.id WHERE users.name LIKE '%$search%'";
     $result=$conn->query($sql);
     $commentsCount=$result->num_rows;
 }
@@ -138,8 +137,8 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
 </head>
 
 <body>
-  <?php require("../module/header.php"); ?>
-  <?php require("../module/aside.php"); ?>
+  <?php //require("../module/header.php"); ?>
+  <?php //require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="container table-responsive">
     <div>

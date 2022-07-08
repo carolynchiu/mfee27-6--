@@ -1,4 +1,5 @@
 <?php
+session_start();
 require("../db-connect.php");
 
 if (isset($_GET["page"])) {
@@ -132,6 +133,7 @@ $totalPage = ceil($userCount / $perPage);
     <div class="container">
       <div class="row">
         <div class="col-md-2 d-flex">
+          <div class="d-grid"></div>
           <form action="users.php" method="post">
             <label for="">顯示筆數</label>
             <select class="form-select" name="perPage" id="">
@@ -142,8 +144,77 @@ $totalPage = ceil($userCount / $perPage);
           </form>
         </div>
         <div class="col-md-2">
-          <div class="py-2">
-            <a href="create-user.php" class="btn btn-primary"><i class="fa-solid fa-circle-plus"></i> 新增使用者</a>
+          <div class="py-2 d-grid">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              新增使用者
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">新增使用者帳號</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container">
+                      <form action="doCreate.php" method="post">
+                        <div class="mb-2">
+                          <label for="">姓名</label>
+                          <input type="text" class="form-control" name="name">
+                        </div>
+                        <div class="mb-2">
+                          <label for="">帳號</label>
+                          <input type="text" class="form-control" name="account">
+                        </div>
+                        <div class="mb-2">
+                          <label for="">密碼</label>
+                          <input type="password" class="form-control" name="password">
+                        </div>
+                        <div class="mb-2">
+                          <label for="">再輸入一次密碼</label>
+                          <input type="password" class="form-control" name="repassword">
+                        </div>
+                        <div class="mb-2">
+                          <label for="">電話</label>
+                          <input type="tel" class="form-control" name="phone">
+                        </div>
+                        <div class="mb-2">
+                          <label for="">Email</label>
+                          <input type="email" class="form-control" name="email">
+                        </div>
+                        <div class="mb-2">
+                          <div>
+                            <label class="me-2" for="">性別</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="0">
+                            <label class="form-check-label" for="inlineRadio1">男</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="1">
+                            <label class="form-check-label" for="inlineRadio2">女</label>
+                          </div>
+                        </div>
+                        <div class="mb-2">
+                          <label for="">生日</label>
+                          <input type="date" class="form-control" name="birthday">
+                        </div>
+                        <div class="mb-2">
+                          <label for="">地址</label>
+                          <input type="text" class="form-control" name="address">
+                        </div>
+                        <button type="submit" class="btn btn-info">送出</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <a href="create-user.php" class="btn btn-primary"><i class="fa-solid fa-circle-plus"></i> 新增使用者</a> -->
           </div>
         </div>
         <div class="col-md-4">

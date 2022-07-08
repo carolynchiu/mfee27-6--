@@ -28,9 +28,6 @@ $row=$result->fetch_assoc();?>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <link rel="stylesheet" href="../fontawesome-free-6.1.1-web/css/all.min.css" />
   <style>
-    *{
-      border:1px solid red;
-    }
     :root {
       --aside-width: 200px;
     }
@@ -154,9 +151,9 @@ $row=$result->fetch_assoc();?>
                     ?></td>
                 </tr>
             </table>
-            <div class="py-2">
+            <div class="py-2 d-flex justify-content-between">
                 <a class="btn btn-warning" href="product-edit.php?id=<?=$row["id"]?>">修改商品內容</a>
-                <a class="btn btn-danger" href="">刪除商品</a>
+                <a class="btn btn-danger" href="do-delete.php?id=<?=$row["id"]?>">刪除商品</a>
             </div>
         <?php endif;?>
         </div>

@@ -17,7 +17,9 @@ $discontinue_time=$_POST["discontinue_time"];
 $stock_in_inventory=$_POST["stock_in_inventory"];
 $status=$_POST["status"];
 
-$sql="UPDATE products SET name='$name', description='$description', price='$price',image= '$image', category_id=$category_id,launch_time=$launch_time, discontinue_time=$discontinue_time,stock_in_inventory=$stock_in_inventory, status=$status WHERE id=$id";
+
+
+$sql="UPDATE products SET name='$name', description='$description', price='$price',image= '$image', category_id=$category_id, launch_time='$launch_time',  discontinue_time='$discontinue_time', stock_in_inventory=$stock_in_inventory, status=$status WHERE id=$id";
 
 if ($conn->query($sql) === TRUE) {
     echo "資料表 products 修改完成";
@@ -27,5 +29,6 @@ if ($conn->query($sql) === TRUE) {
 
 $conn->close();
 
-header("location:products-list.php?id=".$id);
+
+header("location:product.php?id=".$id);
 ?>

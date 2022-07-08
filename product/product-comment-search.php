@@ -157,6 +157,7 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
     <div class="py-2  ">
       <!-- 頁數切換 & 新增商品 -->
       <div class="py-2">
+      <h3> " <?=$search?> " 的搜尋結果 :</h3>
         <?php switch($commentsCount){
             case 0:
                 echo "";
@@ -173,6 +174,43 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
             default;
         }?>
        共 <?=$commentsCount?> 筆資料</div>
+       <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item <?php if($page==1)echo "disabled";?>   ">
+            <a class="page-link" href="
+            <?php if(isset($_GET["category"])){
+              echo "product-comment-search.php?category=<?=$category?>&page=<?=$page?>";
+            }else{
+              $previousPage=$page-1;
+              echo "product-comment-search.php?page=$previousPage";
+              }
+              ?>
+            "><</a>
+          </li>
+          <?php for($i=1;$i<=$totalPage;$i++):?>
+          <li class="page-item">
+            <a class="page-link 
+            <?php if($page==$i)echo "active"; ?>" href="
+            <?php if(isset($_GET["category"])){
+              echo "product-comment-search.php?category=<?=$category?>&page=<?=$i?>";
+            }else{
+              echo "product-comment-search.php?page=$i";
+              }
+              ?>"><?=$i?></a>
+          </li>
+          <?php endfor;?>
+          <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
+            <a class="page-link" href="
+            <?php if(isset($_GET["category"])){
+              echo "product-comment-search.php?&category=<?=$category?>&page=<?=$page?>";
+            }else{
+              $nextPage=$page+1;
+              echo "product-comment-search.php?page=$nextPage";
+              }
+              ?>">></a>
+          </li>
+        </ul>
+      </nav>
     </div>
     <?php if($pageCommentCount>0): ?>
         <table class="table table-bordered  table-hover mt-5">
@@ -200,7 +238,9 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
               }
               ?>   
               </td>
-              <td class="text-center"><a class="btn btn-info my-2
+              <td class="text-center">
+              <a class="btn btn-info my-2" href="comment-fix.php">修改</a>  
+              <a class="btn btn-info my-2
               <?php
               if($row["status"]==1){
                 echo "disabled";

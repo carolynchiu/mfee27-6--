@@ -122,8 +122,8 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
             case 0:
                 echo "";
                 break;
-            case 1:
-                echo "第1筆 ,";
+            case($startItem == $commentsCount):
+                echo "第 $commentsCount 筆 ," ;
                 break;
             case ($commentsCount < $endItem):
                 echo "第$startItem ~ $commentsCount 筆 ,";
@@ -139,10 +139,10 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
           <li class="page-item <?php if($page==1)echo "disabled";?>   ">
             <a class="page-link" href="
             <?php if(isset($_GET["category"])){
-              echo "products-list.php?category=<?=$category?>&page=<?=$page?>";
+              echo "product-comments.php?category=<?=$category?>&page=<?=$page?>";
             }else{
               $previousPage=$page-1;
-              echo "products-list.php?page=$previousPage";
+              echo "product-comments.php?page=$previousPage";
               }
               ?>
             "><</a>
@@ -152,9 +152,9 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
             <a class="page-link 
             <?php if($page==$i)echo "active"; ?>" href="
             <?php if(isset($_GET["category"])){
-              echo "products-list.php?category=<?=$category?>&page=<?=$i?>";
+              echo "product-comments.php?category=<?=$category?>&page=<?=$i?>";
             }else{
-              echo "products-list.php?page=$i";
+              echo "product-comments.php?page=$i";
               }
               ?>"><?=$i?></a>
           </li>
@@ -162,10 +162,10 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
           <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
             <a class="page-link" href="
             <?php if(isset($_GET["category"])){
-              echo "products-list.php?&category=<?=$category?>&page=<?=$page?>";
+              echo "product-comments.php?&category=<?=$category?>&page=<?=$page?>";
             }else{
               $nextPage=$page+1;
-              echo "products-list.php?page=$nextPage";
+              echo "product-comments.php?page=$nextPage";
               }
               ?>">></a>
           </li>
@@ -173,6 +173,7 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
       </nav>
     </div>
 
+    <?php if($pageCommentCount>0):?>
   <div class="container table-responsive">
         <table class="table table-bordered  table-hover mt-5">
           <thead>
@@ -186,7 +187,7 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
             </tr>
           </thead>
           <tbody >
-            <?php foreach($rows as $row):?>
+            <?php foreach($resultPage as $row):?>
             <tr>
               <td><?=$row["id"]?></td>
               <td><?=$row["users_name"]?></td>
@@ -199,13 +200,15 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
               }
               ?>   
               </td>
-              <td class="text-center"><a  class="btn btn-info my-2
+              <td class="text-center">
+              <a class="btn btn-info my-2" href="comment-fix.php">修改</a>
+              <a class="btn btn-info my-2
               <?php
               if($row["status"]==1){
                 echo "disabled";
               }
               ?>" href="comment-change.php?id=<?=$row["id"]?>&status=1">顯示</a>
-              <a  class="btn btn-info my-2
+              <a class="btn btn-info my-2
               <?php
               if($row["status"]==0){
                 echo "disabled";
@@ -216,6 +219,9 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
             </tr>
             <?php endforeach;?>
           </tbody>
+          <?php else:?>
+            目前沒有資料
+          <?php endif;?>
         </table>
       </div>
   </main>

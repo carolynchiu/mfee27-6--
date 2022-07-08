@@ -1,11 +1,22 @@
 <?php
+$id=$_POST["id"];
 require("../db-connect.php");
+
+
+$sql="SELECT * FROM products";
+$result=$conn->query($sql);
+$productCount=$result->num_rows;
+
+$sqlHide="UPDATE products SET status =0 WHERE id='$id'";
+$resultHide=$conn->query($sqlHide);
+// $rowHide=$resultHide->fetch_assoc();
+
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
-  <title>Product</title>
+  <title>修改商品內容</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -85,10 +96,10 @@ require("../db-connect.php");
             </a>
         </div>
         <div class="py-2">
-        <form action="doUpdate.php">
+        <form action="do-update.php">
             <table class="table">
                 <tr>
-                    <th>id</th>
+                    <th>商品編號</th>
                     <td><?=$row["id"]?></td>
                 </tr>
                 <tr>

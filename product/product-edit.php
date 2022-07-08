@@ -1,15 +1,15 @@
 <?php
-$id=$_POST["id"];
+if(!isset($_GET["id"])){
+  echo "沒有帶資料";
+  exit;
+}
+$id=$_GET["id"];
 require("../db-connect.php");
 
 
-$sql="SELECT * FROM products";
+$sql="SELECT * FROM products WHERE id=$id";
 $result=$conn->query($sql);
 $productCount=$result->num_rows;
-
-$sqlHide="UPDATE products SET status =0 WHERE id='$id'";
-$resultHide=$conn->query($sqlHide);
-// $rowHide=$resultHide->fetch_assoc();
 
 ?>
 <!doctype html>
@@ -85,8 +85,8 @@ $resultHide=$conn->query($sqlHide);
 </head>
 
 <body>
-  <?php require("../module/header.php"); ?>
-  <?php require("../module/aside.php"); ?>
+  <?php //require("../module/header.php"); ?>
+  <?php //require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="container">
       <?php if($productCount>0):
@@ -96,7 +96,8 @@ $resultHide=$conn->query($sqlHide);
             </a>
         </div>
         <div class="py-2">
-        <form action="do-update.php">
+        <form action="do-update.php" method="post">
+        <input name="id" type="hidden" value="<?=$row["id"]?>">
             <table class="table">
                 <tr>
                     <th>商品編號</th>
@@ -104,11 +105,11 @@ $resultHide=$conn->query($sqlHide);
                 </tr>
                 <tr>
                     <th>商品名稱</th>
-                    <td><input type="text" value="<?=$row["name"]?>"></td>
+                    <td><input type="text" name="name" value="<?=$row["name"]?>"></td>
                 </tr>
                 <tr>
                     <th>商品簡介</th>
-                    <td><input type="text" value="<?=$row["description"]?>"></td>
+                    <td><input type="text" name="description" value="<?=$row["description"]?>"></td>
                 </tr>
                 <tr>
                     <th>商品類別</th>
@@ -123,19 +124,19 @@ $resultHide=$conn->query($sqlHide);
                 </tr>
                 <tr>
                     <th>商品價格</th>
-                    <td><input type="text" value="<?=$row["price"]?>"></td>
+                    <td><input type="text" name="price" value="<?=$row["price"]?>"></td>
                 </tr>
                 <tr>
                     <th>商品庫存</th>
-                    <td><input type="text" value="<?=$row["stock_in_inventory"]?>"></td>
+                    <td><input type="text" name="stock_in_inventory" value="<?=$row["stock_in_inventory"]?>"></td>
                 </tr>
                 <tr>
                     <th>商品圖片</th>
-                    <td><input type="text" value="<?=$row["image"]?>"></td>
+                    <td><input type="text" name="image" value="<?=$row["image"]?>"></td>
                 </tr>
                 <tr>
                     <th>商品上下架時間</th>
-                    <td><input type="date" value="<?=$row["launch_time"]?>">~<input type="date" value="<?=$row["discontinue_time"]?>"></td>
+                    <td><input type="date" name="launch_time" value="<?=$row["launch_time"]?>">~<input type="date" name="discontinue_time" value="<?=$row["discontinue_time"]?>"></td>
                 </tr>
                 <tr>
                     <th>商品上下架狀態</th>
@@ -145,15 +146,16 @@ $resultHide=$conn->query($sqlHide);
                         <label class="form-check-label" for="">上架</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="status" id="" value="2">
+                        <input class="form-check-input" type="radio" name="status" id="" value="0">
                         <label class="form-check-label" for="">下架</label>
                     </div></td>
                 </tr>
             </table>
-        </form>
             <div class="py-2">
-                <a class="btn btn-info" href="">儲存</a>
+            <button class="btn btn-info" type="submit">送出</button>
             </div>
+        </form>
+            
         <?php endif;?>
         </div>
       </div>

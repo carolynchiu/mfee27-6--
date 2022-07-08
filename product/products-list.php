@@ -175,8 +175,8 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
             case 0:
                 echo "";
                 break;
-            case 1:
-                echo "第1筆 ,";
+            case($startItem == $productsCount):
+                echo "第 $productsCount 筆 ," ;
                 break;
             case ($productsCount < $endItem):
                 echo "第$startItem ~ $productsCount 筆 ,";

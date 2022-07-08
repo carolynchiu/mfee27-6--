@@ -149,12 +149,13 @@ $totalPage=ceil($productsCount/$perPage);//無條件進位
     <div class="py-2  ">
       <!-- 頁數切換 & 新增商品 -->
       <div class="py-2">
+      <h3> " <?=$search?> " 的搜尋結果 :</h3>
         <?php switch($productsCount){
             case 0:
                 echo "";
                 break;
-            case 1:
-                echo "第1筆 ,";
+            case($startItem == $productsCount):
+                echo "第 $productsCount 筆 ," ;
                 break;
             case ($productsCount < $endItem):
                 echo "第$startItem ~ $productsCount 筆 ,";

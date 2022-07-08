@@ -200,8 +200,20 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
               }
               ?>   
               </td>
-              <td class="text-center"><a class="btn btn-info my-2" href="product.php?id=<?=$row["id"]?>">顯示</a>
-              <a class="btn btn-info my-2 " href="product.php?id=<?=$row["id"]?>">隱藏</a></td>
+              <td class="text-center"><a class="btn btn-info my-2
+              <?php
+              if($row["status"]==1){
+                echo "disabled";
+              }
+              ?>
+              " href="comment-change.php?id=<?=$row["id"]?>&status=1&search=<?=$search?>">顯示</a>
+              <a class="btn btn-info my-2 
+              <?php
+              if($row["status"]==0){
+                echo "disabled";
+              }
+              ?>
+              " href="comment-change.php?id=<?=$row["id"]?>&status=0&search=<?=$search?>">隱藏</a></td>
               
             </tr>
             <?php endforeach;?>

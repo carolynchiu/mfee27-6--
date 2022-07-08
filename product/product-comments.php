@@ -108,17 +108,17 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
 </head>
 
 <body>
-  <?php //require("../module/header.php"); ?>
-  <?php //require("../module/aside.php"); ?>
+  <?php require("../module/header.php"); ?>
+  <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
-  <div class="">
-  <form action="product-comment-search.php" method="get">
+    <div class="">
+      <form action="product-comment-search.php" method="get">
         <div class="input-group">
             <input type="text" name="search" class="form-control">
             <button type="submit" class="btn btn-info">搜尋</button>
         </div>
       </form>
-  <?php switch($commentsCount){
+      <?php switch($commentsCount){
             case 0:
                 echo "";
                 break;
@@ -132,46 +132,46 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
                 echo "第 $startItem ~ $endItem 筆 ,";
                 break;
             default;
-        }?>
+      }?>
        共 <?=$commentsCount?> 筆資料</div>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
-        <li class="page-item <?php if($page==1)echo "disabled";?>   ">
-          <a class="page-link" href="
-          <?php if(isset($_GET["category"])){
-            echo "products-list.php?category=<?=$category?>&page=<?=$page?>";
-          }else{
-            $previousPage=$page-1;
-            echo "products-list.php?page=$previousPage";
-            }
-            ?>
-          "><</a>
-        </li>
-        <?php for($i=1;$i<=$totalPage;$i++):?>
-        <li class="page-item">
-          <a class="page-link 
-          <?php if($page==$i)echo "active"; ?>" href="
-          <?php if(isset($_GET["category"])){
-            echo "products-list.php?category=<?=$category?>&page=<?=$i?>";
-          }else{
-            echo "products-list.php?page=$i";
-            }
-            ?>"><?=$i?></a>
-        </li>
-        <?php endfor;?>
-        <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
-          <a class="page-link" href="
-          <?php if(isset($_GET["category"])){
-            echo "products-list.php?&category=<?=$category?>&page=<?=$page?>";
-          }else{
-            $nextPage=$page+1;
-            echo "products-list.php?page=$nextPage";
-            }
-            ?>">></a>
-        </li>
-      </ul>
-    </nav>
-  </div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item <?php if($page==1)echo "disabled";?>   ">
+            <a class="page-link" href="
+            <?php if(isset($_GET["category"])){
+              echo "products-list.php?category=<?=$category?>&page=<?=$page?>";
+            }else{
+              $previousPage=$page-1;
+              echo "products-list.php?page=$previousPage";
+              }
+              ?>
+            "><</a>
+          </li>
+          <?php for($i=1;$i<=$totalPage;$i++):?>
+          <li class="page-item">
+            <a class="page-link 
+            <?php if($page==$i)echo "active"; ?>" href="
+            <?php if(isset($_GET["category"])){
+              echo "products-list.php?category=<?=$category?>&page=<?=$i?>";
+            }else{
+              echo "products-list.php?page=$i";
+              }
+              ?>"><?=$i?></a>
+          </li>
+          <?php endfor;?>
+          <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
+            <a class="page-link" href="
+            <?php if(isset($_GET["category"])){
+              echo "products-list.php?&category=<?=$category?>&page=<?=$page?>";
+            }else{
+              $nextPage=$page+1;
+              echo "products-list.php?page=$nextPage";
+              }
+              ?>">></a>
+          </li>
+        </ul>
+      </nav>
+    </div>
 
   <div class="container table-responsive">
         <table class="table table-bordered  table-hover mt-5">

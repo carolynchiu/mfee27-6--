@@ -1,5 +1,5 @@
 <?php
-
+//完成
 require("../db-connect.php");//串聯修改
 
 $name=$_POST["name"];

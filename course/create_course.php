@@ -40,7 +40,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 <html lang="en">
 
 <head>
-    <title>Order List</title>
+    <title>新增課程</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -106,43 +106,34 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                 <!-- <a href="create_course.php" type="get" class="btn btn-outline-primary">新增課程</a> -->
             </div>
         </div>
+
         <div class="container">
-            <div class="py-2">
-                <?php if (isset($_GET["product_id"]) || isset($_GET["user_id"]) || isset($_GET["start"])) : ?>
-                    <a href="order-list.php" class="btn btn-info">回所有訂單列表</a>
-                <?php endif; ?>
+
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <form action="doCreate.php" method="post" enctype="multipart/form-data" >
+                        <div class="mb-1">
+                            <label for="exampleInputEmail1" class="form-label">課程標題</label>
+                            <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                            <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">課程內容description</label>
+                            <textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">影音連結url</label>
+                            <textarea name="url" id="" cols="30" rows="3" class="form-control"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <!-- type改file 變選擇檔案 -->
+                            <input class="form-control" type="file" name="myFile">
+                        </div>
+                        <button class="btn btn-info" type="submit">送出</button>
+                        <a class="btn btn-secondary" href="course.php">取消</a>
+                    </form>
+                </div>
             </div>
-
-
-
-            <form action="doCreate.php" method="post">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>課程名稱name</th>
-                            <th>課程內容description</th>
-                            <th>影音連結url</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <input type="text" name="name">
-                            </td>
-
-                            <td>
-                                <input type="textarea" name="description">
-                            </td>
-
-                            <td>
-                                <textarea name="url" id="" cols="20" rows="3"></textarea>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button class="btn btn-info" type="submit">送出</button>
-                <a class="btn btn-secondary" href="course.php">取消</a>
-            </form>
         </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

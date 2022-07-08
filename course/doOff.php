@@ -5,7 +5,8 @@ $id=$_GET["id"];
 
 // $sql="DELETE FROM users WHERE id='$id'";
 // update to valid 0
-$sql="UPDATE course SET valid=2 WHERE id='$id'";
+$sql="UPDATE course SET valid=0 WHERE id='$id'";
+
 
 // echo $sql;
 if ($conn->query($sql) === TRUE) {

@@ -32,7 +32,7 @@ if (isset($_GET["start"])) {
 
 //ORDER BY 日期排序 降冪 新的日期在前面比較好
 // $sql = "SELECT user_order.*, product.name AS product_name, product.price, users.name AS user_name FROM user_order JOIN product ON user_order.product_id = product.id JOIN users ON user_order.user_id = users.id $sqlWhere ORDER BY user_order.order_date DESC";
-$sql = "SELECT * FROM course";
+$sql = "SELECT * FROM course WHERE course.valid=0 || course.valid=1 ORDER BY course.create_time DESC";
 $result = $conn->query($sql);
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 
@@ -43,7 +43,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 <html lang="en">
 
 <head>
-    <title>Order List</title>
+    <title>所有課程</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -106,7 +106,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
             <h1>所有課程</h1>
             <div class="btn-group" role="group" aria-label="Basic example">
                 
-                <a href="create_course.php" type="get" class="btn btn-outline-primary">新增課程</a>
+                <a href="create_course.php" type="get" class="btn btn-outline-primary">+新增課程</a>
             </div>
         </div>
         <div class="container">
@@ -118,39 +118,58 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
 
 
-            <table class="table table-bordered">
+            <table class="table table-bordered table-striped text-center">
                 <thead>
                     <tr>
                         <th>課程編號</th>
                         <th>課程名稱</th>
                         <th>建立日期</th>
                         <th>操作</th>
-                        <th>上/下架</th>
+                        <th>狀態</th>
+                        <!-- <th>上/下架</th> -->
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($rows as $row) : ?>
                         <tr>
-                            <td class="text-end"><?= $row["id"] ?></td>
-                            <td class="text-end"><?= $row["name"] ?></td>
-                            <td class="text-end"><?= $row["create_time"] ?></td>
+                            <td><?= $row["id"] ?></td>
+                            <td><?= $row["name"] ?></td>
+                            <td><?= $row["create_time"] ?></td>
                             <!-- <td class="text-end"><?= $row["url"] ?></td>                             -->
                             <td>
                             <a class="btn btn-info" href="edit-course.php?id=<?= $row["id"] ?>">編輯</a>
-                                <button class="btn btn-danger">刪除</button>
+                            
+                            
+                            <a class="btn btn-success 
+                            <?php if($row["valid"]==0){
+                                echo "d-inline";
+                            }else echo "d-none"  ?> 
+                            " href="doOn.php?id=<?= $row["id"] ?>">上架</a>
+
+
+                            <a class="btn 
+                            <?php if($row["valid"]==1){
+                                echo "d-inline";
+                            }else echo "d-none"  ?> 
+                            btn-secondary" href="doOff.php?id=<?= $row["id"] ?>">下架</a>
+
+                            <a id="check-del" class="btn btn-danger" href="doDelete.php?id=<?= $row["id"] ?>">刪除</a>
                             </td>
                             <td>
                                 <?php if($row["valid"]==1){
-                                    echo "上架中";
-                                }else echo "下架中"; ?>
+                                    echo "<span class=\"text-success fw-bold\">上架</span>";
+                                }else echo "<span class=\"text-secondary fw-bold\">下架</span>"; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
+
+            
         </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

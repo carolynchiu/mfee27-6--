@@ -114,6 +114,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
             <figure class="mb-2 ">
               <img class="object-cover" style="width: 600px" src="../recipe/recipeimage/<?=$row["main_image"]?>" alt="">
               <input class="form-control" type="file" id="formFile" name="main_image" value="<?=$row["main_image"]?>">
+              <input type="hidden" value="<?= $row["main_image"] ?>" name="main_image_original">
             </figure>
         </div>
         <div class="py-2 d-flex ">
@@ -134,7 +135,8 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
              <div class="col-2">
                 <figure class="mb-2 " style="width:200px">
                     <img class="object-cover" src="../recipe/recipeimage/<?=$row["step_image1"]?>" alt="">
-                    <input class="form-control" type="file" id="formFile" name="step_image1" value="<?=$row["step_image1"]?>">
+                    <input class="form-control" type="file" id="formFile" name="step_image1" >
+                    <input type="hidden" value="<?= $row["step_image1"] ?>" name="step_image1_original">
                 </figure>
                </div>
             <div class="col-8"><textarea class="form-control" style="height:150px" name="step1" ><?=$row["step1"]?></textarea></div>
@@ -143,7 +145,8 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
              <div class="col-2">
                 <figure class="mb-2 " style="width:200px">
                     <img class="object-cover" src="../recipe/recipeimage/<?=$row["step_image2"]?>" alt="">
-                    <input class="form-control" type="file" id="formFile" name="step_image2" value="<?=$row["step_image2"]?>">
+                    <input class="form-control" type="file" id="formFile" name="step_image2">
+                    <input type="hidden" value="<?= $row["step_image2"] ?>" name="step_image2_original">
                 </figure>
                </div>
             <div class="col-8"><textarea class="form-control" style="height:150px" name="step2" ><?=$row["step2"]?></textarea></div>
@@ -152,7 +155,8 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
              <div class="col-2">
                 <figure class="mb-2 " style="width:200px">
                     <img class="object-cover" src="../recipe/recipeimage/<?=$row["step_image3"]?>" alt="">
-                    <input class="form-control" type="file" id="formFile" name="step_image3" value="<?=$row["step_image3"]?>">
+                    <input class="form-control" type="file" id="formFile" name="step_image3" >
+                    <input type="hidden" value="<?= $row["step_image3"] ?>" name="step_image3_original">
                 </figure>
                </div>
             <div class="col-8"><textarea class="form-control" style="height:150px" name="step3" ><?=$row["step3"]?></textarea></div>
@@ -161,7 +165,8 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
              <div class="col-2">
                 <figure class="mb-2 " style="width:200px">
                     <img class="object-cover" src="../recipe/recipeimage/<?=$row["step_image4"]?>" alt="">
-                    <input class="form-control" type="file" id="formFile" name="step_image4" value="<?=$row["step_image4"]?>">
+                    <input class="form-control" type="file" id="formFile" name="step_image4" >
+                    <input type="hidden" value="<?= $row["step_image4"] ?>" name="step_image4_original">
                 </figure>
                </div>
             <div class="col-8"><textarea class="form-control" style="height:150px" name="step4" ><?=$row["step4"]?></textarea></div>
@@ -170,7 +175,8 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
              <div class="col-2">
                 <figure class="mb-2 " style="width:200px">
                     <img class="object-cover" src="../recipe/recipeimage/<?=$row["step_image5"]?>" alt="">
-                    <input class="form-control" type="file" id="formFile" name="step_image5" value="<?=$row["step_image5"]?>">
+                    <input class="form-control" type="file" id="formFile" name="step_image5">
+                    <input type="hidden" value="<?= $row["step_image5"] ?>" name="step_image5_original">
                 </figure>
                </div>
             <div class="col-8"><textarea class="form-control" style="height:150px" name="step5" ><?=$row["step5"]?></textarea></div>

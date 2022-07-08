@@ -134,7 +134,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
         
         <?php for($i=1;$i<=5;$i++):?>
         <div class="py-2 d-flex">
-            <?php if($row["step_image$i"]!==null):?>
+            <?php if($row["step_image$i"]!==""):?>
             <div class="col-2">
               <figure class="mb-2 " style="width:200px">
                   <img class="object-cover" src="../recipe/recipeimage/<?=$row["step_image$i"]?>" alt="">

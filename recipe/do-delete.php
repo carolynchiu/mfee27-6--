@@ -14,6 +14,6 @@ if ($conn->query($sql) === TRUE) {
         echo "刪除資料錯誤" . $conn->error;
     }
 
-
-    // header("location: recipe-all.php")
+    
+    header("location: recipe-all.php")
 ?>

@@ -45,5 +45,5 @@ if ($conn->query($sql) === TRUE) {
 
 $conn->close();
 
-
+header("location: recipe-all.php");
 ?>

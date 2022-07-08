@@ -31,13 +31,8 @@ $endItem=$page*$perPage;
 $totalPage=ceil($commentsCount/$perPage);//無條件進位
 
 //變更評論/隱藏
-if(isset($_GET["id"])){
-  echo $_GET["id"];
-}else{
-  echo "false";
-}
-// $sqlReveal="UPDATE product_comments SET status =1 WHERE id='$id'";
-// $sqlHide="UPDATE product_comments SET status =0 WHERE id='$id'";
+
+
 
 ?>
 <!doctype html>
@@ -204,8 +199,19 @@ if(isset($_GET["id"])){
               }
               ?>   
               </td>
-              <td class="text-center"><button type="submit" class="btn btn-info my-2" href="product-comments.php?id=<?=$row["id"]?>">顯示</button>
-              <button type="submit" class="btn btn-info my-2 " href="product-comments.php?id=<?=$row["id"]?>">隱藏</button></td>
+              <td class="text-center"><a  class="btn btn-info my-2
+              <?php
+              if($row["status"]==1){
+                echo "disabled";
+              }
+              ?>" href="comment-change.php?id=<?=$row["id"]?>&status=1">顯示</a>
+              <a  class="btn btn-info my-2
+              <?php
+              if($row["status"]==0){
+                echo "disabled";
+              }
+              ?>
+              " href="comment-change.php?id=<?=$row["id"]?>&status=0">隱藏</a></td>
               
             </tr>
             <?php endforeach;?>

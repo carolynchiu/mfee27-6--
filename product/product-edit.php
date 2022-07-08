@@ -96,7 +96,7 @@ $resultHide=$conn->query($sqlHide);
             </a>
         </div>
         <div class="py-2">
-        <form action="doUpdate.php">
+        <form action="do-update.php">
             <table class="table">
                 <tr>
                     <th>商品編號</th>

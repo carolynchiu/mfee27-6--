@@ -4,8 +4,7 @@
 
 
 require("../db-connect.php");
-//設定如果有抓到頁數 則$page=該頁數
-//若無則假設$page為1
+
 
 if(!isset($_GET["search"])){
     $search="";
@@ -19,6 +18,8 @@ if(!isset($_GET["search"])){
     $commentsCount=$result->num_rows;
 }
 
+//設定如果有抓到頁數 則$page=該頁數
+//若無則假設$page為1
 if(isset($_GET["page"])){
   $page=$_GET["page"];
 }else{

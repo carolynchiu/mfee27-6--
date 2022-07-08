@@ -66,19 +66,27 @@
       <form action="doCreate.php" method="post">
         <div class="mb-2">
           <label for="">姓名</label>
-          <input type="text" class="form-control" name="name">
+          <input type="text" class="form-control" name="name" required>
         </div>
         <div class="mb-2">
           <label for="">帳號</label>
-          <input type="text" class="form-control" name="account">
+          <input type="text" class="form-control" name="account" required>
         </div>
         <div class="mb-2">
           <label for="">密碼</label>
-          <input type="password" class="form-control" name="password">
+          <input type="password" class="form-control" name="password" required>
         </div>
         <div class="mb-2">
           <label for="">再輸入一次密碼</label>
-          <input type="password" class="form-control" name="repassword">
+          <input type="password" class="form-control" name="repassword" required>
+        </div>
+        <div class="mb-2">
+          <label for="">聯絡電話</label>
+          <input type="tel" class="form-control" name="phone" required>
+        </div>
+        <div class="mb-2">
+          <label for="">Email</label>
+          <input type="email" class="form-control" name="email" required>
         </div>
         <button type="submit" class="btn btn-info">送出</button>
       </form>

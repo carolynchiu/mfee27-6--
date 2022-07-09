@@ -95,6 +95,10 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
             margin-left: var(--aside-width);
             margin-top: 40px;
         }
+        table.table th,td{
+            vertical-align: middle;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -118,7 +122,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
 
 
-            <table class="table table-bordered table-striped text-center">
+            <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>課程編號</th>
@@ -135,10 +139,10 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         <tr>
                             <td><?= $row["id"] ?></td>
                             <td><?= $row["name"] ?></td>
-                            <td><img src="<?= $row["image"] ?>" class="w-50" alt=""></td>                            
+                            <td><img src="<?= $row["image"] ?>" class="w-25" alt=""></td>                            
                             <td><?= $row["create_time"] ?></td>
                             <td>
-                            <a class="btn btn-info" href="edit-course.php?id=<?= $row["id"] ?>">編輯</a>
+                            <a class="btn btn-info" href="edit-course.php?id=<?= $row["id"] ?>">詳細內容</a>
                             
                             
                             <a class="btn btn-success 

@@ -32,10 +32,13 @@ require("../db-connect.php");
 
 //ORDER BY 日期排序 降冪 新的日期在前面比較好
 // $sql = "SELECT user_order.*, product.name AS product_name, product.price, users.name AS user_name FROM user_order JOIN product ON user_order.product_id = product.id JOIN users ON user_order.user_id = users.id $sqlWhere ORDER BY user_order.order_date DESC";
-$id=$_GET["id"];
-$sql = "SELECT * FROM course WHERE id=$id";
+$id = $_GET["id"];
+// $sql = "SELECT * FROM course WHERE id=$id";
+$sql = "SELECT course.*,course_content.* FROM course JOIN course_content ON course.id=course_content.id WHERE course.id=$id";
+
+
 $result = $conn->query($sql);
-$userCount=$result->num_rows;
+$userCount = $result->num_rows;
 
 ?>
 <!doctype html>
@@ -94,6 +97,8 @@ $userCount=$result->num_rows;
             margin-left: var(--aside-width);
             margin-top: 40px;
         }
+
+        
     </style>
 </head>
 
@@ -104,48 +109,64 @@ $userCount=$result->num_rows;
         <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
             <h1>編輯課程</h1>
         </div>
-        
+
 
         <div class="container">
-        <div class="py-2">
-            <a class="btn btn-info" href="course.php">返回所有課程</a>
-        </div>
-        <?php if($userCount>0):
-            $row = $result->fetch_assoc();
-            ?>
-        <table class="table">
-            <tr>
-                <th>課程編號</th>
-                <td><?=$row["id"]?></td>
-            </tr>
-            <tr>
-                <th>課程名稱</th>
-                <td><?=$row["name"]?></td>
-            </tr>
-            <tr>
-                <th>課程內容</th>
-                <td><?=$row["description"]?></td>
-            </tr>
-            <tr>
-                <th>創立時間</th>
-                <td><?=$row["create_time"]?></td>
-            </tr>
-            <tr>
-                <th>影音連結</th>
-                <td><?=$row["url"]?></td>
-            </tr>
-
-        </table>
-        <div class="py-2">
-            <div class="d-flex justify-content-between">
-                <a class="btn btn-info" href="edit-course2.php?id=<?=$row["id"]?>">修改</a>
-                <a class="btn btn-danger" href="doDelete.php?id=<?=$row["id"]?>">刪除</a>
+            <div class="py-2">
+                <a class="btn btn-info" href="course.php">返回所有課程</a>
             </div>
+            <?php if ($userCount > 0) :
+                $row = $result->fetch_assoc();
+            ?>
+                <table class="table">
+                    <tr>
+                        <th>課程編號</th>
+                        <td><?= $row["id"] ?></td>
+                    </tr>
+                    <tr>
+                        <th>課程名稱</th>
+                        <td><?= $row["name"] ?></td>
+                    </tr>
+                    <tr>
+                        <th>課程內容</th>
+                        <td><?= $row["description"] ?></td>
+                    </tr>
+                    <tr>
+                        <th>建立時間</th>
+                        <td><?= $row["create_time"] ?></td>
+                    </tr>
+                    <tr>
+                        <th>影音連結</th>
+                        <td><?= $row["url"] ?></td>
+                    </tr>
+                    <tr>
+                        <th>影音預覽</th>
+                        <td>
+
+                            <iframe width="560" height="315" src="
+                            
+                            <?php
+                            $url = $row["url"];
+                            preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match);
+                            echo "https://www.youtube.com/embed/".$match[1];
+                            ?>
+
+                            " title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="py-2">
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-info me-5" href="edit-course2.php?id=<?= $row["id"] ?>">修改</a>
+                        <a class="btn btn-danger ms-5" href="doDelete.php?id=<?= $row["id"] ?>">刪除</a>
+                    </div>
+                </div>
+            <?php else : ?>
+                沒有該使用者
+            <?php endif; ?>
         </div>
-        <?php else: ?>
-            沒有該使用者
-        <?php endif; ?>
-     </div>
 
 
 

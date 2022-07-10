@@ -25,6 +25,7 @@ if(isset($_GET["page"])){
   $page=1;
 }
 
+//要改
 if (isset($_GET["category"])){
   $category = $_GET["category"];
   $sqlWhere="WHERE product.category_id=$category";
@@ -136,12 +137,14 @@ $totalPage=ceil($productsCount/$perPage);//無條件進位
   <div class="container table-responsive">
     <div>
         <div><a class="btn btn-info" href="products-list.php">回產品清單頁面</a></div>
+        <!-- 要改的 -->
         <form action="product-search.php" method="get">
         <div class="input-group">
             <input type="text" name="search" class="form-control">
             <button type="submit" class="btn btn-info">搜尋</button>
         </div>
       </form>
+      <!-- 要改的 -->
     </div>
     <div class="py-2  ">
       <!-- 頁數切換 & 新增商品 -->

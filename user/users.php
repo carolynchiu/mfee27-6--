@@ -123,33 +123,17 @@ $totalPage = ceil($userCount / $perPage);
   <?php require("../module/header.php"); ?>
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
-    <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-      <h1>所有會員</h1>
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-outline-primary">share</button>
-        <button type="button" class="btn btn-outline-primary">export</button>
-      </div>
+    <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+      <h1><i class="fa-solid fa-users me-3"></i>所有會員</h1>
     </div>
     <div class="container">
-      <div class="row">
-        <div class="col-md-2 d-flex">
-          <div class="d-grid"></div>
-          <form action="users.php" method="post">
-            <label for="">顯示筆數</label>
-            <select class="form-select" name="perPage" id="">
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="20">20</option>
-            </select>
-          </form>
-        </div>
-        <div class="col-md-2">
-          <div class="py-2 d-grid">
+      <div class="row justify-content-between mb-3">
+        <div class="col-md-3">
+          <div class="py-2">
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-              新增使用者
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              <i class="fa-solid fa-user-plus me-2"></i>新增使用者
             </button>
-
             <!-- Modal -->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
               <div class="modal-dialog">
@@ -214,96 +198,127 @@ $totalPage = ceil($userCount / $perPage);
                 </div>
               </div>
             </div>
-            <!-- <a href="create-user.php" class="btn btn-primary"><i class="fa-solid fa-circle-plus"></i> 新增使用者</a> -->
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="py-2 d-flex justify-content-end align-items-center">
-            <div class="me-2">排序</div>
-            <div class="btn-group">
-              <a href="users.php?page=<?= $page ?>&order=1" class="btn btn-primary
-        <?php if ($order == 1) echo "active"; ?>">id <i class="fa-solid fa-arrow-down-short-wide"></i></a>
-              <a href="users.php?page=<?= $page ?>&order=2" class="btn btn-primary
-        <?php if ($order == 2) echo "active"; ?>">id <i class="fa-solid fa-arrow-down-wide-short"></i></a>
-              <a href="users.php?page=<?= $page ?>&order=3" class="btn btn-primary
-        <?php if ($order == 3) echo "active"; ?>">account <i class="fa-solid fa-arrow-down-short-wide"></i></a>
-              <a href="users.php?page=<?= $page ?>&order=4" class="btn btn-primary
-        <?php if ($order == 4) echo "active"; ?>">account <i class="fa-solid fa-arrow-down-wide-short"></i></a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="py-2">
+        <div class="col-md-8 d-flex">
+          <div class="py-2 col-md-5">
             <form action="user-search.php" method="get">
               <div class="input-group">
+                <button type="submit" class="btn btn-info"><i class="fa-solid fa-magnifying-glass me-2"></i>搜尋</button>
                 <input type="text" name="search" class="form-control">
-                <button type="submit" class="btn btn-primary">搜尋</button>
               </div>
             </form>
           </div>
+          <div class="py-2 d-flex justify-content-end align-items-center col-md-6">
+            <div class="me-2">排序</div>
+            <div class="btn-group">
+              <a href="users.php?page=<?= $page ?>&order=1" class="btn btn-info
+        <?php if ($order == 1) echo "active"; ?>"><i class="fa-solid fa-arrow-down-short-wide me-2"></i>編號</a>
+              <a href="users.php?page=<?= $page ?>&order=2" class="btn btn-info
+        <?php if ($order == 2) echo "active"; ?>"><i class="fa-solid fa-arrow-down-wide-short me-2"></i>編號</a>
+              <a href="users.php?page=<?= $page ?>&order=3" class="btn btn-info
+        <?php if ($order == 3) echo "active"; ?>"><i class="fa-solid fa-arrow-down-short-wide me-2"></i>帳號</a>
+              <a href="users.php?page=<?= $page ?>&order=4" class="btn btn-info
+        <?php if ($order == 4) echo "active"; ?>"><i class="fa-solid fa-arrow-down-wide-short me-2"></i>帳號</a>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-
-
-    <div class="py-2">
-      第<?= $startItem ?>-<?= $endItem ?> 筆，共<?= $userCount ?>筆資料
-    </div>
-    <?php if ($pageUserCount > 0) : ?>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>編號</th>
-            <th>帳號</th>
-            <th>姓名</th>
-            <th>性別</th>
-            <th>電話</th>
-            <th>Email</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          //把資料轉換成關聯式陣列 
-          while ($row = $result->fetch_assoc()) : ?>
-            <tr>
-              <td><?= $row["id"] ?></td>
-              <td><?= $row["account"] ?></td>
-              <td><?= $row["name"] ?></td>
-              <td><?php if ($row["gender"] == 0) {
-                    echo "<i class='fa-solid fa-mars text-info'></i>";
-                  } else {
-                    echo "<i class='fa-solid fa-venus text-danger'></i>";
-                  } ?></td>
-              <td><?= $row["phone"] ?></td>
-              <td><?= $row["email"] ?></td>
-              <td class="text-center">
-                <a href="user.php?id=<?= $row["id"] ?>" class="btn btn-primary">詳細資料</a>
-                <a href="" class="btn btn-warning">修改</a>
-                <a href="" class="btn btn-danger">刪除</a>
-              </td>
-              <!-- 連結資料 -->
-            </tr>
-          <?php endwhile; ?>
-        </tbody>
-      </table>
-    <?php else : ?>
-      目前沒有資料
-    <?php endif; ?>
-    <div class="py-2">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
-          <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-            <li class="page-item
+      <div class="row border-top">
+        <div class="py-2 col-md-2">
+          第<?= $startItem ?>-<?= $endItem ?> 筆，共<?= $userCount ?>筆資料
+        </div>
+      </div>
+      <div class="py-1">
+        <?php $pageInt = settype($page, "integer") ?>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination pagination-sm justify-content-center">
+            <li class="page-item"><a class="page-link" href="users.php?page=<?php
+                                                                            if ($page - 1 <= 0) {
+                                                                              echo 1;
+                                                                            } else {
+                                                                              echo $page - 1;
+                                                                            } ?>&order=<?= $order ?>"><i class="fa-solid fa-angle-left"></i></a></li>
+            <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+              <li class="page-item
             <?php if ($page == $i) echo "active"; ?>
             "><a class="page-link" href="users.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
-          <?php endfor; ?>
-          <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
-        </ul>
-      </nav>
-    </div>
-    </div>
+            <?php endfor; ?>
+            <li class="page-item"><a class="page-link" href="users.php?page=<?php
+                                                                            if ($page + 1 > $totalPage) {
+                                                                              echo $totalPage;
+                                                                            } else {
+                                                                              echo $page + 1;
+                                                                            } ?>&order=<?= $order ?>"><i class="fa-solid fa-angle-right"></i></a></li>
+          </ul>
+        </nav>
+      </div>
+      <?php if ($pageUserCount > 0) : ?>
+        <table class="table table-bordered border-dark">
+          <thead>
+            <tr class="table-info border-dark border-bottom border-3">
+              <th>編號</th>
+              <th>帳號</th>
+              <th>姓名</th>
+              <th>性別</th>
+              <th>電話</th>
+              <th>Email</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            //把資料轉換成關聯式陣列 
+            while ($row = $result->fetch_assoc()) : ?>
+              <tr>
+                <td><?= $row["id"] ?></td>
+                <td><?= $row["account"] ?></td>
+                <td><?= $row["name"] ?></td>
+                <td><?php if ($row["gender"] == 0) {
+                      echo "<i class='fa-solid fa-mars text-info'></i>";
+                    } else {
+                      echo "<i class='fa-solid fa-venus text-danger'></i>";
+                    } ?></td>
+                <td><?= $row["phone"] ?></td>
+                <td><?= $row["email"] ?></td>
+                <td class="text-center">
+                  <a href="user.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye me-2"></i>詳細資料</a>
+                  <a href="user-edit.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square me-2"></i>修改</a>
+                  <a href="" class="btn btn-sm btn-danger"><i class="fa-solid fa-circle-minus me-2"></i>刪除</a>
+                </td>
+                <!-- 連結資料 -->
+              </tr>
+            <?php endwhile; ?>
+          </tbody>
+        </table>
+      <?php else : ?>
+        目前沒有資料
+      <?php endif; ?>
+      <div class="py-1">
+        <?php $pageInt = settype($page, "integer") ?>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item"><a class="page-link" href="users.php?page=<?php
+                                                                            if ($page - 1 <= 0) {
+                                                                              echo 1;
+                                                                            } else {
+                                                                              echo $page - 1;
+                                                                            } ?>&order=<?= $order ?>"><i class="fa-solid fa-angle-left"></i></a></li>
+            <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+              <li class="page-item
+            <?php if ($page == $i) echo "active"; ?>
+            "><a class="page-link" href="users.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
+            <?php endfor; ?>
+            <li class="page-item"><a class="page-link" href="users.php?page=<?php
+                                                                            if ($page + 1 > $totalPage) {
+                                                                              echo $totalPage;
+                                                                            } else {
+                                                                              echo $page + 1;
+                                                                            } ?>&order=<?= $order ?>"><i class="fa-solid fa-angle-right"></i></a></li>
+          </ul>
+        </nav>
+      </div>
+    </div> <!-- container-end -->
   </main>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>

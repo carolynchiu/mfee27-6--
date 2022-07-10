@@ -123,19 +123,15 @@ $totalPage = ceil($adminCount / $perPage);
   <?php require("../module/header.php"); ?>
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
-    <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-      <h1>所有管理員</h1>
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-outline-primary">share</button>
-        <button type="button" class="btn btn-outline-primary">export</button>
-      </div>
+    <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+      <h1><i class="fa-solid fa-users-gear me-3"></i>所有管理員</h1>
     </div>
     <div class="container">
       <div class="row justify-content-between align-items-center">
         <div class="col-md-3">
           <div class="py-2">
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
               <i class="fa-solid fa-user-plus me-2"></i>新增管理員帳號
             </button>
 
@@ -187,68 +183,67 @@ $totalPage = ceil($adminCount / $perPage);
         </div>
         <div class="col-md-4">
           <div class="py-2 d-flex justify-content-end align-items-center">
-            <div class="me-2">排序</div>
+            <div class="me-3">排序</div>
             <div class="btn-group">
-              <a href="admins.php?page=<?= $page ?>&order=1" class="btn btn-primary
-        <?php if ($order == 1) echo "active"; ?>">id <i class="fa-solid fa-arrow-down-short-wide"></i></a>
-              <a href="admins.php?page=<?= $page ?>&order=2" class="btn btn-primary
-        <?php if ($order == 2) echo "active"; ?>">id <i class="fa-solid fa-arrow-down-wide-short"></i></a>
-              <a href="admins.php?page=<?= $page ?>&order=3" class="btn btn-primary
-        <?php if ($order == 3) echo "active"; ?>">account <i class="fa-solid fa-arrow-down-short-wide"></i></a>
-              <a href="admins.php?page=<?= $page ?>&order=4" class="btn btn-primary
-        <?php if ($order == 4) echo "active"; ?>">account <i class="fa-solid fa-arrow-down-wide-short"></i></a>
+              <a href="admins.php?page=<?= $page ?>&order=1" class="btn btn-info
+        <?php if ($order == 1) echo "active"; ?>"><i class="fa-solid fa-arrow-down-short-wide me-2"></i>編號</a>
+              <a href="admins.php?page=<?= $page ?>&order=2" class="btn btn-info
+        <?php if ($order == 2) echo "active"; ?>"><i class="fa-solid fa-arrow-down-wide-short me-2"></i>編號</a>
+              <a href="admins.php?page=<?= $page ?>&order=3" class="btn btn-info
+        <?php if ($order == 3) echo "active"; ?>"><i class="fa-solid fa-arrow-down-short-wide me-2"></i>帳號</a>
+              <a href="admins.php?page=<?= $page ?>&order=4" class="btn btn-info
+        <?php if ($order == 4) echo "active"; ?>"><i class="fa-solid fa-arrow-down-wide-short me-2"></i>帳號</a>
             </div>
           </div>
         </div>
       </div>
-    </div>
-
-
-    <div class="py-2">
-      第<?= $startItem ?>-<?= $endItem ?> 筆，共<?= $adminCount ?>筆資料
-    </div>
-    <?php if ($pageAdminCount > 0) : ?>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>編號</th>
-            <th>帳號</th>
-            <th>姓名</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          //把資料轉換成關聯式陣列 
-          while ($row = $result->fetch_assoc()) : ?>
-            <tr>
-              <td><?= $row["id"] ?></td>
-              <td><?= $row["account"] ?></td>
-              <td><?= $row["name"] ?></td>
-              <td class="text-center">
-                <a href="admin.php?id=<?= $row["id"] ?>" class="btn btn-warning">修改</a>
-                <a href="" class="btn btn-danger">刪除</a>
-              </td>
-              <!-- 連結資料 -->
+      <div class="py-2">
+        第<?= $startItem ?>-<?= $endItem ?> 筆，共<?= $adminCount ?>筆資料
+      </div>
+      <?php if ($pageAdminCount > 0) : ?>
+        <table class="table table-bordered border-dark">
+          <thead>
+            <tr class="table-info border-dark border-bottom border-3">
+              <th>編號</th>
+              <th>帳號</th>
+              <th>姓名</th>
+              <th></th>
             </tr>
-          <?php endwhile; ?>
-        </tbody>
-      </table>
-    <?php else : ?>
-      目前沒有資料
-    <?php endif; ?>
-    <div class="py-2">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
-          <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-            <li class="page-item
+          </thead>
+          <tbody>
+            <?php
+            //把資料轉換成關聯式陣列 
+            while ($row = $result->fetch_assoc()) : ?>
+              <tr>
+                <td><?= $row["id"] ?></td>
+                <td><?= $row["account"] ?></td>
+                <td><?= $row["name"] ?></td>
+                <td class="text-center">
+                  <a href="admin.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye me-2"></i>詳細資料</a>
+                  <a href="" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square me-2"></i>修改</a>
+                  <a href="" class="btn btn-sm btn-danger"><i class="fa-solid fa-circle-minus me-2"></i>刪除</a>
+                </td>
+                <!-- 連結資料 -->
+              </tr>
+            <?php endwhile; ?>
+          </tbody>
+        </table>
+      <?php else : ?>
+        目前沒有資料
+      <?php endif; ?>
+      <div class="py-2">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
+            <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+              <li class="page-item
             <?php if ($page == $i) echo "active"; ?>
             "><a class="page-link" href="admins.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
-          <?php endfor; ?>
-          <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
-        </ul>
-      </nav>
+            <?php endfor; ?>
+            <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
+          </ul>
+        </nav>
+      </div>
     </div>
     </div>
   </main>

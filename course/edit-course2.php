@@ -111,7 +111,7 @@ $userCount=$result->num_rows;
             <a class="btn btn-info" href="course.php">返回所有課程</a>
         </div>
 
-        <form action="doUpdate.php" method="post">
+        <form action="doUpdate.php" method="post" enctype="multipart/form-data">
         <?php if($userCount>0):
             $row = $result->fetch_assoc();
             ?>
@@ -122,16 +122,16 @@ $userCount=$result->num_rows;
                 <td><?=$row["id"]?></td>
             </tr>
             <tr>
-                    <th>課程名稱</th>
-                    <td><input type="text" name="name" class="form-control"
-                    value="<?=$row["name"]?>"
-                    ></td>
+                <th>課程名稱</th>
+                <td><input type="text" name="name" class="form-control"
+                value="<?=$row["name"]?>"
+                ></td>
             </tr>
             <tr>
-                    <th>課程內容</th>
-                    <td><input type="text" name="description" class="form-control"
-                    value="<?=$row["description"]?>"
-                    ></td>
+                <th>課程內容</th>
+                <td>
+                <textarea name="description" cols="30" rows="10" class="form-control"><?=$row["description"]?></textarea>
+                </td>
             </tr>
             <tr>
                 <th>創立時間</th>
@@ -142,6 +142,10 @@ $userCount=$result->num_rows;
                 <td><input type="text" name="url" class="form-control"
                     value="<?=$row["url"]?>"
                     ></td>
+            </tr>
+            <tr>
+                <th>更換圖片</th>
+                <td><input class="form-control" type="file" name="file"></td>
             </tr>
 
         </table>

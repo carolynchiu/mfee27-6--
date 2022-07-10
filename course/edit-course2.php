@@ -33,7 +33,7 @@ $sqlWhere = "";
 //ORDER BY 日期排序 降冪 新的日期在前面比較好
 // $sql = "SELECT user_order.*, product.name AS product_name, product.price, users.name AS user_name FROM user_order JOIN product ON user_order.product_id = product.id JOIN users ON user_order.user_id = users.id $sqlWhere ORDER BY user_order.order_date DESC";
 $id=$_GET["id"];
-$sql = "SELECT * FROM course WHERE id=$id";
+$sql = "SELECT course.*,course_content.* FROM course JOIN course_content ON course.id=course_content.id WHERE course.id=$id";
 $result = $conn->query($sql);
 $userCount=$result->num_rows;
 
@@ -126,7 +126,13 @@ $userCount=$result->num_rows;
                     <td><input type="text" name="name" class="form-control"
                     value="<?=$row["name"]?>"
                     ></td>
-                </tr>
+            </tr>
+            <tr>
+                    <th>課程內容</th>
+                    <td><input type="text" name="description" class="form-control"
+                    value="<?=$row["description"]?>"
+                    ></td>
+            </tr>
             <tr>
                 <th>創立時間</th>
                 <td><?=$row["create_time"]?></td>

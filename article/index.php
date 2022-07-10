@@ -148,7 +148,7 @@
                         // 後面要改的
                         user_id: 1,
                         // 後面要改的
-                        create_time: "2022-07-09 12:00:00",
+                        // create_time: "2022-07-09 12:00:00",
                     },
                 }).then((res) => {
                     console.log(res);

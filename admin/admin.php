@@ -9,15 +9,22 @@ $id = $_GET["id"];
 
 require("../db-connect.php");
 
+//所有管理員
+$sqlAll = "SELECT * FROM admins";
+$resultAll = $conn->query($sqlAll);
+$allCount = $resultAll->num_rows; //所有管理員筆數
+
 $sql = "SELECT * FROM admins WHERE id=$id AND valid=1";
 $result = $conn->query($sql);
 $adminCount = $result->num_rows;
+
+
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
-  <title>User</title>
+  <title>Admin</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -79,20 +86,36 @@ $adminCount = $result->num_rows;
   <main class="main-content p-4">
     <?php if ($adminCount > 0) :
       $row = $result->fetch_assoc(); ?>
-      <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-        <h1>管理員 <?= $row["name"]
-                ?></h1>
+      <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+        <h1><i class="fa-solid fa-user-gear me-3"></i>管理員 <?= $row["id"]
+                                                          ?></h1>
         <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-outline-primary">share</button>
-          <button type="button" class="btn btn-outline-primary">export</button>
+          <a href="admin.php?id=<?php
+                                if ($id - 1 <= 0) {
+                                  echo 1;
+                                } else {
+                                  echo $id - 1;
+                                }
+                                ?>" type="button" class="btn btn-info btn-outline-dark"><i class="fa-solid fa-circle-chevron-left me-2"></i>上一筆</a>
+          <a href="admin.php?id=<?php
+                                if ($id + 1 > $allCount) {
+                                  echo $id;
+                                } else {
+                                  echo $id + 1;
+                                }
+                                ?>" type="button" class="btn btn-info btn-outline-dark">下一筆<i class="fa-solid fa-circle-chevron-right ms-2"></i></a>
         </div>
       </div>
       <div class="container">
         <!-- 回到使用者列表頁 -->
-        <div class="py-2">
-          <a href="admins.php" class="btn btn-info">回到所有使用者</a>
+        <div class="py-2 d-flex justify-content-between">
+          <div>
+            <a href="admins.php" class="btn btn-info me-2"><i class="fa-solid fa-circle-arrow-left me-2"></i>回到所有使用者</a>
+            <a href="admin-edit.php?id=<?= $row["id"] ?>" class="btn btn-info"><i class="fa-solid fa-user-pen me-2"></i>修改</a>
+          </div>
+          <a href="doDelete.php?id=<?= $row["id"] ?>" class="btn btn-danger"><i class="fa-solid fa-circle-minus me-2"></i>刪除</a>
         </div>
-        <table class="table">
+        <table class="table table-hover">
           <tr>
             <th>管理員編號</th>
             <td><?= $row["id"]
@@ -124,16 +147,27 @@ $adminCount = $result->num_rows;
                 ?></td>
           </tr>
         </table>
-        <!-- CRUD => update -->
-        <div class="py-2">
-          <div class="d-flex justify-content-between">
-            <a href="admin-edit.php?id=<?= $row["id"] ?>" class="btn btn-info">修改</a>
-            <!-- CRUD => delete -->
-            <a href="doDelete.php?id=<?= $row["id"] ?>" class="btn btn-danger">刪除</a>
+      <?php else : ?>
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+          <h1><i class="fa-solid fa-user me-3"></i>管理員 <?= $id ?></h1>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <a href="admin.php?id=<?php
+                                  if ($id - 1 <= 0) {
+                                    echo 1;
+                                  } else {
+                                    echo $id - 1;
+                                  }
+                                  ?>" type="button" class="btn btn-info btn-outline-dark"><i class="fa-solid fa-circle-chevron-left me-2"></i>上一筆</a>
+            <a href="admin.php?id=<?php
+                                  if ($id + 1 > $allCount) {
+                                    echo $id;
+                                  } else {
+                                    echo $id + 1;
+                                  }
+                                  ?>" type="button" class="btn btn-info btn-outline-dark">下一筆<i class="fa-solid fa-circle-chevron-right ms-2"></i></a>
           </div>
         </div>
-      <?php else : ?>
-        沒有該使用者
+        <h3 class="text-danger">管理員資料已刪除</h3>
       <?php endif; ?>
       </div>
   </main>

@@ -7,6 +7,12 @@ if (!isset($_GET["id"])) {
 $id = $_GET["id"];
 
 require("../db-connect.php");
+
+//所有會員
+$sqlAll = "SELECT * FROM users";
+$resultAll = $conn->query($sqlAll);
+$allCount = $resultAll->num_rows; //所有會員筆數
+
 $sql = "SELECT * FROM users WHERE id=$id AND valid=1";
 $result = $conn->query($sql);
 $userCount = $result->num_rows;
@@ -105,20 +111,35 @@ $recipeCount = $resultRecipe->num_rows;
   <main class="main-content p-4">
     <?php if ($userCount > 0) :
       $row = $result->fetch_assoc(); ?>
-      <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-        <h1>會員 <?= $row["name"]
-                ?></h1>
+      <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+        <h1><i class="fa-solid fa-user me-3"></i>會員 <?= $id ?></h1>
         <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-outline-primary">share</button>
-          <button type="button" class="btn btn-outline-primary">export</button>
+          <a href="user.php?id=<?php
+                                if ($id - 1 <= 0) {
+                                  echo 1;
+                                } else {
+                                  echo $id - 1;
+                                }
+                                ?>" type="button" class="btn btn-info btn-outline-dark"><i class="fa-solid fa-circle-chevron-left me-2"></i>上一筆</a>
+          <a href="user.php?id=<?php
+                                if ($id + 1 > $allCount) {
+                                  echo $id;
+                                } else {
+                                  echo $id + 1;
+                                }
+                                ?>" type="button" class="btn btn-info btn-outline-dark">下一筆<i class="fa-solid fa-circle-chevron-right ms-2"></i></a>
         </div>
       </div>
       <div class="container">
         <!-- 回到使用者列表頁 -->
-        <div class="py-2">
-          <a href="users.php" class="btn btn-info">回到所有使用者</a>
+        <div class="py-2 d-flex justify-content-between mb-3">
+          <div>
+            <a href="users.php" class="btn btn-info me-2"><i class="fa-solid fa-circle-arrow-left me-2"></i>回到所有使用者</a>
+            <a href="user-edit.php?id=<?= $row["id"] ?>" class="btn btn-info"><i class="fa-solid fa-user-pen me-2"></i>修改</a>
+          </div>
+          <a href="doDelete.php?id=<?= $row["id"] ?>" class="btn btn-danger"><i class="fa-solid fa-circle-minus me-2"></i>刪除</a>
         </div>
-        <table class="table">
+        <table class="table table-hover">
           <tr>
             <th>會員編號</th>
             <td><?= $row["id"]
@@ -168,27 +189,36 @@ $recipeCount = $resultRecipe->num_rows;
                 ?></td>
           </tr>
         </table>
-        <!-- CRUD => update -->
-        <div class="py-2">
-          <div class="d-flex justify-content-between">
-            <a href="user-edit.php?id=<?= $row["id"] ?>" class="btn btn-info">修改</a>
-            <!-- CRUD => delete -->
-            <a href="doDelete.php?id=<?= $row["id"] ?>" class="btn btn-danger">刪除</a>
+      <?php else : ?>
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+          <h1><i class="fa-solid fa-user me-3"></i>會員 <?= $id ?></h1>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <a href="user.php?id=<?php
+                                  if ($id - 1 <= 0) {
+                                    echo 1;
+                                  } else {
+                                    echo $id - 1;
+                                  }
+                                  ?>" type="button" class="btn btn-info btn-outline-dark"><i class="fa-solid fa-circle-chevron-left me-2"></i>上一筆</a>
+            <a href="user.php?id=<?php
+                                  if ($id + 1 > $allCount) {
+                                    echo $id;
+                                  } else {
+                                    echo $id + 1;
+                                  }
+                                  ?>" type="button" class="btn btn-info btn-outline-dark">下一筆<i class="fa-solid fa-circle-chevron-right ms-2"></i></a>
           </div>
         </div>
-      <?php else : ?>
-        沒有該使用者
+        <h3 class="text-danger">會員資料已刪除</h3>
       <?php endif; ?>
-
-      <hr>
-      <div class="py-2">
+      <div class="mt-5">
         <nav>
-          <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="nav-order-tab" data-bs-toggle="tab" data-bs-target="#nav-order" type="button" role="tab" aria-controls="nav-order" aria-selected="true">訂單記錄</button>
-            <button class="nav-link" id="nav-product-tab" data-bs-toggle="tab" data-bs-target="#nav-product" type="button" role="tab" aria-controls="nav-product" aria-selected="false">商品收藏</button>
-            <button class="nav-link" id="nav-recipe-tab" data-bs-toggle="tab" data-bs-target="#nav-recipe" type="button" role="tab" aria-controls="nav-recipe" aria-selected="false">食譜收藏</button>
-            <button class="nav-link" id="nav-course-tab" data-bs-toggle="tab" data-bs-target="#nav-course" type="button" role="tab" aria-controls="nav-course" aria-selected="false">課程收藏</button>
-            <button class="nav-link" id="nav-article-tab" data-bs-toggle="tab" data-bs-target="#nav-article" type="button" role="tab" aria-controls="nav-article" aria-selected="false">文章收藏</button>
+          <div class="nav nav-tabs justify-content-center border-dark h5" id="nav-tab" role="tablist">
+            <button class="nav-link active border-dark border-bottom-0 border border-2" id="nav-order-tab" data-bs-toggle="tab" data-bs-target="#nav-order" type="button" role="tab" aria-controls="nav-order" aria-selected="true"><i class="fa-solid fa-file-lines me-2"></i>訂單紀錄</button>
+            <button class="nav-link border-dark border-bottom-0 border border-2" id="nav-product-tab" data-bs-toggle="tab" data-bs-target="#nav-product" type="button" role="tab" aria-controls="nav-product" aria-selected="false"><i class="fa-solid fa-box-archive me-2"></i>商品收藏</button>
+            <button class="nav-link border-dark border-bottom-0 border border-2" id="nav-recipe-tab" data-bs-toggle="tab" data-bs-target="#nav-recipe" type="button" role="tab" aria-controls="nav-recipe" aria-selected="false"><i class="fa-solid fa-utensils me-2"></i>食譜收藏</button>
+            <button class="nav-link border-dark border-bottom-0 border border-2" id="nav-course-tab" data-bs-toggle="tab" data-bs-target="#nav-course" type="button" role="tab" aria-controls="nav-course" aria-selected="false"><i class="fa-solid fa-dumbbell me-2"></i>課程收藏</button>
+            <button class="nav-link border-dark border-bottom-0 border border-2" id="nav-article-tab" data-bs-toggle="tab" data-bs-target="#nav-article" type="button" role="tab" aria-controls="nav-article" aria-selected="false"><i class="fa-solid fa-newspaper me-2"></i>文章收藏</button>
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -196,14 +226,15 @@ $recipeCount = $resultRecipe->num_rows;
             <?php if ($orderCount > 0) :
               $rowsOrder = $resultOrder->fetch_all(MYSQLI_ASSOC);
             ?>
-              <table class="table table-bordered mt-3">
+              <table class="table table-bordered border-dark mt-3">
                 <thead>
-                  <tr>
+                  <tr class="table-info border-dark">
                     <th>訂單編號</th>
                     <th>會員編號</th>
                     <th>使用者帳號</th>
                     <th>訂購日期</th>
                     <th>訂單狀態</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -215,6 +246,9 @@ $recipeCount = $resultRecipe->num_rows;
                       <td><?= $row["user_account"] ?></td>
                       <td><?= $row["create_time"] ?></td>
                       <td><?= $row["user_order_status"] ?></td>
+                      <td class="text-center">
+                        <a href="http://localhost/mfee27-group6-V2/order/order-detail.php?id=<?= $row['id'] ?>" class="btn btn-outline-info">訂單明細</a>
+                      </td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>

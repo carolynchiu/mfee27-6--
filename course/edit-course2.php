@@ -94,6 +94,9 @@ $userCount=$result->num_rows;
             margin-left: var(--aside-width);
             margin-top: 40px;
         }
+        .image_prev{
+            width: 300px;
+        }
     </style>
 </head>
 
@@ -145,7 +148,12 @@ $userCount=$result->num_rows;
             </tr>
             <tr>
                 <th>更換圖片</th>
-                <td><input class="form-control" type="file" name="file" value=""></td>
+                <td>
+                    <div class="image_prev">
+                        <img class="w-100" src="<?= $row["image"] ?>" alt="">
+                        <input class="form-control" type="file" name="file" value="">
+                    </div>
+                </td>
             </tr>
 
         </table>

@@ -48,7 +48,7 @@
         <div class="collapse" id="collapseOrders">
           <ul class="list-unstyled">
             <li class="border-bottom ps-4">
-              <a href="order/order-list.php">所有訂單</a>
+              <a href="http://localhost/mfee27-group6/order/order-list.php">所有訂單</a>
             </li>
             <li class="border-bottom ps-4">
               <a href="">優惠券管理</a>

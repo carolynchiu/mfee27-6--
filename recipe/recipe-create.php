@@ -11,7 +11,7 @@ require("../db-connect.php");
 <html lang="en">
 
 <head>
-  <title>dashboard</title>
+  <title>建立食譜</title>
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -72,26 +72,31 @@ require("../db-connect.php");
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="container">
+  <a class="btn btn-info my-3" href="recipe-all.php">取消</a>
         <form action="do-create.php" method="post">
             <div class="mb-2">
                 <label for="">食譜標題</label>
-                <input class="form-control" type="text" name="title">
+                <input class="form-control" type="text" name="title" required>
             </div>
 
             <input type="hidden" name="user_id" value="1">   
             
             <div class="mb-2">
               <label for="formFile" class="form-label">主要圖片</label>
-              <input class="form-control" type="file" id="formFile" name="main_image">
+              <input class="form-control" type="file" id="formFile" name="main_image" required>
             </div>
+            <div class="py-2">
+            <label for="formFile" class="form-label">簡介</label>
+            <textarea class="form-control"name="intro" ></textarea>
+           </div>
             <div class="mb-2 d-flex justify-content-between">
-                <div class="col-5">
-                <label for="">份量</label>
-                <input class="form-control" type="number" name="servings" spaceholder="人份">
+                <div class="col-6 me-1">
+                <label for="">份量(人份)</label>
+                <input class="form-control" type="number" name="servings" required>
                 </div>
-                <div class="col-5">
-                <label for="">時間</label>
-                <input class="form-control" type="text" name="cook_time" spaceholder="分鐘">
+                <div class="col-6 ms-1">
+                <label for="">時間(分鐘)</label>
+                <input class="form-control" type="text" name="cook_time"  required>
                 </div>  
             </div>
 
@@ -128,11 +133,9 @@ require("../db-connect.php");
               <div class="col-9"><textarea class="form-control" name="step5" ></textarea></div>
               </div>
             </div>
-            
-                      
-            
-            <button class="btn btn-info" type="submit">送出</button>
+              <button class="btn btn-info" type="submit">送出</button>
         </form>
+        
       </div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

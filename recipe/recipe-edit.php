@@ -38,7 +38,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
 <html lang="en">
 
 <head>
-  <title>dashboard</title>
+  <title>編輯食譜</title>
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -117,6 +117,9 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
               <input type="hidden" value="<?= $row["main_image"] ?>" name="main_image_original">
             </figure>
         </div>
+        <div class="py-2">
+            <textarea class="form-control"name="intro" ><?=$row["intro"]?></textarea>
+           </div>
         <div class="py-2 d-flex ">
             <div class="col-auto"><input type="text" class="form-control" name="servings" value="<?=$row["servings"]?>">人份</div>
             <div class="col-auto"><input type="text" class="form-control" name="cook_time" value="<?=$row["cook_time"]?>">分鐘</div>

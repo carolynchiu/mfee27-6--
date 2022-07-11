@@ -12,6 +12,7 @@ if ($_POST["main_image"] !== ''){
 }else{
     $main_image = $_POST["main_image_original"] ;
 };
+$intro=$_POST["intro"];
 $servings=$_POST["servings"];
 $cook_time=$_POST["cook_time"];
 
@@ -57,7 +58,7 @@ if ($_POST["step_image5"] !== ''){
     $step_image5 = $_POST["step_image5_original"] ;
 };
 
-$sql="UPDATE recipe SET title='$title', main_image='$main_image',servings='$servings',cook_time='$cook_time',
+$sql="UPDATE recipe SET title='$title', main_image='$main_image',intro='$intro',servings='$servings',cook_time='$cook_time',
 ingredient1='$ingredient1',ingredient2='$ingredient2',ingredient3='$ingredient3',ingredient4='$ingredient4',ingredient5='$ingredient5',
 step1='$step1',step2='$step2',step3='$step3',step4='$step4',step5='$step5',
 step_image1='$step_image1',step_image2='$step_image2',step_image3='$step_image3',step_image4='$step_image4',step_image5='$step_image5'

@@ -6,19 +6,49 @@ session_start();
 
 require("../db-connect.php");
 
+// 分頁
+if(isset($_GET["page"])){
+  $page=$_GET["page"];
+}else{
+  $page=1;
+}
+
+$sqlAll="SELECT recipe.*, users.name AS user_name FROM recipe 
+JOIN users ON recipe.user_id=users.id  WHERE valid=1";
+// 撈出的資料會是物件，須把它存在result當中
+$resultAll=$conn->query($sqlAll);
+// numrows代表回傳的資料筆數
+$recipe_count=$resultAll->num_rows;
+
+
+$perPage=6;
+$start=($page-1)*$perPage;
+
+
+
 
 $sql ="SELECT recipe.*, users.name AS user_name FROM recipe 
-    JOIN users ON recipe.user_id=users.id  WHERE valid=1 ORDER BY user_name ASC ";
+    JOIN users ON recipe.user_id=users.id  WHERE valid=1 ORDER BY create_time DESC LIMIT $start, 6 ";
 
 $result=$conn->query($sql);
-$recipe_count=$result->num_rows;
+$page_recipe_count=$result->num_rows;
 $rows=$result->fetch_all(MYSQLI_ASSOC);
+
+
+$startItem=($page-1)*$perPage+1;
+$endItem=($page)*$perPage;
+if($endItem>$recipe_count)$endItem=$recipe_count;
+
+$totalpage=ceil($recipe_count/$perPage);
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <title>dashboard</title>
+  <title>食譜列表</title>
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -78,9 +108,18 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
   <?php require("../module/header.php"); ?>
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
-    <div class="py-2">
-        <a href="recipe-create.php"class="btn btn-info">新增食譜</a>
-    </div>
+  <div class="py-2">
+      <a href="recipe-create.php"class="btn btn-info">新增食譜</a>
+  </div>
+  <div class="py-2">
+        <form action="recipe-search.php" method="get">
+          <div class="input-group">
+            <input type="text" name="search" class="form-control">
+            <button type="submit" class="btn btn-info">搜尋</button>
+          </div>
+          </form>
+        </div>
+  <div class="py-2">第 <?=$startItem?>-<?=$endItem?> 筆, 共 <?=$recipe_count?> 筆資料</div>
   <div class="row gy-4">
     <?php foreach($rows as $row):?>
         <div class="col-md-4">
@@ -98,6 +137,19 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
         </div>
     <?php endforeach;?>
 </div>
+      <div class="py-2">
+        <ul class="pagination">
+          <?php for($i=1; $i<=$totalpage; $i++): ?>
+          <!-- 停留頁面的ui反白 -->
+          <li class="page-item
+          <?php 
+          if($page==$i) echo"active";
+          ?>
+          
+          "><a class="page-link" href="recipe-all.php?page=<?=$i?>"><?=$i?></a></li>
+          <?php endfor; ?>
+        </ul>
+      </div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>

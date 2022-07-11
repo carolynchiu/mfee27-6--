@@ -67,17 +67,10 @@ if(isset($_GET["page"])){
  $perPage=5; //每頁有5項產品
  $start=($page-1)*$perPage; //起始頁能顯示的產品數
 
-<<<<<<< HEAD
 
 
 if(count($conditions)>0){
   $sql .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%' LIMIT $start, 5";
-=======
-//要改
-if (isset($_GET["category"])){
-  $category = $_GET["category"];
-  $sqlWhere="WHERE product.category_id=$category";
->>>>>>> 7b16a0b370d51c4df025a3716ca79a23ba8bbfb1
 }else{
   $sql .=" LIKE '%$search%' LIMIT $start, 5";
 }

@@ -25,7 +25,7 @@ switch($order){
     $orderType="id ASC";
     break;
   case 2:
-    $orderType="id ASC";
+    $orderType="id DESC";
     break;
   case 3:
     $orderType="status DESC";
@@ -34,7 +34,7 @@ switch($order){
     $orderType="status ASC";
     break;
     default:
-     $orderType="DESC";
+     $orderType="ASC";
 }
 
 
@@ -158,8 +158,10 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
       </ul>
           <div class="btn-group">
             <div class="m-2">排序</div>
-            <a href="products-list.php?page=<?=$page?>&order=2" class="btn btn-primary <?php if($order==2) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-            <a href="products-list.php?page=<?=$page?>&order=3" class="btn btn-primary <?php if($order==3) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
+            <a href="products-list.php?page=<?=$page?>&order=1" class="btn btn-primary <?php if($order==1) echo "active" ?>" name="order">id<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+            <a href="products-list.php?page=<?=$page?>&order=2" class="btn btn-primary <?php if($order==2) echo "active" ?>" name="order">id<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+            <a href="products-list.php?page=<?=$page?>&order=3" class="btn btn-primary <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+            <a href="products-list.php?page=<?=$page?>&order=4" class="btn btn-primary <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
           </div>
         </div>
         <form action="product-search.php" method="get">

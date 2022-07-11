@@ -61,7 +61,7 @@
         <div class="collapse" id="collapseHealth">
           <ul class="list-unstyled">
             <li class="border-bottom ps-4">
-              <a href="">食譜管理</a>
+              <a href="http://localhost/mfee27-group6/recipe/recipe-all.php">食譜管理</a>
             </li>
             <li class="border-bottom ps-4">
               <a href="http://localhost/mfee27-group6/course/course.php">課程管理</a>

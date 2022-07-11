@@ -1,10 +1,3 @@
-<style>
-.side-menu>.border-bottom>a{
-  background-color: #ddd;
-}
-</style>
-
-
 <aside class="dashboard-control position-fixed bg-light start-0 top-0 vh-100 border-end overflow-auto">
   <nav>
     <div class="py-4 px-3 text-primary">

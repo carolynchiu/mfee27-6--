@@ -64,7 +64,7 @@
               <a href="">食譜管理</a>
             </li>
             <li class="border-bottom ps-4">
-              <a href="">課程管理</a>
+              <a href="http://localhost/mfee27-group6/course/course.php">課程管理</a>
             </li>
             <li class="border-bottom ps-4">
               <a href="">文章管理</a>

@@ -57,17 +57,17 @@ switch ($order) {
   <?php require("../module/header.php"); ?>
   <?php require("../module/aside.php"); ?>
   <div class="main-content px-4">
-    <h3>新增文章</h3>
+    <h3>新增評論</h3>
         <div class="d-flex">
         <input  class="form-control" id="create" type="text" />
         <button class="btn btn-primary" id="create-submit">送出</button>
         </div>
         <table class="table" id="article-data">
             <tr>
+                <th>編號</th>
                 <th>文章編號</th>
                 <th>使用者</th>
-                <th>內文</th>
-                <th>發布時間</th>
+                <th>內容</th>
                 <th>編輯</th>
             </tr>
         </table>
@@ -87,6 +87,7 @@ switch ($order) {
                 url: "./api/research.php",
                 type: "POST",
             }).then((res) => {
+                console.log(res);
                 // 1. 把res呈現在table裡面 (變成UI)
                 let appendTarget = document.getElementById("article-data");
                 // for 1. 宣告變數0 , 2.結束條件 , 3.每次回圈做完+1
@@ -98,10 +99,10 @@ switch ($order) {
                     let tr = document.createElement("tr");
 
                     tr.innerHTML = `
+                        <td>${object.id}</td>
                         <td>${object.article_id}</td>
-                        <td>${object.user_name}</td>
-                        <td>${object.article_text}</td>
-                        <td>${object.create_time}</td>
+                        <td>${object.user_id}</td>
+                        <td>${object.comment}</td>
                         <td>
                             <button class="button-standard blue" id="update-${object.id}">修改</button>
                             <button class="button-standard red" id="delete-${object.id}">刪除</button>
@@ -146,28 +147,28 @@ switch ($order) {
                             let updateDiv =
                                 document.getElementById("update-div");
                             // 再做出要推的標籤到變數裡
-                            let text = document.createElement("textarea");
+                            let comment = document.createElement("textarea");
 
                             // updateSubmitBtn=變數                button=標籤
                             let updateSubmitBtn =
                                 document.createElement("button");
                             // 方法：要推的目標.append(要推的東西)
                             // 概念：把要推的東西推到要推的目標內
-                            text.value = object.text;
-                            updateDiv.append(text);
+                            comment.value = object.comment;
+                            updateDiv.append(comment);
                             updateSubmitBtn.innerText = "更改";
 
                             updateSubmitBtn.onclick = function () {
                                 // 已經或得改的目標、改文字
                                 let id = object.id;
-                                let word = text.value;
+                                let word = comment.value;
                                 console.log(id, word);
                                 $.ajax({
                                     url: "./api/update.php",
                                     type: "post",
                                     data: {
                                         id: id,
-                                        text: word,
+                                        comment: word,
                                     },
                                 }).then(function (updateRes) {
                                     if (updateRes === "修改成功") {
@@ -198,7 +199,7 @@ switch ($order) {
                 $.ajax("./api/create.php", {
                     method: "POST",
                     data: {
-                        text: createInput.value,
+                        comment: createInput.value,
 
                         // 後面要改的
                         user_id: 1,

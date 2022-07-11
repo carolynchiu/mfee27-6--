@@ -14,7 +14,7 @@ if(isset($_GET["page"])){
 }
 
 $sqlAll="SELECT recipe.*, users.name AS user_name FROM recipe 
-JOIN users ON recipe.user_id=users.id  WHERE valid=1";
+JOIN users ON recipe.user_id=users.id  WHERE recipe.valid=1";
 // 撈出的資料會是物件，須把它存在result當中
 $resultAll=$conn->query($sqlAll);
 // numrows代表回傳的資料筆數
@@ -28,7 +28,7 @@ $start=($page-1)*$perPage;
 
 
 $sql ="SELECT recipe.*, users.name AS user_name FROM recipe 
-    JOIN users ON recipe.user_id=users.id  WHERE valid=1 ORDER BY create_time DESC LIMIT $start, 6 ";
+    JOIN users ON recipe.user_id=users.id  WHERE recipe.valid=1 ORDER BY create_time DESC LIMIT $start, 6 ";
 
 $result=$conn->query($sql);
 $page_recipe_count=$result->num_rows;

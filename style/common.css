@@ -1,0 +1,44 @@
+
+    :root {
+        --aside-width: 200px;
+      }
+  
+      a,
+      a:link {
+        text-decoration: none;
+      }
+  
+      .site-name {
+        width: var(--aside-width);
+      }
+  
+      .dashboard-control {
+        width: var(--aside-width);
+      }
+  
+      .dashboard-control nav {
+        margin-top: 40px;
+      }
+  
+      .side-menu a {
+        display: block;
+        color: #333;
+        padding: 10px;
+      }
+  
+      .side-menu a:hover {
+        background: #fff;
+      }
+  
+      .second-title {
+        padding: 10px;
+      }
+  
+      .second-title a {
+        color: #333;
+      }
+  
+      .main-content {
+        margin-left: var(--aside-width);
+        margin-top: 40px;
+      }

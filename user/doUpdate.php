@@ -9,10 +9,12 @@ $id = $_POST["id"];
 $name = $_POST["name"];
 $phone = $_POST["phone"];
 $email = $_POST["email"];
+$gender = $_POST["gender"];
+$birthday = $_POST["birthday"];
+$address = $_POST["address"];
 // echo $name;
 
-$sql = "UPDATE users SET name='$name', phone='$phone', email='$email' WHERE id=$id
-";
+$sql = "UPDATE users SET name='$name', phone='$phone', email='$email', birthday='$birthday', address='$address' WHERE id=$id";
 // echo $sql;
 if ($conn->query($sql) === TRUE) {
   echo "更新成功";

@@ -1,14 +1,14 @@
 <?php
 session_start();
-if (isset($_SESSION["user"])) {
-  header("location: index.php");
+if (isset($_SESSION["admin"])) {
+  header("location: homepage.php");
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <title>login</title>
+  <title>登入後台管理系統</title>
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -18,7 +18,7 @@ if (isset($_SESSION["user"])) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
   <style>
     body {
-      background: url("../images/sky.jpg");
+      background: url("./images/login.jpg");
       background-size: cover;
     }
 
@@ -61,16 +61,15 @@ if (isset($_SESSION["user"])) {
       <?php else : ?>
         <form action="doLogin.php" method="post">
           <div class="text-center">
-            <img class="logo" src="../images/bootstrap-logo.svg" alt="" />
-            <h2 class="mt-2">Please sign in</h2>
+            <h1 class="mt-2">後台管理系統</h1>
           </div>
           <div class="form-floating mt-3">
             <input type="text" class="form-control input-top" id="floatingInput" placeholder="Your account" name="account" />
-            <label for="floatingInput">Account </label>
+            <label for="floatingInput">帳號</label>
           </div>
           <div class="form-floating">
             <input type="password" class="form-control input-bt" id="floatingPassword" placeholder="Password" name="password" />
-            <label for="floatingPassword">Password</label>
+            <label for="floatingPassword">密碼</label>
           </div>
 
           <div class="mt-3 mb-2 d-flex">
@@ -79,10 +78,11 @@ if (isset($_SESSION["user"])) {
             <?php endif; ?>
           </div>
 
-          <div class="d-grid gap-2">
-            <button class="btn btn-primary" type="submit">Sign in</button>
+          <div class="text-center">
+            <button class="btn btn-warning" type="submit">登入</button>
+            <a href="sign-up.php" class="btn btn-info">註冊</a>
           </div>
-          <div class="pt-4 text-center text-muted">© 2017–2022</div>
+          <div class="pt-4 text-center text-muted">© 2020–2022</div>
         </form>
       <?php endif; ?>
     </div>

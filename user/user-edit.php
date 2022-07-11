@@ -15,7 +15,7 @@ $userCount = $result->num_rows;
 <html lang="en">
 
 <head>
-  <title>User</title>
+  <title>修改會員資料</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -77,23 +77,18 @@ $userCount = $result->num_rows;
   <main class="main-content p-4">
     <?php if ($userCount > 0) :
       $row = $result->fetch_assoc(); ?>
-      <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-        <h1>會員 <?= $row["name"]
-                ?></h1>
-        <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-outline-primary">share</button>
-          <button type="button" class="btn btn-outline-primary">export</button>
-        </div>
+      <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+        <h1><i class="fa-solid fa-user-pen me-3"></i>修改會員資料<?= $row["id"] ?></h1>
       </div>
       <div class="container">
         <div class="py-2">
-          <a class="btn btn-info" href="user.php?id=<?= $row["id"] ?>">取消</a>
+          <a class="btn btn-info" href="user.php?id=<?= $row["id"] ?>"><i class="fa-solid fa-circle-arrow-left me-2"></i>取消並返回</a>
         </div>
         <form action="doUpdate.php" method="post">
           <input type="hidden" name="id" value=" <?= $row["id"] ?>">
-          <table class="table">
+          <table class="table w-75">
             <tr>
-              <th>id</th>
+              <th class="table-info w-25 ps-3">會員編號</th>
               <td>
                 <?= $row["id"] ?>
                 <!-- <input class="form-control-plaintext" type="text" readonly value="" name="id"> -->
@@ -101,24 +96,40 @@ $userCount = $result->num_rows;
               <!-- 不能讓使用者修改 -->
             </tr>
             <tr>
-              <th>Account</th>
+              <th class="table-info w-25 ps-3">帳號</th>
               <td><?= $row["account"] ?></td>
             </tr>
             <tr>
-              <th>Name</th>
+              <th class="table-info w-25 ps-3">姓名</th>
               <td><input type="text" class="form-control" value="<?= $row["name"] ?>" name="name"></td>
             </tr>
             <tr>
-              <th>Phone</th>
+              <th class="table-info w-25 ps-3">生日</th>
+              <td><input type="date" class="form-control" value="<?= $row["birthday"] ?>" name="birthday"></td>
+            </tr>
+            <tr>
+              <th class="table-info w-25 ps-3">性別</th>
+              <td><?php if ($row["gender"] == 0) {
+                    echo "<i class='fa-solid fa-mars text-info'></i>";
+                  } else {
+                    echo "<i class='fa-solid fa-venus text-danger'></i>";
+                  } ?></td>
+            </tr>
+            <tr>
+              <th class="table-info w-25 ps-3">電話</th>
               <td><input type="tel" class="form-control" value="<?= $row["phone"] ?>" name="phone"></td>
             </tr>
             <tr>
-              <th>Email</th>
+              <th class="table-info w-25 ps-3">Email</th>
               <td><input type="email" class="form-control" value="<?= $row["email"] ?>" name="email"></td>
+            </tr>
+            <tr>
+              <th class="table-info w-25 ps-3">住址</th>
+              <td><input type="text" class="form-control" value="<?= $row["address"] ?>" name="address"></td>
             </tr>
           </table>
           <div class="py-2">
-            <button class="btn btn-info" type="submit">儲存</button>
+            <button class="btn btn-info" type="submit"><i class="fa-solid fa-circle-check me-2"></i>儲存</button>
           </div>
         </form>
       <?php else : ?>

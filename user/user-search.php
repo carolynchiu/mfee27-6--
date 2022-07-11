@@ -11,7 +11,7 @@ if (!isset($_GET["search"])) {
   // $sql = "SELECT id, account, name, email, phone FROM users WHERE account='$search'";
 
   //模糊搜尋 -> LIKE
-  $sql = "SELECT id, account, name, email, phone FROM users WHERE account LIKE '%$search%'";
+  $sql = "SELECT id, account, name, email, phone FROM users  WHERE account LIKE '%$search%'";
 
   $result = $conn->query($sql);
   $userCount = $result->num_rows;

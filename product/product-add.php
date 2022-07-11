@@ -1,19 +1,11 @@
 <?php
 require("../db-connect.php");
-
-$sql="SELECT products.*  FROM products  ";
-// 想辦法把product.category_id=category.name
-$result=$conn->query($sql);
-$rows=$result->fetch_all(MYSQLI_ASSOC);
-
-
-
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
-  <title>Product</title>
+  <title>新增商品</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,9 +14,6 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <link rel="stylesheet" href="../fontawesome-free-6.1.1-web/css/all.min.css" />
   <style>
-    *{
-      border:1px solid red;
-    }
     :root {
       --aside-width: 200px;
     }
@@ -86,6 +75,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="container">
+    <div class="py-2"><a class="btn btn-info" href="products-list.php">回產品清單頁面</a></div>
         <form action="do-create.php" method="post">
             <div class="mb-2">
                 <label for="">商品名稱</label>
@@ -93,7 +83,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
             </div>
             <div class="mb-2">
                 <label for="">商品簡介</label>
-                <input type="text" class="form-control" name="description" required>
+                <textarea class="form-control" aria-label="With textarea" name="description" required></textarea> 
             </div>
             <div class="mb-2">
                 <label for="inputState" class="form-label">商品類別</label>

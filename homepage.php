@@ -1,10 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION["user"])) {
-  header("location: login-2.php");
+if (!isset($_SESSION["admin"])) {
+  header("location: login.php");
 }
 
-require("../db-connect.php");
+require("./db-connect.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +17,7 @@ require("../db-connect.php");
 
   <!-- Bootstrap CSS v5.0.2 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
-  <link rel="stylesheet" href="../fontawesome-free-6.1.1-web/css/all.min.css" />
+  <link rel="stylesheet" href="./fontawesome-free-6.1.1-web/css/all.min.css" />
 
   <style>
     :root {
@@ -115,12 +115,7 @@ require("../db-connect.php");
                 <i class="fa-solid fa-box-archive fa-4x"></i>
               </div>
               <div class="col-auto ">
-                <?php
-                $sqlProducts = "SELECT * FROM product";
-                $resultProducts = $conn->query($sqlProducts);
-                $productsCount = $resultProducts->num_rows; //所有的使用者
-                ?>
-                <div class="h2"><?= $productsCount ?></div>
+                <div class="h2">0</div>
                 <div>商品</div>
               </div>
             </div>
@@ -143,12 +138,7 @@ require("../db-connect.php");
                 <i class="fa-solid fa-file-lines fa-4x"></i>
               </div>
               <div class="col-auto ">
-                <?php
-                $sqlOrders = "SELECT * FROM user_order";
-                $resultOrders = $conn->query($sqlOrders);
-                $ordersCount = $resultOrders->num_rows; //所有的使用者
-                ?>
-                <div class="h2"><?= $ordersCount ?></div>
+                <div class="h2">0</div>
                 <div>訂單</div>
               </div>
             </div>

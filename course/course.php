@@ -201,9 +201,9 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
                         排序方式
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <li><a class="dropdown-item" href="course.php?page=<?= $page ?>&order=3" <?php if ($order == 3) echo "active" ?>">課程編號</a></li>
-                        <li><a class="dropdown-item" href="course.php?page=<?= $page ?>&order=1" <?php if ($order == 1) echo "active" ?>">已下架</a></li>
-                        <li><a class="dropdown-item" href="course.php?page=<?= $page ?>&order=2" <?php if ($order == 2) echo "active" ?>">已上架</a></li>
+                        <li><a class="dropdown-item" href="course.php?page=1&order=3" <?php if ($order == 3) echo "active" ?>">課程編號</a></li>
+                        <li><a class="dropdown-item" href="course.php?page=1&order=1" <?php if ($order == 1) echo "active" ?>">已下架</a></li>
+                        <li><a class="dropdown-item" href="course.php?page=1&order=2" <?php if ($order == 2) echo "active" ?>">已上架</a></li>
                     </ul>
                 </div>
 

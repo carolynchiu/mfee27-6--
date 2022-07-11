@@ -12,7 +12,7 @@ if(!isset($_GET["search"])){
     $search=$_GET["search"];
     $sql="SELECT product_comments.* ,users.name AS users_name , products.name AS product_name FROM product_comments
     JOIN users ON product_comments.user_id =users.id
-    JOIN products ON product_comments.product_id = products.id WHERE users.name LIKE '%$search%'";
+    JOIN products ON product_comments.product_id = products.id WHERE users.name LIKE '%$search%' ";
     $result=$conn->query($sql);
     $commentsCount=$result->num_rows;
 }
@@ -34,12 +34,14 @@ if (isset($_GET["category"])){
 }
 
 
-
+$page=isset($_GET["page"])? $_GET["page"] :1;
+$perPage=5; //每頁有5項產品
+$start=($page-1)*$perPage; //起始頁能顯示的產品數
 //將users.id帶入product_comments.user_id 和products.id 帶入product_comments.product_id
 //然後用users和products的id個別帶入他們的name
 $sql="SELECT product_comments.* ,users.name AS users_name , products.name AS product_name FROM product_comments
 JOIN users ON product_comments.user_id =users.id
-JOIN products ON product_comments.product_id = products.id WHERE users.name LIKE '%$search%'";
+JOIN products ON product_comments.product_id = products.id WHERE users.name LIKE '%$search%' LIMIT $start, 5";
 
 $result=$conn->query($sql);
 $commentsCount=$result->num_rows;
@@ -47,9 +49,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
 
 //待處理
 //2.頁數
-$page=isset($_GET["page"])? $_GET["page"] :1;
-$perPage=5; //每頁有5項產品
-$start=($page-1)*$perPage; //起始頁能顯示的產品數
+
 //每頁產品
 $sqlPage="SELECT product_comments.* ,users.name AS users_name , products.name AS product_name FROM product_comments
 JOIN users ON product_comments.user_id =users.id
@@ -71,7 +71,7 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
 <html lang="en">
 
 <head>
-  <title>商品-搜尋" "的結果</title>
+  <title>商品-" <?=$search?> "的搜尋結果</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -137,19 +137,20 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
 </head>
 
 <body>
-  <?php //require("../module/header.php"); ?>
-  <?php //require("../module/aside.php"); ?>
+  <?php require("../module/header.php"); ?>
+  <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="container table-responsive">
     <div>
-        <div><a class="btn btn-info" href="product-comments.php">回產品評論清單頁面</a></div>
-        <form action="product-search.php" method="get">
+        <div><a class="btn btn-info mb-2" href="product-comments.php">回商品評論清單頁面</a></div>
+        <form action="product-comment-search.php" method="get">
         <div class="input-group">
             <input type="text" name="search" class="form-control">
             <button type="submit" class="btn btn-info">搜尋</button>
         </div>
       </form>
     </div>
+    
     <div class="py-2  ">
       <!-- 頁數切換 & 新增商品 -->
       <div class="py-2">
@@ -235,7 +236,6 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
               ?>   
               </td>
               <td class="text-center">
-              <a class="btn btn-info my-2" href="comment-fix.php">修改</a>  
               <a class="btn btn-info my-2
               <?php
               if($row["status"]==1){

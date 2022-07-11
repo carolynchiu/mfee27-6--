@@ -17,6 +17,8 @@ $by_price_max=isset($_GET["max"])?$_GET["max"]:"";
 if(!isset($_GET["search"])){
   $search="";
   $pageProductCount=0;
+}else{
+  $search=$_GET["search"];
 }
 
 //每頁產品
@@ -80,7 +82,7 @@ $sqlAll="SELECT products.* , product_category.name AS category_name  FROM produc
 if(count($conditions)>0){
   $sqlAll .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%' LIMIT $start, 5";
 }
-echo $sqlAll;
+
 
 //選取所有產品
 $resultAll= $conn->query($sqlAll);
@@ -106,7 +108,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 <html lang="en">
 
 <head>
-  <title>商品-搜尋" <?=$search?> "的結果</title>
+  <title>商品-" <?=$search?> "搜尋的結果</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -172,23 +174,23 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
-  <?php require("../module/header.php"); ?>
-  <?php require("/module/aside.php"); ?>
+  <?php //require("../module/header.php"); ?>
+  <?php //require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="container table-responsive">
     <div>
         <div>
-          <a class="btn btn-info my-2" href="search-test.php">回產品清單頁面</a>
+          <a class="btn btn-info my-2" href="products-list.php">回產品清單頁面</a>
         </div>
-        <form action="search-test.php" method="get">
+        <form action="product-search.php" method="get">
           <div class="d-flex justify-content-between">
             <ul class="nav nav-pills my-2">
               <li class="nav-item">
-                <a class="nav-link   <?php if($category=="") echo "active"?>"  aria-current="page" href="search-test.php">全部</a>
+                <a class="nav-link   <?php if($category=="") echo "active"?>"  aria-current="page" href="product-search.php">全部</a>
               </li>
               <?php foreach ($rowsCategory as $row):?>
               <li>
-                <a class="nav-link category  <?php if($category==$row["id"]) echo "active"?> " href="search-test.php?category=<?=$row["id"]?>" id="category" name="category"  ><?=$row["name"]?></a>
+                <a class="nav-link category  <?php if($category==$row["id"]) echo "active"?> " href="product-search.php?category=<?=$row["id"]?>" id="category" name="category"  ><?=$row["name"]?></a>
               </li>
               <?php endforeach;?>
             </ul>

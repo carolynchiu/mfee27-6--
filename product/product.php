@@ -74,7 +74,7 @@ $row=$result->fetch_assoc();?>
 
     /* product-module */
     .object-cover {
-      width: 100%;
+      width: 100px;
       height: 100%;
       object-fit: cover;
     }
@@ -107,6 +107,14 @@ $row=$result->fetch_assoc();?>
                     <th>商品簡介</th>
                     <td><?=$row["description"]?></td>
                 </tr>
+                  <tr>
+                      <th>商品圖片</th>
+                      <td> 
+                        <figure>
+                          <img class="object-cover" src="../product_image/<?=$row["image"]?>" alt="">
+                        </figure>
+                      </td>
+                  </tr>
                 <tr>
                     <th>商品類別</th>
                     <td><?php 
@@ -132,10 +140,6 @@ $row=$result->fetch_assoc();?>
                 <tr>
                     <th>商品庫存</th>
                     <td><?=$row["stock_in_inventory"]?></td>
-                </tr>
-                <tr>
-                    <th>商品圖片</th>
-                    <td><?=$row["image"]?></td>
                 </tr>
                 <tr>
                     <th>商品上下架時間</th>

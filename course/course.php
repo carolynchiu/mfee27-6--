@@ -131,25 +131,42 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
             <h1>所有課程</h1>
             <div class="btn-group" role="group" aria-label="Basic example">
 
-                <a href="create_course.php" type="get" class="btn btn-outline-primary">+新增課程</a>
+                <a href="create_course.php" type="get" class="btn btn-success">+新增課程</a>
             </div>
         </div>
         <div class="container">
-            <div class="py-2">
+            <!-- <div class="py-2">
                 <?php if (isset($_GET["product_id"]) || isset($_GET["user_id"]) || isset($_GET["start"])) : ?>
                     <a href="order-list.php" class="btn btn-info">回所有訂單列表</a>
                 <?php endif; ?>
+            </div> -->
+            <div>
+                    <nav class="d-flex justify-content-center" aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
+                            <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                                <li class="page-item <?php if ($page == $i) echo "active"; ?>">
+                                    <a class="page-link" href="course.php?page=<?= $i ?>"><?= $i ?></a>
+                                </li>
+                            <?php endfor; ?>
+                            <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
+                        </ul>
+                    </nav>
             </div>
 
-            <div class="d-flex justify-content-between h4">
+            <div class="d-flex justify-content-between h5">
                 <div>
-                    第<?= $startItem ?>-<?= $endItem ?>筆，共計<?= $courseCount ?>筆資料
+                    目前顯示第<?= $startItem ?>-<?= $endItem ?>筆，共計<?= $courseCount ?>筆資料
                 </div>
+
                 <div>
                     <i class="text-success fa-solid fa-circle-check me-2">已上架</i>
                     <i class="text-secondary fa-solid fa-circle-xmark">已下架</i>
                 </div>
+
             </div>
+
+
 
 
             <?php if ($pageCourseCount > 0) : ?>
@@ -170,25 +187,25 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
                             <tr>
                                 <td><?= $row["id"] ?></td>
                                 <td><?= $row["name"] ?></td>
-                                <td><img src="<?= $row["image"] ?>" class="w-50" alt=""></td>
+                                <td><img src="<?= $row["image"] ?>" style="width:150px" alt=""></td>
                                 <td><?= $row["create_time"] ?></td>
                                 <td style="width:300px">
 
                                     <a class="btn btn-info" href="edit-course.php?id=<?= $row["id"] ?>">
                                         <i class="fa-solid fa-pen-to-square"></i> 編輯</a>
-                                        
+
                                     <a class="btn btn-success text-nowrap 
                                 <?php if ($row["valid"] == 0) {
                                     echo "d-inline";
                                 } else echo "d-none"  ?> 
-                                " href="doOn.php?id=<?= $row["id"] ?>">上架</a>
+                                " href="doOn.php?id=<?= $row["id"] ?>">上架 <i class="fa-solid fa-arrow-up"></i></a>
 
                                     <!-- text-nowrap不換行 -->
                                     <a class="btn text-nowrap
                                 <?php if ($row["valid"] == 1) {
                                     echo "d-inline";
                                 } else echo "d-none"  ?> 
-                                btn-secondary" href="doOff.php?id=<?= $row["id"] ?>">下架</a>
+                                btn-secondary" href="doOff.php?id=<?= $row["id"] ?>">下架 <i class="fa-solid fa-arrow-down"></i></a>
 
                                     <a class="btn btn-danger" href="doDelete.php?id=<?= $row["id"] ?>"><i class="fa-solid fa-trash-can"></i></a>
                                 </td>
@@ -206,19 +223,7 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
                 目前沒有資料
             <?php endif; ?>
 
-            <div class="text-center ">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
-                        <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                        <li class="page-item <?php if ($page == $i) echo "active";?>">
-                            <a class="page-link" href="course.php?page=<?= $i ?>"><?= $i ?></a>
-                        </li>
-                        <?php endfor; ?>
-                        <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
-                    </ul>
-                </nav>
-            </div>
+
 
         </div>
     </main>

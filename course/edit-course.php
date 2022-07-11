@@ -98,7 +98,15 @@ $userCount = $result->num_rows;
             margin-top: 40px;
         }
 
-        
+        .image_prev{
+            width: 300px;
+        }
+
+        table.table th {
+            width: 100px;
+            vertical-align: middle;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -134,6 +142,14 @@ $userCount = $result->num_rows;
                     <tr>
                         <th>建立時間</th>
                         <td><?= $row["create_time"] ?></td>
+                    </tr>
+                    <tr>
+                        <th>圖片連結</th>
+                        <td><?= $row["image"] ?></td>
+                    </tr>
+                    <tr>
+                        <th>圖片預覽</th>
+                        <td><img src="<?= $row["image"] ?>" class="image_prev" alt=""></td>
                     </tr>
                     <tr>
                         <th>影音連結</th>

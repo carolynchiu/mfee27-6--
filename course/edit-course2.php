@@ -145,7 +145,7 @@ $userCount=$result->num_rows;
             </tr>
             <tr>
                 <th>更換圖片</th>
-                <td><input class="form-control" type="file" name="file"></td>
+                <td><input class="form-control" type="file" name="file" value=""></td>
             </tr>
 
         </table>

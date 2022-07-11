@@ -54,8 +54,8 @@ if ((($_FILES["file"]["type"] == "image/gif")
         // echo "檔案大小: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
         // echo "快取檔案: " . $_FILES["file"]["tmp_name"] . "<br />";
 
-        //設定檔案上傳路徑，選擇指定資料夾
 
+        //設定檔案上傳路徑，選擇指定資料夾
         if (file_exists("./upload/" . $_FILES["file"]["name"])) {
             echo $_FILES["file"]["name"] . " already exists. ";
         } else {
@@ -67,14 +67,16 @@ if ((($_FILES["file"]["type"] == "image/gif")
         }
     }
 } else {
-    echo "上傳失敗！"; //上傳失敗後顯示錯誤資訊
+    // echo "上傳失敗！"; //上傳失敗後顯示錯誤資訊
 }
 
-$file = "./upload/" . $_FILES["file"]["name"];
 
+$file = "./upload/" . $_FILES["file"]["name"];
 $sqlCreate2 = "UPDATE course_content SET image='$file' WHERE id=$id";
+
+
 if ($conn->query($sqlCreate2) === TRUE) {
-    $message = "課程新增成功";
+    $message = "課程更新成功";
     echo "<script type='text/javascript'>alert('$message');
     window.location='course.php';
     </script>";

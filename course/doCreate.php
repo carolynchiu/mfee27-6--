@@ -39,7 +39,7 @@ if ((($_FILES["file"]["type"] == "image/gif")
                 $_FILES["file"]["tmp_name"],
                 "./upload/" . $_FILES["file"]["name"]
             );
-            echo "儲存於: " . "./upload/" . $_FILES["file"]["name"]; //上傳成功後提示上傳資訊
+            // echo "儲存於: " . "./upload/" . $_FILES["file"]["name"]; //上傳成功後提示上傳資訊
         }
     }
 } else {

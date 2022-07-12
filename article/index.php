@@ -100,7 +100,7 @@ switch ($order) {
                 url: "./api/research.php",
                 type: "POST",
             }).then((res) => {
-
+                console.log(res);
                 // 1. 把res呈現在table裡面 (變成UI)
                 let appendTarget = document.getElementById("append-target");
                     
@@ -166,7 +166,7 @@ switch ($order) {
                     
                     //#endregion
                 }
-                
+
                 $("#article-data").DataTable();
             });
                     //新增按鈕跳轉

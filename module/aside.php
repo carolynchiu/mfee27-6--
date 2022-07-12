@@ -69,9 +69,6 @@
             <li class="border-bottom ps-4">
               <a href="../article/">文章管理</a>
             </li>
-            <li class="border-bottom ps-4">
-              <a href="../article_comment/">文章評論</a>
-            </li>
           </ul>
         </div>
       </li>

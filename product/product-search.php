@@ -214,10 +214,13 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
   <?php require("../module/header.php"); ?>
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
+  <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+      <h1><i class="fa-solid fa-magnifying-glass me-3"></i>商品搜尋結果</h1>
+    </div>
   <div class="container table-responsive">
     <div>
         <div>
-          <a class="btn btn-info my-2" href="products-list.php">回產品清單頁面</a>
+          <a class="btn btn-info my-2" href="products-list.php"><i class="fa-solid fa-arrow-rotate-left me-3"></i>回產品清單頁面</a>
         </div>
         <form action="product-search.php" method="get">
           <div class="py-2 d-flex justify-content-between align-items-center ">
@@ -263,7 +266,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
             </div>
             
             <input type="text" name="search" class="form-control">
-            <button type="submit" class="btn btn-info mx-2">搜尋</button>
+            <button type="submit" class="btn btn-info mx-2"><i class="fa-solid fa-magnifying-glass me-3"></i>搜尋</button>
         </div>
       </form>
       <!-- 要改的 -->
@@ -292,7 +295,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
     <?php if($pageProductCount>0): ?>
         <table class="table table-bordered  table-hover mt-5">
           <thead>
-            <tr>
+            <tr class="table-info border-dark border-bottom border-3">
               <th>商品編號</th>
               <th>商品圖片</th>
               <th>商品名稱</th>

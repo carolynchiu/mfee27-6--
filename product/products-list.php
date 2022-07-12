@@ -144,6 +144,9 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
   <?php require("../module/header.php"); ?>
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
+  <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+      <h1><i class="fa-solid fa-box-archive me-3"></i>所有商品</h1>
+    </div>
   <div class="container table-responsive">
     <div>
     <div class="py-2 d-flex justify-content-between align-items-center ">
@@ -174,7 +177,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
             <input class="form-check-input my-0 mx-2" type="radio" name="search-category" id="" value="name">
           </div>
             <input type="text" name="search" class="form-control">
-            <button type="submit" class="btn btn-info">搜尋</button>
+            <button type="submit" class="btn btn-info"><i class="fa-solid fa-magnifying-glass me-3"></i>搜尋</button>
         </div>
       </form>
     
@@ -234,12 +237,12 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
         </li>
       </ul>
     </nav>
-      <a class="btn btn-info " href="product-add.php">新增商品</a>
+      <a class="btn btn-info " href="product-add.php"><i class="fa-solid fa-boxes-packing me-2"></i>新增商品</a>
     </div>
     <?php if($pageProductCount>0): ?>
         <table class="table table-bordered  table-hover mt-5">
           <thead>
-            <tr>
+            <tr class="table-info border-dark border-bottom border-3">
               <th>商品編號</th>
               <th>商品圖片</th>
               <th>商品名稱</th>

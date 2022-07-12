@@ -257,7 +257,7 @@ $totalPage = ceil($userCount / $perPage);
         <table class="table table-bordered border-dark">
           <thead>
             <tr class="table-info border-dark border-bottom border-3">
-              <th>編號</th>
+              <th>會員編號</th>
               <th>帳號</th>
               <th>姓名</th>
               <th>性別</th>

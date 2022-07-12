@@ -66,6 +66,7 @@ switch ($order) {
             <tr>
                 <th>文章編號</th>
                 <th>使用者</th>
+                <th>文章標題</th>
                 <th>內文</th>
                 <th>發布時間</th>
                 <th>編輯</th>
@@ -100,6 +101,7 @@ switch ($order) {
                     tr.innerHTML = `
                         <td>${object.article_id}</td>
                         <td>${object.user_name}</td>
+                        <td>${object.article_title}</td>
                         <td>${object.article_text}</td>
                         <td>${object.create_time}</td>
                         <td>

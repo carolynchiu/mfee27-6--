@@ -7,14 +7,13 @@ $searchCategory=isset($_GET["search-category"])?$_GET["search-category"]:"";
 $category=isset($_GET["category"])?$_GET["category"]:"";
 $min=isset($_GET["min"])?$_GET["min"]:"";
 $max=isset($_GET["max"])?$_GET["max"]:"";
+if(isset($_GET["search"])){
+  if(($_GET["search"]) != ""){
+    $search=$_GET["search"];
+  }
+} 
+$getSearch=isset($_GET["search"])? "LIKE '%$search%'":"";
 
-
-if(!isset($_GET["search"])){
-  $search="";
-  $pageProductCount=0;
-}else{
-  $search=$_GET["search"];
-}
 
 //每頁產品
 // sql product所有的欄位和 product_category的名子並生出category_name
@@ -79,12 +78,13 @@ $sql="$query";
 
 
 if(count($conditions)>0){
-  $sql .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+  $sql .= " WHERE ".implode(' AND ',$conditions)." $getSearch  ORDER BY $orderType LIMIT $start, 5";
 }else{
-  $sql .=" WHERE products.name LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+  $sql .=" ORDER BY $orderType LIMIT $start, 5";
 }
 $resultPage=$conn->query($sql);
 $pageProductCount=$resultPage->num_rows;
+
 
 
 
@@ -108,10 +108,9 @@ switch($order){
     default:
     $orderType="ASC";
 }
-  $sqlAll .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
-  $GLOBALS["sqlAll"];
+  $sqlAll .= " WHERE ".implode(' AND ',$conditions)." $getSearch  ORDER BY $orderType LIMIT $start, 5";
 }else{
-  $sqlAll .=" WHERE products.name LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+  $sql .="  $getSearch  ORDER BY $orderType LIMIT $start, 5";
 }
 
 
@@ -132,7 +131,11 @@ $sqlCategory="SELECT * FROM product_category";
 $resultCategory=$conn->query($sqlCategory);
 $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 
-
+if(isset($_GET["search"])){
+  $search=$_GET["search"];
+}else{
+  $search="";
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -204,8 +207,8 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
-  <?php require("../module/header.php"); ?>
-  <?php require("../module/aside.php"); ?>
+  <?php //require("../module/header.php"); ?>
+  <?php //require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
       <h1><i class="fa-solid fa-magnifying-glass me-3"></i>商品搜尋結果</h1>

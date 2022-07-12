@@ -16,12 +16,7 @@ $category=isset($_GET["category"])?$_GET["category"]:"";
 $min=isset($_GET["min"])?$_GET["min"]:"";
 $max=isset($_GET["max"])?$_GET["max"]:"";
 
-if(!isset($_GET["search"])){
-  $search="";
-  $pageProductCount=0;
-}else{
-  $search=$_GET["search"];
-}
+$search=isset($_GET["search"])? "LIKE '%$search%'":"";
 
 $query="SELECT products.* , product_category.name AS category_name  FROM products  JOIN product_category ON products.category_id = product_category.id";
 $conditions=array();
@@ -79,10 +74,12 @@ switch($order){
 
 
 if(count($conditions)>0){
-  $sql .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+  $sql .= " WHERE ".implode(' AND ',$conditions)." ORDER BY $orderType LIMIT $start, 5";
 }else{
-  $sql .=" WHERE products.name LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+  $sql .=" ORDER BY $orderType LIMIT $start, 5";
 }
+
+
 $resultPage=$conn->query($sql);
 $pageProductCount=$resultPage->num_rows;
 
@@ -106,9 +103,9 @@ switch($order){
     default:
     $orderType="ASC";
 }
-  $sqlAll .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+  $sqlAll .= " WHERE ".implode(' AND ',$conditions)."  ORDER BY $orderType LIMIT $start, 5";
 }else{
-  $sql .=" WHERE products.name LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+  $sql .=" ORDER BY $orderType LIMIT $start, 5";
 }
 
 //選取所有產品
@@ -199,8 +196,8 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
-  <?php require("../module/header.php"); ?>
-  <?php require("../module/aside.php"); ?>
+  <?php //require("../module/header.php"); ?>
+  <?php //require("../module/aside.php"); ?>
   <main class="main-content p-4">
     <!-- 頁面標題 -->
     <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">

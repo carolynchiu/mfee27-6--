@@ -1,4 +1,5 @@
 <?php
+session_start();
 if(!isset($_GET["id"])){
   echo "沒有參數";
   exit;
@@ -74,7 +75,7 @@ $row=$result->fetch_assoc();?>
 
     /* product-module */
     .object-cover {
-      width: 100px;
+      width: 100%;
       height: 100%;
       object-fit: cover;
     }
@@ -88,13 +89,17 @@ $row=$result->fetch_assoc();?>
   <?php require("../module/header.php"); ?>
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
+  <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+      <h1><i class="fa-solid fa-box-archive me-3"></i>商品<?=$row["id"]?>:<?=$row["name"]?></h1>
+    </div>
   <div class="container">
         <div class="py-2">
-            <a class="btn btn-info" href="products-list.php">回到商品頁面</a>
+            <a class="btn btn-info" href="products-list.php"><i class="fa-solid fa-arrow-rotate-left me-3"></i>回到商品頁面</a>
         </div>
         <div class="py-2">
-        
-            <table class="table">
+          <div class="row  justify-content-between py-2">
+            <div class="d-flex col-8 justify-content-center">
+            <table class="table table-hover  ps-5 ">
                 <tr>
                     <th>商品編號</th>
                     <td><?=$row["id"]?></td>
@@ -107,14 +112,6 @@ $row=$result->fetch_assoc();?>
                     <th>商品簡介</th>
                     <td><?=$row["description"]?></td>
                 </tr>
-                  <tr>
-                      <th>商品圖片</th>
-                      <td> 
-                        <figure>
-                          <img class="object-cover" src="../product_image/<?=$row["image"]?>" alt="">
-                        </figure>
-                      </td>
-                  </tr>
                 <tr>
                     <th>商品類別</th>
                     <td><?php 
@@ -155,9 +152,14 @@ $row=$result->fetch_assoc();?>
                     ?></td>
                 </tr>
             </table>
+                  </div>
+            <figure class="col-4">
+              <img class="object-cover shadow" src="../product_image/<?=$row["image"]?>" alt="">
+            </figure>
+            </div>
             <div class="py-2 d-flex justify-content-between">
-                <a class="btn btn-warning" href="product-edit.php?id=<?=$row["id"]?>">修改商品內容</a>
-                <a class="btn btn-danger" href="do-delete.php?id=<?=$row["id"]?>">刪除商品</a>
+                <a class="btn btn-warning" href="product-edit.php?id=<?=$row["id"]?>"><i class="fa-solid fa-pen me-2"></i>修改商品內容</a>
+                <a class="btn btn-danger" href="do-delete.php?id=<?=$row["id"]?>"><i class="fa-solid fa-trash-can me-2"></i>刪除商品</a>
             </div>
         <?php endif;?>
         </div>

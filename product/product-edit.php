@@ -1,4 +1,5 @@
 <?php
+session_start();
 if(!isset($_GET["id"])){
   echo "沒有帶資料";
   exit;
@@ -90,8 +91,12 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
   <?php require("../module/header.php"); ?>
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
+  
   <div class="container">
   <?php if($productCount>0):$row=$result->fetch_assoc();?>
+  <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+      <h1><i class="fa-solid fa-box-archive me-3"></i>修改 商品<?=$row["id"]?>:<?=$row["name"]?></h1>
+    </div>
         <div class="py-2">
             <a class="btn btn-info" href="product.php?id=<?=$row["id"]?>">取消
             </a>

@@ -135,7 +135,7 @@ $userCount = $result->num_rows;
                 <a class="btn btn-info" href="course.php">返回所有課程</a>
             </div>
 
-            <form action="doUpdate.php" method="post" enctype="multipart/form-data">
+            <form action="doUpdate.php" method="post" enctype="multipart/form-data" runat="server">
                 <?php if ($userCount > 0) :
                     $row = $result->fetch_assoc();
                 ?>
@@ -165,40 +165,51 @@ $userCount = $result->num_rows;
                         </tr>
                         <tr>
                             <th>原始圖片</th>
-                            <td><img class="w-25" src="<?= $row["image"] ?>" alt=""></td>
-                        </tr>
-                        <tr>
-                            <th>更換圖片</th>
-                            <td><img class="w-25" src="<?= $row["image"] ?>" alt=""></td>
+                            <td>
+                                <div class="image_prev">
+                                    <img class="w-100" src="<?= $row["image"] ?>" alt="">
+
+                                </div>
+                            </td>
                         </tr>
 
+                        <tr>
+                            <th>更換圖片</th>
+                            <td>
+                                <div class="image_prev">
+                                    <input accept="image/*" id="imgInp" class="form-control mb-2" type="file" name="file" value="">
+                                    <img class="w-100" id="blah" src="#" alt="" />
+                                    
+                                </div>
+                            </td>
+                        </tr>
                     </table>
+
+
                     <div class="py-2">
                         <div class="d-flex justify-content-between">
                             <div class="py-2">
                                 <button class="btn btn-info" type="submit">儲存</button>
                             </div>
+                        </div>
+                    </div>
             </form>
-        </div>
-        </div>
+
     <?php else : ?>
         沒有該使用者
     <?php endif; ?>
     </div>
 
 
-
-
-
-
-
-
-
     </main>
-
-    
-    <!-- 引入JQ -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                blah.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 

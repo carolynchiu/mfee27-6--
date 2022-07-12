@@ -24,14 +24,6 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
 
 
-// for($i=0;$i<count($rows);$i++){
-//   $recipe=$rows[$i]["id"];
-//   $sqlLikeCount="SELECT * FROM user_like_recipe WHERE id= $recipe_id";
-//   $resultLike=$conn->query($sqlLikeCount);
-//   $like_count=$resultLike->num_rows;
-// echo $rows[$i]["id"].":". $like_count."<br>";
-// $rows[$i]["liked-count"]=$like_count;
-// }
 ?>
 
 <!DOCTYPE html>

@@ -158,8 +158,8 @@ $row=$result->fetch_assoc();?>
             </figure>
             </div>
             <div class="py-2 d-flex justify-content-between">
-                <a class="btn btn-warning" href="product-edit.php?id=<?=$row["id"]?>">修改商品內容</a>
-                <a class="btn btn-danger" href="do-delete.php?id=<?=$row["id"]?>">刪除商品</a>
+                <a class="btn btn-warning" href="product-edit.php?id=<?=$row["id"]?>"><i class="fa-solid fa-pen me-2"></i>修改商品內容</a>
+                <a class="btn btn-danger" href="do-delete.php?id=<?=$row["id"]?>"><i class="fa-solid fa-trash-can me-2"></i>刪除商品</a>
             </div>
         <?php endif;?>
         </div>

@@ -204,24 +204,31 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
     <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
     <h1><i class="fa-solid fa-box-archive me-3"></i>所有商品</h1>
     </div>
-    <!-- 篩選器 -->
-    <div class="container table-responsive">
-      <div>
-        <div class="py-2 d-flex justify-content-between align-items-center ">
-          <!-- 商品種類 -->
-          <ul class="nav nav-pills">
-            <li class="nav-item">
-              <a class="nav-link  <?php if($category=="") echo "active"?>" aria-current="page" href="products-list.php">全部</a>
-            </li>
-            <?php foreach ($rowsCategory as $row):?>
-            <li>
-              <a class="nav-link <?php if($category==$row["id"]) echo "active"?> "  href="products-list.php?category=<?=$row["id"]?>"><?=$row["name"]?></a>
-            </li>
-            <?php endforeach;?>
-          </ul>
-        <div>
-          <!-- 排序 -->
-          <div class="me-2">排序</div> 
+  <div class="container table-responsive">
+    <div>
+    <div class="py-2 d-flex justify-content-between align-items-center ">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link  <?php if($category=="") echo "active"?>" aria-current="page" href="products-list.php">全部</a>
+        </li>
+        <?php foreach ($rowsCategory as $row):?>
+        <li>
+          <a class="nav-link <?php if($category==$row["id"]) echo "active"?> "  href="products-list.php?category=<?=$row["id"]?>">
+          <?php switch($row["name"]){
+            case($row["name"]="服飾"):
+              echo "<i class='fa-solid fa-shirt'></i>";
+              break;
+            case($row["name"]="器材"):
+              echo "<i class='fa-solid fa-kitchen-set'></i></i>";
+              break;
+            case($row["name"]="食品"):
+              echo "<i class='fa-solid fa-carrot'></i>";
+              break;
+          }?>
+          <?=$row["name"]?></a>
+        </li>
+        <?php endforeach;?>
+      </ul>
           <div class="btn-group">
             <a href="products-list.php?page=<?=$page?>&order=1" class="btn btn-primary <?php if($order==1) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-short-wide"></i></a>
             <a href="products-list.php?page=<?=$page?>&order=2" class="btn btn-primary <?php if($order==2) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-wide-short"></i></a>
@@ -305,9 +312,9 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
       <a class="btn btn-info " href="product-add.php"><i class="fa-solid fa-boxes-packing me-2"></i>新增商品</a>
     </div>
     <?php if($pageProductCount>0): ?>
-        <table class="table table-bordered  table-hover mt-5">
-          <thead>
-            <tr class="table-info border-dark border-bottom border-3">
+        <table class=" table table-bordered  table-hover mt-5">
+          <thead class="">
+            <tr class="table-info border-dark border-bottom border-3 text-center ">
               <th>商品編號</th>
               <th>商品圖片</th>
               <th>商品名稱</th>
@@ -315,8 +322,8 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
               <th>商品類別</th>
               <th>商品價格</th>
               <th>商品庫存</th>
-              <th>商品上下架時間</th>
-              <th>商品上下架狀態</th>
+              <th colspan="2">商品上下架時間</th>
+              <th colspan="2">商品上下架狀態</th>
               <th>查看商品資訊</th>
             </tr>
           </thead>
@@ -330,18 +337,18 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
                 </figure>
               </td>
               <td><?=$row["name"]?></td>
-              <td><?=$row["description"]?></td>
+              <td class="text-truncate"><?=$row["description"]?></td>
               <td><?=$row["category_name"]?></td>
               <td><?=$row["price"]?></td>
               <td><?=$row["stock_in_inventory"]?></td>
-              <td><?=$row["launch_time"]."<br>";?>~<?=$row["discontinue_time"]?></td>
-              <td><?php if($row["status"]==1){
+              <td colspan="2"><?=$row["launch_time"]."<br>";?>~<?=$row["discontinue_time"]?></td>
+              <td colspan="2"><?php if($row["status"]==1){
                 echo "上架";
               }else{
                 echo "下架";
               }
               ?></td>
-              <td class="text-center"><a class="btn btn-info " href="product.php?id=<?=$row["id"]?>">查看</a></td>
+              <td class="text-center" ><a class="btn btn-info " href="product.php?id=<?=$row["id"]?>"><i class="fa-solid fa-info me-2"></i>查看</a></td>
               
             </tr>
             <?php endforeach;?>
@@ -362,7 +369,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
             echo "products-list.php?order=$order&page=$previousPage";
             }
             ?>
-          "><</a>
+          "><i class="fa-solid fa-angle-left"></i></a>
         </li>
         <?php for($i=1;$i<=$totalPage;$i++):?>
         <li class="page-item">
@@ -384,7 +391,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
             $nextPage=$page+1;
             echo "products-list.php?order=$order&page=$nextPage";
             }
-            ?>">></a>
+            ?>"><i class="fa-solid fa-angle-right"></i></a>
         </li>
       </ul>
     </nav>

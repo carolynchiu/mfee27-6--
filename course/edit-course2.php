@@ -1,6 +1,25 @@
+  <style>
+        #box{
+            width: 300px;
+            height: 300px;
+            border: 2px solid #858585;
+        }
+        #imgshow{
+            width: 100%;
+            height: 100%;
+        }
+        #pox{
+            width: 70px;
+            height: 24px;
+            overflow: hidden;
+        }
+  </style>
+
 <?php
 session_start();
 require("../db-connect.php");
+session_start();
+
 
 //要先給一個值，這樣沒有 $_GET["product_id"] 或是 $_GET["user_id"] 才不會報錯
 $sqlWhere = "";
@@ -33,10 +52,10 @@ $sqlWhere = "";
 
 //ORDER BY 日期排序 降冪 新的日期在前面比較好
 // $sql = "SELECT user_order.*, product.name AS product_name, product.price, users.name AS user_name FROM user_order JOIN product ON user_order.product_id = product.id JOIN users ON user_order.user_id = users.id $sqlWhere ORDER BY user_order.order_date DESC";
-$id=$_GET["id"];
+$id = $_GET["id"];
 $sql = "SELECT course.*,course_content.* FROM course JOIN course_content ON course.id=course_content.id WHERE course.id=$id";
 $result = $conn->query($sql);
-$userCount=$result->num_rows;
+$userCount = $result->num_rows;
 
 ?>
 <!doctype html>
@@ -95,7 +114,8 @@ $userCount=$result->num_rows;
             margin-left: var(--aside-width);
             margin-top: 40px;
         }
-        .image_prev{
+
+        .image_prev {
             width: 300px;
         }
     </style>
@@ -105,82 +125,91 @@ $userCount=$result->num_rows;
     <?php require("../module/header.php"); ?>
     <?php require("../module/aside.php"); ?>
     <main class="main-content p-4">
-        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-            <h1>編輯課程</h1>
+        <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+            <h1><i class="fa-solid fa-pen-to-square"></i> 編輯課程</h1>
         </div>
-        
+
 
         <div class="container">
-        <div class="py-2">
-            <a class="btn btn-info" href="course.php">返回所有課程</a>
-        </div>
-
-        <form action="doUpdate.php" method="post" enctype="multipart/form-data">
-        <?php if($userCount>0):
-            $row = $result->fetch_assoc();
-            ?>
-            <input name="id" type="hidden" value="<?=$row["id"]?>">
-        <table class="table">
-            <tr>
-                <th>課程編號</th>
-                <td><?=$row["id"]?></td>
-            </tr>
-            <tr>
-                <th>課程名稱</th>
-                <td><input type="text" name="name" class="form-control"
-                value="<?=$row["name"]?>"
-                ></td>
-            </tr>
-            <tr>
-                <th>課程內容</th>
-                <td>
-                <textarea name="description" cols="30" rows="10" class="form-control"><?=$row["description"]?></textarea>
-                </td>
-            </tr>
-            <tr>
-                <th>創立時間</th>
-                <td><?=$row["create_time"]?></td>
-            </tr>
-            <tr>
-                <th>影音連結</th>
-                <td><input type="text" name="url" class="form-control"
-                    value="<?=$row["url"]?>"
-                    ></td>
-            </tr>
-            <tr>
-                <th>更換圖片</th>
-                <td>
-                    <div class="image_prev">
-                        <img class="w-100" src="<?= $row["image"] ?>" alt="">
-                        <input class="form-control" type="file" name="file" value="">
-                    </div>
-                </td>
-            </tr>
-
-        </table>
-        <div class="py-2">
-            <div class="d-flex justify-content-between">
             <div class="py-2">
-                <button class="btn btn-info" 
-                type="submit">儲存</button>
+                <a class="btn btn-info" href="course.php">返回所有課程</a>
             </div>
-        </form>
-            </div>
-        </div>
-        <?php else: ?>
-            沒有該使用者
-        <?php endif; ?>
-     </div>
+
+            <form action="doUpdate.php" method="post" enctype="multipart/form-data" runat="server">
+                <?php if ($userCount > 0) :
+                    $row = $result->fetch_assoc();
+                ?>
+                    <input name="id" type="hidden" value="<?= $row["id"] ?>">
+                    <table class="table">
+                        <tr>
+                            <th>課程編號</th>
+                            <td><?= $row["id"] ?></td>
+                        </tr>
+                        <tr>
+                            <th>課程名稱</th>
+                            <td><input type="text" name="name" class="form-control" value="<?= $row["name"] ?>"></td>
+                        </tr>
+                        <tr>
+                            <th>課程內容</th>
+                            <td>
+                                <textarea name="description" cols="30" rows="10" class="form-control"><?= $row["description"] ?></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>創立時間</th>
+                            <td><?= $row["create_time"] ?></td>
+                        </tr>
+                        <tr>
+                            <th>影音連結</th>
+                            <td><input type="text" name="url" class="form-control" value="<?= $row["url"] ?>"></td>
+                        </tr>
+                        <tr>
+                            <th>原始圖片</th>
+                            <td>
+                                <div class="image_prev">
+                                    <img class="w-100" src="<?= $row["image"] ?>" alt="">
+
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>更換圖片</th>
+                            <td>
+                                <div class="image_prev">
+                                    <input accept="image/*" id="imgInp" class="form-control mb-2" type="file" name="file" value="">
+                                    <img class="w-100" id="blah" src="#" alt="" />
+                                    
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
 
 
+                    <div class="py-2">
+                        <div class="d-flex justify-content-between">
+                            <div class="py-2">
+                                <button class="btn btn-info" type="submit">儲存</button>
+                            </div>
+                        </div>
+                    </div>
+            </form>
 
-
-
-
-
+    <?php else : ?>
+        沒有該使用者
+    <?php endif; ?>
+    </div>
 
 
     </main>
+    <script>
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                blah.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 

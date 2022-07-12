@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
 require("../db-connect.php");
 
 if (isset($_GET["page"])) {
@@ -149,8 +152,7 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
             margin-top: 40px;
         }
 
-        table.table th,
-        td {
+        table.table th,td {
             vertical-align: middle;
             text-align: center;
         }
@@ -161,8 +163,8 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
     <?php require("../module/header.php"); ?>
     <?php require("../module/aside.php"); ?>
     <main class="main-content p-4">
-        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-            <h1>所有課程</h1>
+        <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+            <h1><i class="fa-solid fa-person-swimming"></i> 所有課程</h1>
             <div class="btn-group" role="group" aria-label="Basic example">
 
                 <a href="create_course.php" type="get" class="btn btn-success">+新增課程</a>
@@ -213,9 +215,9 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
 
 
         <?php if ($pageCourseCount > 0) : ?>
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-hover">
                 <thead>
-                    <tr>
+                    <tr class="table-info border-dark border-bottom border-3">
                         <th>課程編號</th>
                         <th>課程名稱</th>
                         <th>課程圖片</th>
@@ -269,6 +271,19 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
 
 
         </div>
+        <div>
+                <nav class="d-flex justify-content-center" aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
+                        <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                            <li class="page-item <?php if ($page == $i) echo "active"; ?>">
+                                <a class="page-link" href="course.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a>
+                            </li>
+                        <?php endfor; ?>
+                        <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
+                    </ul>
+                </nav>
+            </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 

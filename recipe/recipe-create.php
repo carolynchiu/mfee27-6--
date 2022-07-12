@@ -86,16 +86,16 @@ require("../db-connect.php");
           <input class="form-control" type="file" id="formFile" name="main_image" required>
         </div>
         <div class="py-2">
-          <label for="formFile" class="form-label">簡介</label>
+          <label for="formFile" class="form-label">食譜簡介</label>
           <textarea class="form-control" name="intro"></textarea>
         </div>
         <div class="mb-2 d-flex justify-content-between">
           <div class="col-6 me-1">
-            <label for="">份量(人份)</label>
+            <label for="">食譜份量(人份)</label>
             <input class="form-control" type="number" name="servings" required>
           </div>
           <div class="col-6 ms-1">
-            <label for="">時間(分鐘)</label>
+            <label for="">製作時間(分鐘)</label>
             <input class="form-control" type="text" name="cook_time" required>
           </div>
         </div>

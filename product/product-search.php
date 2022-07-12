@@ -212,8 +212,8 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
-  <?php //require("../module/header.php"); ?>
-  <?php //require("../module/aside.php"); ?>
+  <?php require("../module/header.php"); ?>
+  <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="container table-responsive">
     <div>

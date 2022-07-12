@@ -123,7 +123,7 @@ switch ($order) {
                                 url: "./api/delete.php",
                                 type: "post",
                                 data: {
-                                    id: object.id,
+                                    id: object.article_id,
                                 },
                             }).then(function (deleteRes) {
                                 if (deleteRes === "刪除成功") {

@@ -118,7 +118,7 @@ require("./db-connect.php");
               </div>
               <div class="col-auto ">
                 <?php
-                $sqlProduct = "SELECT * FROM products WHERE id=$id ";
+                $sqlProduct = "SELECT * FROM products";
                 $resultProduct = $conn->query($sqlProduct);
                 $productCount = $resultProduct->num_rows;
                 ?>

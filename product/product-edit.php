@@ -1,4 +1,5 @@
 <?php
+session_start();
 if(!isset($_GET["id"])){
   echo "沒有帶資料";
   exit;

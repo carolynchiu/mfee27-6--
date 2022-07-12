@@ -1,4 +1,5 @@
 <?php
+session_start();
 //待處理
 //3.排序
 

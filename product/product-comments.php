@@ -1,4 +1,5 @@
 <?php
+session_start();
 require("../db-connect.php");
 
 //將users.id帶入product_comments.user_id 和products.id 帶入product_comments.product_id

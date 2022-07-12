@@ -150,7 +150,7 @@ $userCount = $result->num_rows;
                     </tr>
                     <tr>
                         <th>圖片預覽</th>
-                        <td><img src="<?= $row["image"] ?>" class="image_prev" alt=""></td>
+                        <td><img src="./upload/<?= $row["image"] ?>" class="image_prev" alt=""></td>
                     </tr>
                     <tr>
                         <th>影音連結</th>

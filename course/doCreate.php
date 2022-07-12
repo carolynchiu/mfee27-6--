@@ -62,7 +62,8 @@ if ($conn->query($sqlCreate) === TRUE) {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
-$file = "./upload/" . $_FILES["file"]["name"];
+// $file = "./upload/" . $_FILES["file"]["name"];
+$file = $_FILES["file"]["name"];
 
 $sqlCreate2 = "INSERT INTO course_content (description,image) VALUES ('$description','$file')";
 if ($conn->query($sqlCreate2) === TRUE) {

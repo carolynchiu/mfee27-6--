@@ -25,6 +25,9 @@
             <a class="nav-link" href="http://localhost/mfee27-group6/product/products-list.php">商品</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="http://localhost/mfee27-group6/product/product-comments.php">商品評論</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="http://localhost/mfee27-group6/order/order-list.php">訂單</a>
           </li>
           <li class="nav-item">

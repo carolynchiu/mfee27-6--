@@ -1,7 +1,6 @@
 <?php
 session_start();
 //待處理
-//價錢篩選器
 //時間篩選器
 
 
@@ -10,14 +9,52 @@ require("../db-connect.php");
 //設定如果有抓到頁數 則$page=該頁數
 //若無則假設$page為1
 $page=isset($_GET["page"])? $_GET["page"] :1;
+$perPage=5; //每頁有5項產品
+$start=($page-1)*$perPage; //起始頁能顯示的產品數
+$searchCategory=isset($_GET["search-category"])?$_GET["search-category"]:"";
+$category=isset($_GET["category"])?$_GET["category"]:"";
+$min=isset($_GET["min"])?$_GET["min"]:"";
+$max=isset($_GET["max"])?$_GET["max"]:"";
 
-if (isset($_GET["category"])){
-  $category = $_GET["category"];
-  $sqlWhere="WHERE products.category_id=$category";
+if(!isset($_GET["search"])){
+  $search="";
+  $pageProductCount=0;
 }else{
-  $category="";
-  $sqlWhere="";
+  $search=$_GET["search"];
 }
+
+$query="SELECT products.* , product_category.name AS category_name  FROM products  JOIN product_category ON products.category_id = product_category.id";
+$conditions=array();
+
+if(!empty($searchCategory)){
+  if($searchCategory == "id"){
+    $conditions[]="products.id";
+  }else{
+    $conditions[]="products.name";
+  }
+}
+if(!empty($category)){
+  switch($category){
+    case 1:
+      $conditions[]="products.category_id=1";
+      break;
+    case 2:
+      $conditions[]="products.category_id=2";
+      break;
+    case 3:
+      $conditions[]="products.category_id=3";
+      break;
+
+  }
+}
+if(!empty($max)){
+  $conditions[]="products.price <= $max";
+}
+if(!empty($min)){
+  $conditions[]="products.price >= $min";
+}
+$sql="$query";
+
 //如果有抓到order則顯示抓到的order;沒抓到的話order預設1
 $order= isset($_GET["order"])? $_GET["order"] : 1; 
 
@@ -39,24 +76,43 @@ switch($order){
 }
 
 
-//sql product所有的欄位和 product_category的名子並生出category_name
-//使用join 將product.category_id和 category.id掛勾finished
-$sqlAll="SELECT products.* , product_category.name AS category_name  FROM products JOIN product_category ON products.category_id = product_category.id $sqlWhere ORDER BY $orderType";
- //選取所有產品
+
+
+if(count($conditions)>0){
+  $sql .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+}else{
+  $sql .=" WHERE products.name LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+}
+$resultPage=$conn->query($sql);
+$pageProductCount=$resultPage->num_rows;
+
+$sqlAll="SELECT products.* , product_category.name AS category_name  FROM products  JOIN product_category ON products.category_id = product_category.id";
+if(count($conditions)>0){
+  $order= isset($_GET["order"])? $_GET["order"] : 1; 
+
+switch($order){
+  case 1:
+    $orderType="id ASC";
+    break;
+  case 2:
+    $orderType="id DESC";
+    break;
+  case 3:
+    $orderType="status DESC , id ASC";
+    break;
+  case 4:
+    $orderType="status ASC , id ASC";
+    break;
+    default:
+    $orderType="ASC";
+}
+  $sqlAll .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+}
+
+//選取所有產品
 $resultAll= $conn->query($sqlAll);
 //產品的總數
 $productsCount=$resultAll->num_rows;
-
-
-$perPage=5; //每頁有5項產品
-$start=($page-1)*$perPage; //起始頁能顯示的產品數
-//每頁產品
-$sqlPage="SELECT products.* , product_category.name AS category_name  FROM products JOIN product_category ON products.category_id = product_category.id $sqlWhere ORDER BY $orderType LIMIT $start, 5 ";
-$resultPage=$conn->query($sqlPage);
-$pageProductCount=$resultPage->num_rows;
-
-
-
 
 // //開始 
 $startItem=($page-1)*$perPage+1;
@@ -141,11 +197,12 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
-  <?php require("../module/header.php"); ?>
-  <?php require("../module/aside.php"); ?>
+  <?php //require("../module/header.php"); ?>
+  <?php //require("../module/aside.php"); ?>
   <main class="main-content p-4">
-  <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
-      <h1><i class="fa-solid fa-box-archive me-3"></i>所有商品</h1>
+    <!-- 頁面標題 -->
+    <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+    <h1><i class="fa-solid fa-box-archive me-3"></i>所有商品</h1>
     </div>
   <div class="container table-responsive">
     <div>
@@ -173,25 +230,28 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
         <?php endforeach;?>
       </ul>
           <div class="btn-group">
-            <div class="m-2">排序</div>
-            <a href="products-list.php?page=<?=$page?>&order=1" class="btn btn-primary <?php if($order==1) echo "active" ?>" name="order">id<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-            <a href="products-list.php?page=<?=$page?>&order=2" class="btn btn-primary <?php if($order==2) echo "active" ?>" name="order">id<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+            <a href="products-list.php?page=<?=$page?>&order=1" class="btn btn-primary <?php if($order==1) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+            <a href="products-list.php?page=<?=$page?>&order=2" class="btn btn-primary <?php if($order==2) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-wide-short"></i></a>
             <a href="products-list.php?page=<?=$page?>&order=3" class="btn btn-primary <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
             <a href="products-list.php?page=<?=$page?>&order=4" class="btn btn-primary <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
           </div>
         </div>
-        <form action="product-search.php" method="get">
-        <div class="input-group">
-          <div class="input-group-text ">
-            <label class="form-check-label" for="">依商品編號</label>
-            <input class="form-check-input my-0 mx-2" type="radio" name="search-category"  value="id">
-            <label class="form-check-label" for="">依商品名稱</label>
-            <input class="form-check-input my-0 mx-2" type="radio" name="search-category" id="" value="name">
-          </div>
-            <input type="text" name="search" class="form-control">
-            <button type="submit" class="btn btn-info"><i class="fa-solid fa-magnifying-glass me-3"></i>搜尋</button>
         </div>
-      </form>
+        
+        <!-- 搜尋 -->
+        <form action="product-search.php" method="get">
+        <?php require("price-filter.php") ?>
+          <div class="input-group">
+            <div class="input-group-text ">
+              <label class="form-check-label" for="">依商品編號</label>
+              <input class="form-check-input my-0 mx-2" type="radio" name="search-category"  value="id">
+              <label class="form-check-label" for="">依商品名稱</label>
+              <input class="form-check-input my-0 mx-2" type="radio" name="search-category" id="" value="name">
+            </div>
+              <input type="text" name="search" class="form-control">
+              <button type="submit" class="btn btn-info"><i class="fa-solid fa-magnifying-glass me-3"></i>搜尋</button>
+          </div>
+        </form>
     
 
     <div class="py-2 d-flex justify-content-between align-items-center ">
@@ -217,10 +277,10 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
         <li class="page-item <?php if($page==1)echo "disabled";?>   ">
           <a class="page-link" href="
           <?php if(isset($_GET["category"])){
-            echo "products-list.php?category=<?=$category?>&page=<?=$page?>";
+            echo "products-list.php?order=$order&category=$category&page=$page";
           }else{
             $previousPage=$page-1;
-            echo "products-list.php?page=$previousPage";
+            echo "products-list.php?order=$order&page=$previousPage";
             }
             ?>
           "><</a>
@@ -230,9 +290,9 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
           <a class="page-link 
           <?php if($page==$i)echo "active"; ?>" href="
           <?php if(isset($_GET["category"])){
-            echo "products-list.php?category=<?=$category?>&page=<?=$i?>";
+            echo "products-list.php?order=$order&category=$category&page=$i";
           }else{
-            echo "products-list.php?page=$i";
+            echo "products-list.php?order=$order&page=$i";
             }
             ?>"><?=$i?></a>
         </li>
@@ -240,10 +300,10 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
         <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
           <a class="page-link" href="
           <?php if(isset($_GET["category"])){
-            echo "products-list.php?&category=<?=$category?>&page=<?=$page?>";
+            echo "products-list.php?order=$order&category=$category&page=$page";
           }else{
             $nextPage=$page+1;
-            echo "products-list.php?page=$nextPage";
+            echo "products-list.php?order=$order&page=$nextPage";
             }
             ?>">></a>
         </li>
@@ -303,10 +363,10 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
         <li class="page-item <?php if($page==1)echo "disabled";?>   ">
           <a class="page-link" href="
           <?php if(isset($_GET["category"])){
-            echo "products-list.php?category=<?=$category?>&page=<?=$page?>";
+            echo "products-list.php?order=$order&category=<?=$category?>&page=<?=$page?>";
           }else{
             $previousPage=$page-1;
-            echo "products-list.php?page=$previousPage";
+            echo "products-list.php?order=$order&page=$previousPage";
             }
             ?>
           "><i class="fa-solid fa-angle-left"></i></a>
@@ -316,9 +376,9 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
           <a class="page-link 
           <?php if($page==$i)echo "active"; ?>" href="
           <?php if(isset($_GET["category"])){
-            echo "products-list.php?category=<?=$category?>&page=<?=$i?>";
+            echo "products-list.php?order=$order&category=$category&page=$i";
           }else{
-            echo "products-list.php?page=$i";
+            echo "products-list.php?order=$order&page=$i";
             }
             ?>"><?=$i?></a>
         </li>
@@ -326,10 +386,10 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
         <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
           <a class="page-link" href="
           <?php if(isset($_GET["category"])){
-            echo "products-list.php?&category=<?=$category?>&page=<?=$page?>";
+            echo "products-list.php?order=$order&category=$category&page=$page";
           }else{
             $nextPage=$page+1;
-            echo "products-list.php?page=$nextPage";
+            echo "products-list.php?order=$order&page=$nextPage";
             }
             ?>"><i class="fa-solid fa-angle-right"></i></a>
         </li>

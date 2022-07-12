@@ -25,13 +25,16 @@ switch($order){
     $orderType="id ASC";
     break;
   case 2:
-    $orderType="status DESC";
+    $orderType="id DESC";
     break;
   case 3:
-    $orderType="status ASC";
+    $orderType="status DESC , id ASC";
+    break;
+  case 4:
+    $orderType="status ASC , id ASC";
     break;
     default:
-     $orderType="DESC";
+     $orderType="ASC";
 }
 
 
@@ -154,21 +157,23 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
         <?php endforeach;?>
       </ul>
           <div class="btn-group">
-            <div class="m-auto">排序</div>
-            <a href="products-list.php?page=<?=$page?>&order=2" class="btn btn-primary <?php if($order==2) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-            <a href="products-list.php?page=<?=$page?>&order=3" class="btn btn-primary <?php if($order==3) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
+            <div class="m-2">排序</div>
+            <a href="products-list.php?page=<?=$page?>&order=1" class="btn btn-primary <?php if($order==1) echo "active" ?>" name="order">id<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+            <a href="products-list.php?page=<?=$page?>&order=2" class="btn btn-primary <?php if($order==2) echo "active" ?>" name="order">id<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+            <a href="products-list.php?page=<?=$page?>&order=3" class="btn btn-primary <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+            <a href="products-list.php?page=<?=$page?>&order=4" class="btn btn-primary <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
           </div>
         </div>
-      <form action="product-search.php" method="get">
-        <div class="input-group row">
-          <!-- <select class="form-select" name="search-category" id="">
-            <option disabled selected value=""></option>
-            <option value="1">依使用者</option>
-            <option value="2">依商品名稱</option>
-            <option value="3">依商品狀態</option>
-          </select> -->
-          <input class=" form-control  " type="text" name="search" class="form-control">
-          <button class=" form-control  btn btn-info " type="submit" class="btn btn-info">搜尋</button>
+        <form action="product-search.php" method="get">
+        <div class="input-group">
+          <div class="input-group-text ">
+            <label class="form-check-label" for="">依商品編號</label>
+            <input class="form-check-input my-0 mx-2" type="radio" name="search-category"  value="id">
+            <label class="form-check-label" for="">依商品名稱</label>
+            <input class="form-check-input my-0 mx-2" type="radio" name="search-category" id="" value="name">
+          </div>
+            <input type="text" name="search" class="form-control">
+            <button type="submit" class="btn btn-info">搜尋</button>
         </div>
       </form>
     

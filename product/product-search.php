@@ -2,55 +2,129 @@
 //待處理
 //3.排序
 
-
 require("../db-connect.php");
-//設定如果有抓到頁數 則$page=該頁數
-//若無則假設$page為1
+
+$category=isset($_GET["category"])?$_GET["category"]:"";
+$min=isset($_GET["min"])?$_GET["min"]:0;
+$max=isset($_GET["max"])?$_GET["max"]:9999;
+
+$by_searchCategory=isset($_GET["search-category"])?$_GET["search-category"]:"";
+$by_category=isset($_GET["category"])?$_GET["category"]:"";
+$by_price_min=isset($_GET["min"])?$_GET["min"]:"";
+$by_price_max=isset($_GET["max"])?$_GET["max"]:"";
+
 
 if(!isset($_GET["search"])){
-    $search="";
-    $pageProductCount=0;
+  $search="";
+  $pageProductCount=0;
 }else{
-    $search=$_GET["search"];
-    $sqlAll="SELECT products.* , product_category.name AS category_name  FROM products  JOIN product_category ON products.category_id = product_category.id WHERE products.name LIKE '%$search%'";
-    //選取所有產品
-    $resultAll= $conn->query($sqlAll);
-    //產品的總數
-    $productsCount=$resultAll->num_rows;
+  $search=$_GET["search"];
 }
 
+//每頁產品
+// sql product所有的欄位和 product_category的名子並生出category_name
+// 使用join 將product.category_id和 category.id掛勾finished
+$query="SELECT products.* , product_category.name AS category_name  FROM products  JOIN product_category ON products.category_id = product_category.id";
+$conditions=array();
+
+
+if(!empty($by_searchCategory)){
+  if($by_searchCategory == "id"){
+    $conditions[]="products.id";
+  }else{
+    $conditions[]="products.name";
+  }
+}
+if(!empty($by_category)){
+  switch($by_category){
+    case 1:
+      $conditions[]="products.category_id=1";
+      break;
+    case 2:
+      $conditions[]="products.category_id=2";
+      break;
+    case 3:
+      $conditions[]="products.category_id=3";
+      break;
+
+  }
+}
+if(!empty($by_price_max)){
+  $conditions[]="products.price <= $max";
+}
+if(!empty($by_price_min)){
+  $conditions[]="products.price >= $min";
+}
+$sql="$query";
+
+//設定如果有抓到頁數 則$page=該頁數
+//若無則假設$page為1
 if(isset($_GET["page"])){
   $page=$_GET["page"];
 }else{
   $page=1;
 }
+ $perPage=5; //每頁有5項產品
+ $start=($page-1)*$perPage; //起始頁能顯示的產品數
 
-if (isset($_GET["category"])){
-  $category = $_GET["category"];
-  $sqlWhere="WHERE product.category_id=$category";
+ $order= isset($_GET["order"])? $_GET["order"] : 1; 
+
+ switch($order){
+   case 1:
+     $orderType="id ASC";
+     break;
+   case 2:
+     $orderType="id DESC";
+     break;
+   case 3:
+     $orderType="status DESC , id ASC";
+     break;
+   case 4:
+     $orderType="status ASC , id ASC";
+     break;
+     default:
+     $orderType="ASC";
+ }
+
+
+if(count($conditions)>0){
+  $sql .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
 }else{
-  $category="";
-  $sqlWhere="";
+  $sql .=" WHERE products.name LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+}
+$resultPage=$conn->query($sql);
+$pageProductCount=$resultPage->num_rows;
+
+
+
+$sqlAll="SELECT products.* , product_category.name AS category_name  FROM products  JOIN product_category ON products.category_id = product_category.id";
+if(count($conditions)>0){
+  $order= isset($_GET["order"])? $_GET["order"] : 1; 
+
+switch($order){
+  case 1:
+    $orderType="id ASC";
+    break;
+  case 2:
+    $orderType="id DESC";
+    break;
+  case 3:
+    $orderType="status DESC , id ASC";
+    break;
+  case 4:
+    $orderType="status ASC , id ASC";
+    break;
+    default:
+    $orderType="ASC";
+}
+  $sqlAll .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
 }
 
 
-//sql product所有的欄位和 product_category的名子並生出category_name
-//使用join 將product.category_id和 category.id掛勾finished
-$sqlAll="SELECT products.* , product_category.name AS category_name  FROM products  JOIN product_category ON products.category_id = product_category.id WHERE products.name LIKE '%$search%'";
- //選取所有產品
+//選取所有產品
 $resultAll= $conn->query($sqlAll);
 //產品的總數
 $productsCount=$resultAll->num_rows;
-
-
-$perPage=5; //每頁有5項產品
-$start=($page-1)*$perPage; //起始頁能顯示的產品數
-//每頁產品
-$sqlPage="SELECT products.* , product_category.name AS category_name  FROM products JOIN product_category ON products.category_id = product_category.id WHERE products.name LIKE '%$search%' LIMIT $start, 5";
-
-
-$resultPage=$conn->query($sqlPage);
-$pageProductCount=$resultPage->num_rows;
 
 // //開始 
 $startItem=($page-1)*$perPage+1;
@@ -59,12 +133,18 @@ $endItem=$page*$perPage;
 // if($endItem>$userCount)$endItem=$userCount;
 $totalPage=ceil($productsCount/$perPage);//無條件進位
 
+//給商品種類篩選器的 finished
+$sqlCategory="SELECT * FROM product_category";
+$resultCategory=$conn->query($sqlCategory);
+$rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
+
+
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
-  <title>商品-搜尋" "的結果</title>
+  <title>商品-" <?=$search?> "搜尋的結果</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -135,19 +215,57 @@ $totalPage=ceil($productsCount/$perPage);//無條件進位
   <main class="main-content p-4">
   <div class="container table-responsive">
     <div>
-        <div><a class="btn btn-info my-2" href="products-list.php">回產品清單頁面</a></div>
+        <div>
+          <a class="btn btn-info my-2" href="products-list.php">回產品清單頁面</a>
+        </div>
         <form action="product-search.php" method="get">
-        <div class="input-group">
-            <select class="form-select" name="search-category" id="">
-              <option disabled selected value=""></option>
-              <option value="1">依使用者</option>
-              <option value="2">依商品名稱</option>
-              <option value="3">依商品狀態</option>
-            </select>
+          <div class="py-2 d-flex justify-content-between align-items-center ">
+            <ul class="nav nav-pills my-2">
+              <li class="nav-item">
+                <a class="nav-link   <?php if($category=="") echo "active"?>"  aria-current="page" href="product-search.php">全部</a>
+              </li>
+              <?php foreach ($rowsCategory as $row):?>
+              <li>
+                <a class="nav-link category  <?php if($category==$row["id"]) echo "active"?> " href="product-search.php?category=<?=$row["id"]?>" id="category" name="category"  ><?=$row["name"]?></a>
+              </li>
+              <?php endforeach;?>
+            </ul>
+            <div class="btn-group">
+              <div class="m-2">排序</div>
+              <a href="product-search.php?page=<?=$page?>&order=1" class="btn btn-primary <?php if($order==1) echo "active" ?>" name="order">id<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+              <a href="product-search.php?page=<?=$page?>&order=2" class="btn btn-primary <?php if($order==2) echo "active" ?>" name="order">id<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+              <a href="product-search.php?page=<?=$page?>&order=3" class="btn btn-primary <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+              <a href="product-search.php?page=<?=$page?>&order=4" class="btn btn-primary <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
+            </div>
+            
+          </div>
+          <?php require("price-filter.php") ?>
+
+        <div class="input-group d-block">
+          <div class="input-group-text">
+            <div class="d-flex align-items-center">
+              <label class="form-check-label" for="">依商品編號</label>
+              <input class="form-check-input my-0 mx-2" type="radio" name="search-category"  value="id" <?php 
+              if($by_searchCategory == "id"){
+                echo "checked";
+              }
+            ?>
+            >
+            </div>
+            <div class="d-flex align-items-center">
+              <label class="form-check-label" for="">依商品名稱</label>
+              <input class="form-check-input my-0 mx-2" type="radio" name="search-category" id="" value="name" <?php 
+              if($by_searchCategory  == "name"){
+                echo "checked";
+              }
+            ?>>
+            </div>
+            
             <input type="text" name="search" class="form-control">
-            <button type="submit" class="btn btn-info">搜尋</button>
+            <button type="submit" class="btn btn-info mx-2">搜尋</button>
         </div>
       </form>
+      <!-- 要改的 -->
     </div>
     <div class="py-2  ">
       <!-- 頁數切換 & 新增商品 -->
@@ -218,16 +336,17 @@ $totalPage=ceil($productsCount/$perPage);//無條件進位
         <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center <?php if($productsCount==0) echo "d-none";?>">
         <li class="page-item <?php if($page==1)echo "disabled";?>   ">
-          <a class="page-link" href="product-search.php?search=<?=$search?>&page=<?=$page-1?>"><</a>
+          <a class="page-link" href="product-search.php?<?=$by_category."&"?>
+          search=<?=$search?>&page=<?=$page-1?>"><</a>
         </li>
         <?php for($i=1;$i<=$totalPage;$i++):?>
         <li class="page-item">
           <a class="page-link 
-          <?php if($page==$i)echo "active"; ?>" href="product-search.php?search=<?=$search?>&page=<?=$i?>"><?=$i?></a>
+          <?php if($page==$i)echo "active"; ?>" href="product-search.php?<?=$by_category."&"?>search=<?=$search?>&page=<?=$i?>"><?=$i?></a>
         </li>
         <?php endfor;?>
         <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
-          <a class="page-link" href="product-search.php?search=<?=$search?>&page=<?=$page+1?>">></a>
+          <a class="page-link" href="product-search.php?<?=$by_category."&"?>search=<?=$search?>&page=<?=$page+1?>">></a>
         </li>
       </ul>
     </nav>

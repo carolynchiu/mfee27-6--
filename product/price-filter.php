@@ -1,6 +1,6 @@
 <div class="py-2">
-    <div class="row align-items-center">
-        price 
+    <div class= "ms-2 my-2 row align-items-center">
+        商品價格 
         <div class="col-auto">
                 <input type="number" class="form-control" name="min" value="<?php
                 $min=isset($_GET["min"])?$_GET["min"]:"";

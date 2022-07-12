@@ -107,6 +107,8 @@ switch($order){
     $orderType="ASC";
 }
   $sqlAll .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+}else{
+  $sql .=" WHERE products.name LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
 }
 
 //選取所有產品
@@ -203,6 +205,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
     <!-- 頁面標題 -->
     <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
     <h1><i class="fa-solid fa-box-archive me-3"></i>所有商品</h1>
+    <a class="btn btn-info " href="product-add.php"><i class="fa-solid fa-boxes-packing me-2"></i>新增商品</a>
     </div>
   <div class="container table-responsive">
     <div>
@@ -309,7 +312,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
         </li>
       </ul>
     </nav>
-      <a class="btn btn-info " href="product-add.php"><i class="fa-solid fa-boxes-packing me-2"></i>新增商品</a>
+      
     </div>
     <?php if($pageProductCount>0): ?>
         <table class=" table table-bordered  table-hover mt-5">

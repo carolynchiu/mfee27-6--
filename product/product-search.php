@@ -1,7 +1,5 @@
 <?php
 session_start();
-
-
 require("../db-connect.php");
 
 
@@ -111,6 +109,9 @@ switch($order){
     $orderType="ASC";
 }
   $sqlAll .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+  $GLOBALS["sqlAll"];
+}else{
+  $sqlAll .=" WHERE products.name LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
 }
 
 

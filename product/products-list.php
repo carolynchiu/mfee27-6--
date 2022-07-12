@@ -113,9 +113,9 @@ $resultAll= $conn->query($sqlAll);
 //產品的總數
 $productsCount=$resultAll->num_rows;
 
-// //開始 
+//開始 
 $startItem=($page-1)*$perPage+1;
-// //結尾
+//結尾
 $endItem=$page*$perPage;
 // if($endItem>$userCount)$endItem=$userCount;
 $totalPage=ceil($productsCount/$perPage);//無條件進位
@@ -196,8 +196,8 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
-  <?php //require("../module/header.php"); ?>
-  <?php //require("../module/aside.php"); ?>
+  <?php require("../module/header.php"); ?>
+  <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
     <!-- 頁面標題 -->
     <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">

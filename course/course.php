@@ -251,8 +251,8 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
 
                             <td>
                                 <?php if ($row["valid"] == 1) {
-                                    echo "<span class=\"text-success fw-bold\"><i class=\"fa-solid fa-circle-check display-6\"></i></span>";
-                                } else echo "<span class=\"text-secondary fw-bold\"><i class=\"fa-solid fa-circle-xmark display-6\"></i></span>"; ?>
+                                    echo "<span class=\"text-success fw-bold\"><i class=\"fa-solid fa-circle-check h3\"></i></span>";
+                                } else echo "<span class=\"text-secondary fw-bold\"><i class=\"fa-solid fa-circle-xmark h3\"></i></span>"; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

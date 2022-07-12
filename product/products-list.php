@@ -28,10 +28,10 @@ switch($order){
     $orderType="id DESC";
     break;
   case 3:
-    $orderType="status DESC";
+    $orderType="status DESC , id ASC";
     break;
   case 4:
-    $orderType="status ASC";
+    $orderType="status ASC , id ASC";
     break;
     default:
      $orderType="ASC";

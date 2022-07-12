@@ -10,7 +10,7 @@ require("./db-connect.php");
 <html lang="en">
 
 <head>
-  <title>dashboard</title>
+  <title>首頁</title>
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -71,7 +71,7 @@ require("./db-connect.php");
   <?php require("./module/aside.php"); ?>
   <main class="main-content p-4">
     <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-      <h1>Dashboard</h1>
+      <h1><i class="fa-solid fa-house me-3"></i>首頁</h1>
       <div class="btn-group" role="group" aria-label="Basic example">
         <button type="button" class="btn btn-outline-primary">share</button>
         <button type="button" class="btn btn-outline-primary">export</button>

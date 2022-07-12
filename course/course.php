@@ -87,10 +87,6 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
 
 
 
-
-
-
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -149,8 +145,7 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
             margin-top: 40px;
         }
 
-        table.table th,
-        td {
+        table.table th,td {
             vertical-align: middle;
             text-align: center;
         }
@@ -161,7 +156,7 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
     <?php require("../module/header.php"); ?>
     <?php require("../module/aside.php"); ?>
     <main class="main-content p-4">
-        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+        <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
             <h1>所有課程</h1>
             <div class="btn-group" role="group" aria-label="Basic example">
 
@@ -217,8 +212,8 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
                 <thead>
                     <tr>
                         <th>課程編號</th>
-                        <th>課程名稱</th>
                         <th>課程圖片</th>
+                        <th>課程名稱</th>
                         <th>建立日期</th>
                         <th>操作</th>
                         <th>上架狀態</th>
@@ -229,8 +224,8 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
                     <?php foreach ($rows as $row) : ?>
                         <tr>
                             <td><?= $row["id"] ?></td>
-                            <td><?= $row["name"] ?></td>
                             <td><img src="<?= $row["image"] ?>" style="width:150px" alt=""></td>
+                            <td><?= $row["name"] ?></td>
                             <td><?= $row["create_time"] ?></td>
                             <td style="width:300px">
 

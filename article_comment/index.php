@@ -51,6 +51,7 @@ switch ($order) {
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <link rel="stylesheet" href="../fontawesome-free-6.1.1-web/css/all.min.css">
   <link rel="stylesheet" href="../style/common.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 </head>
 
 <body>
@@ -63,6 +64,7 @@ switch ($order) {
         <button class="btn btn-primary" id="create-submit">送出</button>
         </div>
         <table class="table" id="article-data">
+            <thead>
             <tr>
                 <th>編號</th>
                 <th>文章編號</th>
@@ -70,6 +72,10 @@ switch ($order) {
                 <th>內容</th>
                 <th>編輯</th>
             </tr>
+            </thead>
+            <tbody id="append-target">
+
+            </tbody>
         </table>
         <div id="update-div"></div>
     </div>
@@ -80,6 +86,7 @@ switch ($order) {
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"
         ></script>
+       <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
         <script>
             // 查詢現有資料
@@ -89,7 +96,7 @@ switch ($order) {
             }).then((res) => {
                 console.log(res);
                 // 1. 把res呈現在table裡面 (變成UI)
-                let appendTarget = document.getElementById("article-data");
+                let appendTarget = document.getElementById("append-target");
                 // for 1. 宣告變數0 , 2.結束條件 , 3.每次回圈做完+1
                 for (let i = 0; i < res.length; i++) {
                     let object = res[i];
@@ -188,6 +195,7 @@ switch ($order) {
                     };
                     //#endregion
                 }
+                $("#article-data").DataTable();
             });
 
             //#region 新增

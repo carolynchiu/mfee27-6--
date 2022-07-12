@@ -117,7 +117,12 @@ require("./db-connect.php");
                 <i class="fa-solid fa-box-archive fa-4x"></i>
               </div>
               <div class="col-auto ">
-                <div class="h2">0</div>
+                <?php
+                $sqlProduct = "SELECT * FROM products WHERE id=$id ";
+                $resultProduct = $conn->query($sqlProduct);
+                $productCount = $resultProduct->num_rows;
+                ?>
+                <div class="h2"><?= $productCount ?></div>
                 <div>商品</div>
               </div>
             </div>

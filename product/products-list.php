@@ -252,9 +252,9 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
       <a class="btn btn-info " href="product-add.php"><i class="fa-solid fa-boxes-packing me-2"></i>新增商品</a>
     </div>
     <?php if($pageProductCount>0): ?>
-        <table class="table table-bordered  table-hover mt-5">
-          <thead>
-            <tr class="table-info border-dark border-bottom border-3">
+        <table class=" table table-bordered  table-hover mt-5">
+          <thead class="">
+            <tr class="table-info border-dark border-bottom border-3 text-center ">
               <th>商品編號</th>
               <th>商品圖片</th>
               <th>商品名稱</th>
@@ -262,8 +262,8 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
               <th>商品類別</th>
               <th>商品價格</th>
               <th>商品庫存</th>
-              <th>商品上下架時間</th>
-              <th>商品上下架狀態</th>
+              <th colspan="2">商品上下架時間</th>
+              <th colspan="2">商品上下架狀態</th>
               <th>查看商品資訊</th>
             </tr>
           </thead>
@@ -281,14 +281,14 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
               <td><?=$row["category_name"]?></td>
               <td><?=$row["price"]?></td>
               <td><?=$row["stock_in_inventory"]?></td>
-              <td><?=$row["launch_time"]."<br>";?>~<?=$row["discontinue_time"]?></td>
-              <td><?php if($row["status"]==1){
+              <td colspan="2"><?=$row["launch_time"]."<br>";?>~<?=$row["discontinue_time"]?></td>
+              <td colspan="2"><?php if($row["status"]==1){
                 echo "上架";
               }else{
                 echo "下架";
               }
               ?></td>
-              <td class="text-center"><a class="btn btn-info " href="product.php?id=<?=$row["id"]?>"><i class="fa-solid fa-info me-2"></i>查看</a></td>
+              <td class="text-center" ><a class="btn btn-info " href="product.php?id=<?=$row["id"]?>"><i class="fa-solid fa-info me-2"></i>查看</a></td>
               
             </tr>
             <?php endforeach;?>

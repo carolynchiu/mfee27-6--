@@ -208,14 +208,14 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
               if($row["status"]==1){
                 echo "disabled";
               }
-              ?>" href="comment-change.php?id=<?=$row["id"]?>&status=1">顯示</a>
+              ?>" href="comment-change.php?id=<?=$row["id"]?>&page=<?=$page?>&status=1">顯示</a>
               <a class="btn btn-info my-2
               <?php
               if($row["status"]==0){
                 echo "disabled";
               }
               ?>
-              " href="comment-change.php?id=<?=$row["id"]?>&status=0">隱藏</a></td>
+              " href="comment-change.php?id=<?=$row["id"]?>&page=<?=$page?>&status=0">隱藏</a></td>
               
             </tr>
             <?php endforeach;?>

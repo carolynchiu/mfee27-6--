@@ -1,4 +1,5 @@
 <?php
+session_start();
 //待處理
 //3.排序
 
@@ -140,13 +141,16 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
   <?php require("../module/header.php"); ?>
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
+  <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+      <h1><i class="fa-solid fa-magnifying-glass me-3"></i>商品評論搜尋結果</h1>
+    </div>
   <div class="container table-responsive">
     <div>
-        <div><a class="btn btn-info mb-2" href="product-comments.php">回商品評論清單頁面</a></div>
+        <div><a class="btn btn-info mb-2" href="product-comments.php"><i class="fa-solid fa-arrow-rotate-left me-3"></i>回商品評論清單頁面</a></div>
         <form action="product-comment-search.php" method="get">
         <div class="input-group">
             <input type="text" name="search" class="form-control">
-            <button type="submit" class="btn btn-info">搜尋</button>
+            <button type="submit" class="btn btn-info"><i class="fa-solid fa-magnifying-glass me-3"></i>搜尋</button>
         </div>
       </form>
     </div>
@@ -212,7 +216,7 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
     <?php if($pageCommentCount>0): ?>
         <table class="table table-bordered  table-hover mt-5">
           <thead>
-            <tr>
+            <tr class="table-info border-dark border-bottom border-3">
                 <th>評論編號</th>
                 <th>使用者</th>
                 <th>商品</th>

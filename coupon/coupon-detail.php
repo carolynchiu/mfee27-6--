@@ -90,14 +90,14 @@ $couponCount = $result->num_rows;
         <h1><i class="fa-solid fa-ticket me-3"></i></i>優惠券 <?= $row["id"]
                                                             ?></h1>
         <div class="btn-group" role="group" aria-label="Basic example">
-          <a href="coupon_detail.php?id=<?php
+          <a href="coupon-detail.php?id=<?php
                                         if ($id - 1 <= 0) {
                                           echo 1;
                                         } else {
                                           echo $id - 1;
                                         }
                                         ?>" type="button" class="btn btn-info btn-outline-dark"><i class="fa-solid fa-circle-chevron-left me-2"></i>上一筆</a>
-          <a href="coupon_detail.php?id=<?php
+          <a href="coupon-detail.php?id=<?php
                                         if ($id + 1 > $allCount) {
                                           echo $id;
                                         } else {

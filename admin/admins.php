@@ -220,8 +220,8 @@ $totalPage = ceil($adminCount / $perPage);
                 <td><?= $row["name"] ?></td>
                 <td class="text-center">
                   <a href="admin.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye me-2"></i>詳細資料</a>
-                  <a href="" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square me-2"></i>修改</a>
-                  <a href="" class="btn btn-sm btn-danger"><i class="fa-solid fa-circle-minus me-2"></i>刪除</a>
+                  <a href="admin-edit.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square me-2"></i>修改</a>
+                  <a href="doDelete.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-danger"><i class="fa-solid fa-circle-minus me-2"></i>刪除</a>
                 </td>
                 <!-- 連結資料 -->
               </tr>

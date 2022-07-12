@@ -1,7 +1,6 @@
 <?php
 session_start();
 require("../db-connect.php");
-session_start();
 
 //要先給一個值，這樣沒有 $_GET["product_id"] 或是 $_GET["user_id"] 才不會報錯
 // $sqlWhere = "";

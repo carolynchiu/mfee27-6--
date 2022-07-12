@@ -147,15 +147,22 @@ require("./db-connect.php");
                 <i class="fa-solid fa-file-lines fa-4x"></i>
               </div>
               <div class="col-auto ">
-                <div class="h2">0</div>
+                <?php
+                $sqlOrder = "SELECT * FROM order_list WHERE valid=1";
+                $resultOrder = $conn->query($sqlOrder);
+                $orderCount = $resultOrder->num_rows;
+                ?>
+                <div class="h2"><?= $orderCount ?></div>
                 <div>訂單</div>
               </div>
             </div>
           </div>
           <a href="#">
             <div class="card-footer text-warning py-3">
-              <span class="pull-left">查看詳情</span>
-              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              <a href="http://localhost/mfee27-group6/order/order-list.php">
+                <span class="pull-left">查看詳情</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              </a>
               <div class="clearfix"></div>
             </div>
           </a>

@@ -18,7 +18,6 @@
 <?php
 session_start();
 require("../db-connect.php");
-session_start();
 
 
 //要先給一個值，這樣沒有 $_GET["product_id"] 或是 $_GET["user_id"] 才不會報錯
@@ -163,7 +162,7 @@ $userCount = $result->num_rows;
                             <th>影音連結</th>
                             <td><input type="text" name="url" class="form-control" value="<?= $row["url"] ?>"></td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <th>原始圖片</th>
                             <td>
                                 <div class="image_prev">
@@ -171,14 +170,14 @@ $userCount = $result->num_rows;
 
                                 </div>
                             </td>
-                        </tr>
+                        </tr> -->
 
                         <tr>
                             <th>更換圖片</th>
                             <td>
                                 <div class="image_prev">
                                     <input accept="image/*" id="imgInp" class="form-control mb-2" type="file" name="file" value="">
-                                    <img class="w-100" id="blah" src="#" alt="" />
+                                    <img class="w-100" id="blah" src="./upload/<?= $row["image"] ?>" alt="">
                                     
                                 </div>
                             </td>

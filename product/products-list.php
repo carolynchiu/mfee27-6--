@@ -197,8 +197,8 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
-  <?php //require("../module/header.php"); ?>
-  <?php //require("../module/aside.php"); ?>
+  <?php require("../module/header.php"); ?>
+  <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
     <!-- 頁面標題 -->
     <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
@@ -209,7 +209,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
     <div class="py-2 d-flex justify-content-between align-items-center ">
       <ul class="nav nav-pills">
         <li class="nav-item">
-          <a class="nav-link  <?php if($category=="") echo "active"?>" aria-current="page" href="products-list.php">全部</a>
+          <a class="nav-link   <?php if($category=="") echo "active"?>" aria-current="page" href="products-list.php">全部</a>
         </li>
         <?php foreach ($rowsCategory as $row):?>
         <li>
@@ -230,10 +230,10 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
         <?php endforeach;?>
       </ul>
           <div class="btn-group">
-            <a href="products-list.php?page=<?=$page?>&order=1" class="btn btn-primary <?php if($order==1) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-            <a href="products-list.php?page=<?=$page?>&order=2" class="btn btn-primary <?php if($order==2) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-wide-short"></i></a>
-            <a href="products-list.php?page=<?=$page?>&order=3" class="btn btn-primary <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-            <a href="products-list.php?page=<?=$page?>&order=4" class="btn btn-primary <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
+            <a href="products-list.php?page=<?=$page?>&order=1" class="btn btn-info <?php if($order==1) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+            <a href="products-list.php?page=<?=$page?>&order=2" class="btn btn-info <?php if($order==2) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+            <a href="products-list.php?page=<?=$page?>&order=3" class="btn btn-info <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+            <a href="products-list.php?page=<?=$page?>&order=4" class="btn btn-info <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
           </div>
         </div>
         </div>

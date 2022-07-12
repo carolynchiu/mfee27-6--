@@ -1,7 +1,6 @@
 <?php
 session_start();
 require("../db-connect.php");
-session_start();
 
 //要先給一個值，這樣沒有 $_GET["product_id"] 或是 $_GET["user_id"] 才不會報錯
 // $sqlWhere = "";
@@ -151,7 +150,7 @@ $userCount = $result->num_rows;
                     </tr>
                     <tr>
                         <th>圖片預覽</th>
-                        <td><img src="<?= $row["image"] ?>" class="image_prev" alt=""></td>
+                        <td><img src="./upload/<?= $row["image"] ?>" class="image_prev" alt=""></td>
                     </tr>
                     <tr>
                         <th>影音連結</th>

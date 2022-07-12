@@ -11,31 +11,31 @@ if (isset($_GET["page"])) {
 //要先給一個值，這樣沒有 $_GET["product_id"] 或是 $_GET["user_id"] 才不會報錯
 $sqlWhere = "";
 
-// if (isset($_GET["product_id"])) {
-//     $product_id = $_GET["product_id"];
-//     $sqlWhere = "WHERE user_order.product_id = $product_id";
+if (isset($_GET["product_id"])) {
+    $product_id = $_GET["product_id"];
+    $sqlWhere = "WHERE user_order.product_id = $product_id";
 
-//     //產品名稱 XXX的訂購紀錄 (UI顯示)
-//     $sqlProduct = "SELECT name FROM product WHERE id=$product_id";
-//     $resultProduct = $conn->query($sqlProduct);
-//     $rowProduct = $resultProduct->fetch_assoc();
-// }
+    //產品名稱 XXX的訂購紀錄 (UI顯示)
+    $sqlProduct = "SELECT name FROM product WHERE id=$product_id";
+    $resultProduct = $conn->query($sqlProduct);
+    $rowProduct = $resultProduct->fetch_assoc();
+}
 
-// if (isset($_GET["user_id"])) {
-//     $user_id = $_GET["user_id"];
-//     $sqlWhere = "WHERE user_order.user_id = $user_id";
+if (isset($_GET["user_id"])) {
+    $user_id = $_GET["user_id"];
+    $sqlWhere = "WHERE user_order.user_id = $user_id";
 
-//     //使用者名稱 XXX的訂購紀錄 (UI顯示)
-//     $sqlUser = "SELECT name FROM users WHERE id=$user_id";
-//     $resultUser = $conn->query($sqlUser);
-//     $rowUser = $resultUser->fetch_assoc();
-// }
+    //使用者名稱 XXX的訂購紀錄 (UI顯示)
+    $sqlUser = "SELECT name FROM users WHERE id=$user_id";
+    $resultUser = $conn->query($sqlUser);
+    $rowUser = $resultUser->fetch_assoc();
+}
 
-// if (isset($_GET["start"])) {
-//     $start = $_GET["start"];
-//     $end = $_GET["end"];
-//     $sqlWhere = "WHERE order_date BETWEEN '$start' AND '$end'";
-// }
+if (isset($_GET["start"])) {
+    $start = $_GET["start"];
+    $end = $_GET["end"];
+    $sqlWhere = "WHERE order_date BETWEEN '$start' AND '$end'";
+}
 
 
 
@@ -84,10 +84,6 @@ $startItem = ($page - 1) * $perPage + 1;
 $endItem = $page * $perPage;
 if ($endItem > $courseCount) $endItem = $courseCount;
 $totalPage = ceil($courseCount / $perPage); //無條件進位
-
-
-
-
 
 
 
@@ -162,7 +158,7 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
     <?php require("../module/aside.php"); ?>
     <main class="main-content p-4">
         <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
-            <h1><i class="fa-solid fa-person-swimming"></i> 所有課程</h1>
+            <h1><i class="fa-solid fa-person-running"></i></i> 所有課程</h1>
             <div class="btn-group" role="group" aria-label="Basic example">
 
                 <a href="create_course.php" type="get" class="btn btn-success">+新增課程</a>
@@ -217,8 +213,8 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
                 <thead>
                     <tr class="table-info border-dark border-bottom border-3">
                         <th>課程編號</th>
-                        <th>課程名稱</th>
                         <th>課程圖片</th>
+                        <th>課程名稱</th>
                         <th>建立日期</th>
                         <th>操作</th>
                         <th>上架狀態</th>
@@ -229,8 +225,8 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
                     <?php foreach ($rows as $row) : ?>
                         <tr>
                             <td><?= $row["id"] ?></td>
+                            <td><img src="./upload/<?= $row["image"] ?>" style="width:150px" alt=""></td>
                             <td><?= $row["name"] ?></td>
-                            <td><img src="<?= $row["image"] ?>" style="width:150px" alt=""></td>
                             <td><?= $row["create_time"] ?></td>
                             <td style="width:300px">
 

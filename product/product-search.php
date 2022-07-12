@@ -67,27 +67,59 @@ if(isset($_GET["page"])){
  $perPage=5; //每頁有5項產品
  $start=($page-1)*$perPage; //起始頁能顯示的產品數
 
-<<<<<<< HEAD
+ $order= isset($_GET["order"])? $_GET["order"] : 1; 
+
+ switch($order){
+   case 1:
+     $orderType="id ASC";
+     break;
+   case 2:
+     $orderType="id DESC";
+     break;
+   case 3:
+     $orderType="status DESC , id ASC";
+     break;
+   case 4:
+     $orderType="status ASC , id ASC";
+     break;
+     default:
+     $orderType="ASC";
+ }
 
 
 if(count($conditions)>0){
-  $sql .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%' LIMIT $start, 5";
-=======
-//要改
-if (isset($_GET["category"])){
-  $category = $_GET["category"];
-  $sqlWhere="WHERE product.category_id=$category";
->>>>>>> 7b16a0b370d51c4df025a3716ca79a23ba8bbfb1
+  $sql .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
 }else{
-  $sql .=" LIKE '%$search%' LIMIT $start, 5";
+  $sql .=" WHERE products.name LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
 }
 $resultPage=$conn->query($sql);
 $pageProductCount=$resultPage->num_rows;
 
+echo $sql;
+
+
 
 $sqlAll="SELECT products.* , product_category.name AS category_name  FROM products  JOIN product_category ON products.category_id = product_category.id";
 if(count($conditions)>0){
-  $sqlAll .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%' LIMIT $start, 5";
+  $order= isset($_GET["order"])? $_GET["order"] : 1; 
+
+switch($order){
+  case 1:
+    $orderType="id ASC";
+    break;
+  case 2:
+    $orderType="id DESC";
+    break;
+  case 3:
+    $orderType="status DESC , id ASC";
+    break;
+  case 4:
+    $orderType="status ASC , id ASC";
+    break;
+    default:
+    $orderType="ASC";
+}
+  $sqlAll .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
 }
 
 
@@ -108,9 +140,8 @@ $sqlCategory="SELECT * FROM product_category";
 $resultCategory=$conn->query($sqlCategory);
 $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 
+
 ?>
-
-
 <!doctype html>
 <html lang="en">
 
@@ -190,7 +221,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
           <a class="btn btn-info my-2" href="products-list.php">回產品清單頁面</a>
         </div>
         <form action="product-search.php" method="get">
-          <div class="d-flex justify-content-between">
+          <div class="py-2 d-flex justify-content-between align-items-center ">
             <ul class="nav nav-pills my-2">
               <li class="nav-item">
                 <a class="nav-link   <?php if($category=="") echo "active"?>"  aria-current="page" href="product-search.php">全部</a>
@@ -201,19 +232,35 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
               </li>
               <?php endforeach;?>
             </ul>
-            <?php require("price-filter.php") ?>
+            <div class="btn-group">
+              <div class="m-2">排序</div>
+              <a href="product-search.php?page=<?=$page?>&order=1" class="btn btn-primary <?php if($order==1) echo "active" ?>" name="order">id<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+              <a href="product-search.php?page=<?=$page?>&order=2" class="btn btn-primary <?php if($order==2) echo "active" ?>" name="order">id<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+              <a href="product-search.php?page=<?=$page?>&order=3" class="btn btn-primary <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+              <a href="product-search.php?page=<?=$page?>&order=4" class="btn btn-primary <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
+            </div>
+            
           </div>
-        
+          <?php require("price-filter.php") ?>
 
         <div class="input-group d-block">
           <div class="input-group-text">
             <div class="d-flex align-items-center">
               <label class="form-check-label" for="">依商品編號</label>
-              <input class="form-check-input my-0 mx-2" type="radio" name="search-category"  value="id">
+              <input class="form-check-input my-0 mx-2" type="radio" name="search-category"  value="id" <?php 
+              if($by_searchCategory == "id"){
+                echo "checked";
+              }
+            ?>
+            >
             </div>
             <div class="d-flex align-items-center">
               <label class="form-check-label" for="">依商品名稱</label>
-              <input class="form-check-input my-0 mx-2" type="radio" name="search-category" id="" value="name">
+              <input class="form-check-input my-0 mx-2" type="radio" name="search-category" id="" value="name" <?php 
+              if($by_searchCategory  == "name"){
+                echo "checked";
+              }
+            ?>>
             </div>
             
             <input type="text" name="search" class="form-control">
@@ -291,16 +338,17 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
         <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center <?php if($productsCount==0) echo "d-none";?>">
         <li class="page-item <?php if($page==1)echo "disabled";?>   ">
-          <a class="page-link" href="product-search.php?search=<?=$search?>&page=<?=$page-1?>"><</a>
+          <a class="page-link" href="product-search.php?<?=$by_category."&"?>
+          search=<?=$search?>&page=<?=$page-1?>"><</a>
         </li>
         <?php for($i=1;$i<=$totalPage;$i++):?>
         <li class="page-item">
           <a class="page-link 
-          <?php if($page==$i)echo "active"; ?>" href="product-search.php?search=<?=$search?>&page=<?=$i?>"><?=$i?></a>
+          <?php if($page==$i)echo "active"; ?>" href="product-search.php?<?=$by_category."&"?>search=<?=$search?>&page=<?=$i?>"><?=$i?></a>
         </li>
         <?php endfor;?>
         <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
-          <a class="page-link" href="product-search.php?search=<?=$search?>&page=<?=$page+1?>">></a>
+          <a class="page-link" href="product-search.php?<?=$by_category."&"?>search=<?=$search?>&page=<?=$page+1?>">></a>
         </li>
       </ul>
     </nav>

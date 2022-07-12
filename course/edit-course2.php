@@ -177,7 +177,7 @@ $userCount = $result->num_rows;
                             <td>
                                 <div class="image_prev">
                                     <input accept="image/*" id="imgInp" class="form-control mb-2" type="file" name="file" value="">
-                                    <img class="w-100" id="blah" src="<?= $row["image"] ?>" alt="">
+                                    <img class="w-100" id="blah" src="./upload/<?= $row["image"] ?>" alt="">
                                     
                                 </div>
                             </td>

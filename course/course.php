@@ -225,7 +225,7 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
                     <?php foreach ($rows as $row) : ?>
                         <tr>
                             <td><?= $row["id"] ?></td>
-                            <td><img src="<?= $row["image"] ?>" style="width:150px" alt=""></td>
+                            <td><img src="./upload/<?= $row["image"] ?>" style="width:150px" alt=""></td>
                             <td><?= $row["name"] ?></td>
                             <td><?= $row["create_time"] ?></td>
                             <td style="width:300px">

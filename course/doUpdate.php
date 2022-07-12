@@ -71,7 +71,8 @@ if ((($_FILES["file"]["type"] == "image/gif")
 }
 
 
-$file = "./upload/" . $_FILES["file"]["name"];
+// $file = "./upload/" . $_FILES["file"]["name"];
+$file = $_FILES["file"]["name"];
 $sqlCreate2 = "UPDATE course_content SET image='$file' WHERE id=$id";
 
 

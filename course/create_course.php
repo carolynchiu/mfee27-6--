@@ -1,5 +1,6 @@
 <?php
 require("../db-connect.php");
+session_start();
 
 //要先給一個值，這樣沒有 $_GET["product_id"] 或是 $_GET["user_id"] 才不會報錯
 $sqlWhere = "";
@@ -99,8 +100,8 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <?php require("../module/header.php"); ?>
     <?php require("../module/aside.php"); ?>
     <main class="main-content p-4">
-        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-            <h1>新增課程</h1>
+        <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+            <h1><i class="fa-solid fa-circle-plus"></i> 新增課程</h1>
             <div class="btn-group" role="group" aria-label="Basic example">
 
                 <!-- <a href="create_course.php" type="get" class="btn btn-outline-primary">新增課程</a> -->

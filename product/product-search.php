@@ -1,17 +1,14 @@
 <?php
-//待處理
-//3.排序
+session_start();
+
 
 require("../db-connect.php");
 
-$category=isset($_GET["category"])?$_GET["category"]:"";
-$min=isset($_GET["min"])?$_GET["min"]:0;
-$max=isset($_GET["max"])?$_GET["max"]:9999;
 
-$by_searchCategory=isset($_GET["search-category"])?$_GET["search-category"]:"";
-$by_category=isset($_GET["category"])?$_GET["category"]:"";
-$by_price_min=isset($_GET["min"])?$_GET["min"]:"";
-$by_price_max=isset($_GET["max"])?$_GET["max"]:"";
+$searchCategory=isset($_GET["search-category"])?$_GET["search-category"]:"";
+$category=isset($_GET["category"])?$_GET["category"]:"";
+$min=isset($_GET["min"])?$_GET["min"]:"";
+$max=isset($_GET["max"])?$_GET["max"]:"";
 
 
 if(!isset($_GET["search"])){
@@ -28,15 +25,15 @@ $query="SELECT products.* , product_category.name AS category_name  FROM product
 $conditions=array();
 
 
-if(!empty($by_searchCategory)){
-  if($by_searchCategory == "id"){
+if(!empty($searchCategory)){
+  if($searchCategory == "id"){
     $conditions[]="products.id";
   }else{
     $conditions[]="products.name";
   }
 }
-if(!empty($by_category)){
-  switch($by_category){
+if(!empty($category)){
+  switch($category){
     case 1:
       $conditions[]="products.category_id=1";
       break;
@@ -49,25 +46,21 @@ if(!empty($by_category)){
 
   }
 }
-if(!empty($by_price_max)){
+if(!empty($max)){
   $conditions[]="products.price <= $max";
 }
-if(!empty($by_price_min)){
+if(!empty($min)){
   $conditions[]="products.price >= $min";
 }
 $sql="$query";
 
 //設定如果有抓到頁數 則$page=該頁數
 //若無則假設$page為1
-if(isset($_GET["page"])){
-  $page=$_GET["page"];
-}else{
-  $page=1;
-}
- $perPage=5; //每頁有5項產品
- $start=($page-1)*$perPage; //起始頁能顯示的產品數
+  $page=isset($_GET["page"])? $_GET["page"] :1;
+  $perPage=5; //每頁有5項產品
+  $start=($page-1)*$perPage; //起始頁能顯示的產品數
 
- $order= isset($_GET["order"])? $_GET["order"] : 1; 
+  $order= isset($_GET["order"])? $_GET["order"] : 1; 
 
  switch($order){
    case 1:
@@ -210,13 +203,16 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
-  <?php require("../module/header.php"); ?>
-  <?php require("../module/aside.php"); ?>
+  <?php //require("../module/header.php"); ?>
+  <?php //require("../module/aside.php"); ?>
   <main class="main-content p-4">
+  <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+      <h1><i class="fa-solid fa-magnifying-glass me-3"></i>商品搜尋結果</h1>
+    </div>
   <div class="container table-responsive">
     <div>
         <div>
-          <a class="btn btn-info my-2" href="products-list.php">回產品清單頁面</a>
+          <a class="btn btn-info my-2" href="products-list.php"><i class="fa-solid fa-arrow-rotate-left me-3"></i>回產品清單頁面</a>
         </div>
         <form action="product-search.php" method="get">
           <div class="py-2 d-flex justify-content-between align-items-center ">
@@ -226,7 +222,18 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
               </li>
               <?php foreach ($rowsCategory as $row):?>
               <li>
-                <a class="nav-link category  <?php if($category==$row["id"]) echo "active"?> " href="product-search.php?category=<?=$row["id"]?>" id="category" name="category"  ><?=$row["name"]?></a>
+                <a class="nav-link category  <?php if($category==$row["id"]) echo "active"?> " href="product-search.php?category=<?=$row["id"]?>" id="category" name="category"  >
+                <?php switch($row["name"]){
+            case($row["name"]="服飾"):
+              echo "<i class='fa-solid fa-shirt'></i>";
+              break;
+            case($row["name"]="器材"):
+              echo "<i class='fa-solid fa-kitchen-set'></i></i>";
+              break;
+            case($row["name"]="食品"):
+              echo "<i class='fa-solid fa-carrot'></i>";
+              break;
+          }?><?=$row["name"]?></a>
               </li>
               <?php endforeach;?>
             </ul>
@@ -237,16 +244,15 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
               <a href="product-search.php?page=<?=$page?>&order=3" class="btn btn-primary <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
               <a href="product-search.php?page=<?=$page?>&order=4" class="btn btn-primary <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
             </div>
-            
           </div>
           <?php require("price-filter.php") ?>
-
+            <!-- 搜尋 -->
         <div class="input-group d-block">
           <div class="input-group-text">
             <div class="d-flex align-items-center">
               <label class="form-check-label" for="">依商品編號</label>
               <input class="form-check-input my-0 mx-2" type="radio" name="search-category"  value="id" <?php 
-              if($by_searchCategory == "id"){
+              if($searchCategory == "id"){
                 echo "checked";
               }
             ?>
@@ -255,14 +261,14 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
             <div class="d-flex align-items-center">
               <label class="form-check-label" for="">依商品名稱</label>
               <input class="form-check-input my-0 mx-2" type="radio" name="search-category" id="" value="name" <?php 
-              if($by_searchCategory  == "name"){
+              if($searchCategory  == "name"){
                 echo "checked";
               }
             ?>>
             </div>
             
             <input type="text" name="search" class="form-control">
-            <button type="submit" class="btn btn-info mx-2">搜尋</button>
+            <button type="submit" class="btn btn-info mx-2"><i class="fa-solid fa-magnifying-glass me-3"></i>搜尋</button>
         </div>
       </form>
       <!-- 要改的 -->
@@ -291,7 +297,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
     <?php if($pageProductCount>0): ?>
         <table class="table table-bordered  table-hover mt-5">
           <thead>
-            <tr>
+            <tr class="table-info border-dark border-bottom border-3">
               <th>商品編號</th>
               <th>商品圖片</th>
               <th>商品名稱</th>

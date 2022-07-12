@@ -44,6 +44,17 @@ JOIN recipe ON user_like_recipe.recipe_id =recipe.id
 WHERE user_like_recipe.user_id=$id";
 $resultRecipe = $conn->query($sqlRecipe);
 $recipeCount = $resultRecipe->num_rows;
+
+//課程收藏
+$sqlCourse = "SELECT user_like_course.*, users.account AS user_account, course.name AS course_name, course_content.image AS course_image, course_content.description AS course_description FROM user_like_course
+JOIN users ON user_like_course.user_id = users.id
+JOIN course ON user_like_course.id = course.id
+JOIN course_content ON user_like_course.id = course_content.id
+WHERE user_like_course.user_id=$id
+ ";
+$resultCourse = $conn->query($sqlCourse);
+$courseCount = $resultCourse->num_rows;
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -222,6 +233,7 @@ $recipeCount = $resultRecipe->num_rows;
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
+          <!-- 訂單記錄 -->
           <div class="tab-pane fade show active" id="nav-order" role="tabpanel" aria-labelledby="nav-order-tab">
             <?php if ($orderCount > 0) :
               $rowsOrder = $resultOrder->fetch_all(MYSQLI_ASSOC);
@@ -257,19 +269,19 @@ $recipeCount = $resultRecipe->num_rows;
               沒有訂單記錄
             <?php endif; ?>
           </div>
+          <!-- 食譜收藏 -->
           <div class="tab-pane fade" id="nav-product" role="tabpanel" aria-labelledby="nav-product-tab">
             <?php if ($productCount > 0) :
               $rowsProduct = $resultProduct->fetch_all(MYSQLI_ASSOC);
             ?>
               <div class="row gy-4 mt-3">
                 <?php foreach ($rowsProduct as $row) : ?>
-                  <div class="col-md-3 me-3 border border-primary">
+                  <div class="col-md-3 me-3 border border-dark">
                     <div>
-                      <figure class="ratio ratio-4x3 mb-2">
-                        <img class="object-cover" src="../images/<?= $row["product_image"] ?>" alt="">
+                      <figure class="ratio ratio-4x3 my-2 border border-secondary shadow-sm">
+                        <img class="object-cover" src="../product_image/<?= $row["product_image"] ?>" alt="">
                       </figure>
                       <!-- 可以先把資料寫死再處理資料庫的資料 -->
-                      <div class="text-info">category</div>
                       <h2 class="mb-2 h4"><?= $row["product_name"] ?></h2>
                       <div class="text-end text-danger">$<?= $row["product_price"] ?></div>
                     </div>
@@ -289,7 +301,7 @@ $recipeCount = $resultRecipe->num_rows;
                   <div class="col-md-3">
                     <div class="card border border-dark" style="width: 18rem;">
                       <figure class="ratio ratio-4x3 mb-2">
-                        <img src="../images/<?= $row["recipe_image"] ?>" class="card-img-top" alt="...">
+                        <img src="../recipe/recipeimage/<?= $row["recipe_image"] ?>" class="card-img-top" alt="...">
                       </figure>
                       <div class="card-body">
                         <h5 class="card-title"><?= $row["recipe_name"] ?></h5>
@@ -304,19 +316,27 @@ $recipeCount = $resultRecipe->num_rows;
               沒有食譜收藏
             <?php endif; ?>
           </div>
+          <!-- 課程收藏 -->
           <div class="tab-pane fade" id="nav-course" role="tabpanel" aria-labelledby="nav-course-tab">
-            <div class="row gy-4 mt-3">
-              <div class="col-md-3">
-                <div class="card" style="width: 18rem;">
-                  <img src="..." class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+            <?php if ($courseCount > 0) :
+              $rowsCourse = $resultCourse->fetch_all(MYSQLI_ASSOC);
+            ?>
+              <div class="row gy-4 mt-3">
+                <?php foreach ($rowsCourse as $row) : ?>
+                  <div class="col-md-3">
+                    <div class="card" style="width: 18rem;">
+                      <img src="../course/upload/<?= $row["course_image"] ?>" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title"><?= $row["course_name"] ?></h5>
+                        <p class="card-text"><?= $row["course_description"] ?></p>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                <?php endforeach; ?>
               </div>
-            </div>
+            <?php else : ?>
+              沒有課程收藏
+            <?php endif; ?>
           </div>
           <div class="tab-pane fade" id="nav-article" role="tabpanel" aria-labelledby="nav-article-tab">
             <div class="row gy-4 mt-3">

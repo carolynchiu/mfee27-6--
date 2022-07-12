@@ -51,7 +51,7 @@
               <a href="../order/order-list.php">所有訂單</a>
             </li>
             <li class="border-bottom ps-4">
-              <a href="">優惠券管理</a>
+              <a href="coupon.php">優惠券管理</a>
             </li>
           </ul>
         </div>

@@ -6,6 +6,7 @@
 require("../db-connect.php");
 
 //確認有沒有抓到
+$page=isset($_GET["page"])?$_GET["page"]:"";
 if(isset($_GET["search"])){
     $search=$_GET["search"];
     echo "search catch"."<br>";
@@ -32,9 +33,9 @@ if($_GET["status"]==1){
     }
     if(isset($_GET["search"])){
         
-        header("location:product-comment-search.php?search=$search");
+        header("location:product-comment-search.php?search=$search&page=$page");
     }else{
-        header("location:product-comments.php");
+        header("location:product-comments.php?page=$page");
     }
     
 }
@@ -50,9 +51,9 @@ if($_GET["status"]==0){
     }
     //根據有沒有抓到search來判斷 header去哪
     if(isset($_GET["search"])){
-        header("location:product-comment-search.php?search=$search");
+        header("location:product-comment-search.php?search=$search&page=$page");
     }else{
-        header("location:product-comments.php");
+        header("location:product-comments.php?page=$page");
     }
 }
 

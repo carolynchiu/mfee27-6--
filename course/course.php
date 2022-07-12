@@ -10,31 +10,31 @@ if (isset($_GET["page"])) {
 //要先給一個值，這樣沒有 $_GET["product_id"] 或是 $_GET["user_id"] 才不會報錯
 $sqlWhere = "";
 
-// if (isset($_GET["product_id"])) {
-//     $product_id = $_GET["product_id"];
-//     $sqlWhere = "WHERE user_order.product_id = $product_id";
+if (isset($_GET["product_id"])) {
+    $product_id = $_GET["product_id"];
+    $sqlWhere = "WHERE user_order.product_id = $product_id";
 
-//     //產品名稱 XXX的訂購紀錄 (UI顯示)
-//     $sqlProduct = "SELECT name FROM product WHERE id=$product_id";
-//     $resultProduct = $conn->query($sqlProduct);
-//     $rowProduct = $resultProduct->fetch_assoc();
-// }
+    //產品名稱 XXX的訂購紀錄 (UI顯示)
+    $sqlProduct = "SELECT name FROM product WHERE id=$product_id";
+    $resultProduct = $conn->query($sqlProduct);
+    $rowProduct = $resultProduct->fetch_assoc();
+}
 
-// if (isset($_GET["user_id"])) {
-//     $user_id = $_GET["user_id"];
-//     $sqlWhere = "WHERE user_order.user_id = $user_id";
+if (isset($_GET["user_id"])) {
+    $user_id = $_GET["user_id"];
+    $sqlWhere = "WHERE user_order.user_id = $user_id";
 
-//     //使用者名稱 XXX的訂購紀錄 (UI顯示)
-//     $sqlUser = "SELECT name FROM users WHERE id=$user_id";
-//     $resultUser = $conn->query($sqlUser);
-//     $rowUser = $resultUser->fetch_assoc();
-// }
+    //使用者名稱 XXX的訂購紀錄 (UI顯示)
+    $sqlUser = "SELECT name FROM users WHERE id=$user_id";
+    $resultUser = $conn->query($sqlUser);
+    $rowUser = $resultUser->fetch_assoc();
+}
 
-// if (isset($_GET["start"])) {
-//     $start = $_GET["start"];
-//     $end = $_GET["end"];
-//     $sqlWhere = "WHERE order_date BETWEEN '$start' AND '$end'";
-// }
+if (isset($_GET["start"])) {
+    $start = $_GET["start"];
+    $end = $_GET["end"];
+    $sqlWhere = "WHERE order_date BETWEEN '$start' AND '$end'";
+}
 
 
 

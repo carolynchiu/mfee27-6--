@@ -1,4 +1,5 @@
 <?php
+session_start();
 require("../db-connect.php");
 
 //將users.id帶入product_comments.user_id 和products.id 帶入product_comments.product_id
@@ -108,6 +109,9 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
   <?php require("../module/header.php"); ?>
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
+    <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+      <h1><i class="fa-solid fa-comments me-3"></i>商品評論</h1>
+    </div>
     <div class="">
       <form action="product-comment-search.php" method="get">
         <div class="input-group">
@@ -174,7 +178,7 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
   <div class="container table-responsive">
         <table class="table table-bordered  table-hover mt-5">
           <thead>
-            <tr>
+            <tr class="table-info border-dark border-bottom border-3">
               <th>評論編號</th>
               <th>使用者</th>
               <th>商品</th>

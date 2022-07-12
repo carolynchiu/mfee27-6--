@@ -230,7 +230,18 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
               </li>
               <?php foreach ($rowsCategory as $row):?>
               <li>
-                <a class="nav-link category  <?php if($category==$row["id"]) echo "active"?> " href="product-search.php?category=<?=$row["id"]?>" id="category" name="category"  ><?=$row["name"]?></a>
+                <a class="nav-link category  <?php if($category==$row["id"]) echo "active"?> " href="product-search.php?category=<?=$row["id"]?>" id="category" name="category"  >
+                <?php switch($row["name"]){
+            case($row["name"]="服飾"):
+              echo "<i class='fa-solid fa-shirt'></i>";
+              break;
+            case($row["name"]="器材"):
+              echo "<i class='fa-solid fa-kitchen-set'></i></i>";
+              break;
+            case($row["name"]="食品"):
+              echo "<i class='fa-solid fa-carrot'></i>";
+              break;
+          }?><?=$row["name"]?></a>
               </li>
               <?php endforeach;?>
             </ul>

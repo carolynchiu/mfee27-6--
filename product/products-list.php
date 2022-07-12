@@ -156,7 +156,19 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
         </li>
         <?php foreach ($rowsCategory as $row):?>
         <li>
-          <a class="nav-link <?php if($category==$row["id"]) echo "active"?> "  href="products-list.php?category=<?=$row["id"]?>"><?=$row["name"]?></a>
+          <a class="nav-link <?php if($category==$row["id"]) echo "active"?> "  href="products-list.php?category=<?=$row["id"]?>">
+          <?php switch($row["name"]){
+            case($row["name"]="服飾"):
+              echo "<i class='fa-solid fa-shirt'></i>";
+              break;
+            case($row["name"]="器材"):
+              echo "<i class='fa-solid fa-kitchen-set'></i></i>";
+              break;
+            case($row["name"]="食品"):
+              echo "<i class='fa-solid fa-carrot'></i>";
+              break;
+          }?>
+          <?=$row["name"]?></a>
         </li>
         <?php endforeach;?>
       </ul>
@@ -265,7 +277,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
                 </figure>
               </td>
               <td><?=$row["name"]?></td>
-              <td><?=$row["description"]?></td>
+              <td class="text-truncate"><?=$row["description"]?></td>
               <td><?=$row["category_name"]?></td>
               <td><?=$row["price"]?></td>
               <td><?=$row["stock_in_inventory"]?></td>
@@ -276,7 +288,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
                 echo "下架";
               }
               ?></td>
-              <td class="text-center"><a class="btn btn-info " href="product.php?id=<?=$row["id"]?>">查看</a></td>
+              <td class="text-center"><a class="btn btn-info " href="product.php?id=<?=$row["id"]?>"><i class="fa-solid fa-info me-2"></i>查看</a></td>
               
             </tr>
             <?php endforeach;?>
@@ -297,7 +309,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
             echo "products-list.php?page=$previousPage";
             }
             ?>
-          "><</a>
+          "><i class="fa-solid fa-angle-left"></i></a>
         </li>
         <?php for($i=1;$i<=$totalPage;$i++):?>
         <li class="page-item">
@@ -319,7 +331,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
             $nextPage=$page+1;
             echo "products-list.php?page=$nextPage";
             }
-            ?>">></a>
+            ?>"><i class="fa-solid fa-angle-right"></i></a>
         </li>
       </ul>
     </nav>

@@ -95,8 +95,6 @@ if(count($conditions)>0){
 $resultPage=$conn->query($sql);
 $pageProductCount=$resultPage->num_rows;
 
-echo $sql;
-
 
 
 $sqlAll="SELECT products.* , product_category.name AS category_name  FROM products  JOIN product_category ON products.category_id = product_category.id";
@@ -212,8 +210,8 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
-  <?php //require("../module/header.php"); ?>
-  <?php //require("../module/aside.php"); ?>
+  <?php require("../module/header.php"); ?>
+  <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="container table-responsive">
     <div>

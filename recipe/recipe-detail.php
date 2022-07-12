@@ -5,22 +5,22 @@ session_start();
 // }
 
 
-if(!isset($_GET["recipe_id"])){
-    echo "沒有參數";
-    exit;
+if (!isset($_GET["recipe_id"])) {
+  echo "沒有參數";
+  exit;
 }
 
-$recipe_id=$_GET["recipe_id"];
+$recipe_id = $_GET["recipe_id"];
 
 require("../db-connect.php");
 
 
-$sql ="SELECT recipe.*,users.name AS user_name FROM recipe 
+$sql = "SELECT recipe.*,users.name AS user_name FROM recipe 
 JOIN users ON recipe.user_id=users.id 
 WHERE recipe.id=$recipe_id";
 
-$result=$conn->query($sql);
-$rows=$result->fetch_all(MYSQLI_ASSOC);
+$result = $conn->query($sql);
+$rows = $result->fetch_all(MYSQLI_ASSOC);
 
 
 
@@ -29,8 +29,8 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
 //   $sqlLikeCount="SELECT * FROM user_like_recipe WHERE id= $recipe_id";
 //   $resultLike=$conn->query($sqlLikeCount);
 //   $like_count=$resultLike->num_rows;
-  // echo $rows[$i]["id"].":". $like_count."<br>";
-  // $rows[$i]["liked-count"]=$like_count;
+// echo $rows[$i]["id"].":". $like_count."<br>";
+// $rows[$i]["liked-count"]=$like_count;
 // }
 ?>
 
@@ -38,7 +38,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
 <html lang="en">
 
 <head>
-  <title>食譜</title>
+  <title>食譜明細</title>
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -91,11 +91,12 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
       margin-left: var(--aside-width);
       margin-top: 40px;
     }
-    .object-cover{
-            width: 100%;
-            height: 100%;
-            object-fit:cover;
-        }
+
+    .object-cover {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   </style>
 </head>
 
@@ -103,51 +104,75 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
   <?php require("../module/header.php"); ?>
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
- 
-  <div class="container">
-    <?php foreach($rows as $row):?>
-      <div class="py-2 d-flex justify-content-between">
-        <a class="btn btn-info" href="recipe-edit.php?recipe_id=<?=$row["id"]?>">修改資料</a>
-        <a class="btn btn-info" href="recipe-all.php">回主頁面</a>
-    </div>
-          <h2><?=$row["title"]?></h2>
-        <div class="py-2 justify-content-between">
-            <h3><?=$row["user_name"]?></h3>
-            <figure class="mb-2 ">
-                <img class="object-cover" style="width: 600px" src="../recipe/recipeimage/<?=$row["main_image"]?>" alt="">
-            </figure>
-        </div>
-        <div class="py-2">
-          <?=$row["intro"]?>
-        </div>
-        <div class="py-2 d-flex ">
-            <div class="col-auto"><?=$row["servings"]?>人份</div>
-            <div class="col-auto"><?=$row["cook_time"]?>分鐘</div>
-        </div>
-      
-
-        <h3>食材</h3>
-            <div class="py-2 ">
-            <div class="col-auto"><?=$row["ingredient1"]?></div>
-            <div class="col-auto"><?=$row["ingredient2"]?></div>
-            <div class="col-auto"><?=$row["ingredient3"]?></div>
-            <div class="col-auto"><?=$row["ingredient4"]?></div>
-            <div class="col-auto"><?=$row["ingredient5"]?></div>
-        </div>
-        
-        <?php for($i=1;$i<=5;$i++):?>
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+        <h1><i class="fa-solid fa-utensils me-3"></i></i>食譜明細-<?= $recipe_id ?></h1>
+      </div>
+      <?php foreach ($rows as $row) : ?>
         <div class="py-2 d-flex">
-            <?php if($row["step_image$i"]!==""):?>
-            <div class="col-2">
-              <figure class="mb-2 " style="width:200px">
-                  <img class="object-cover" src="../recipe/recipeimage/<?=$row["step_image$i"]?>" alt="">
-              </figure>
-            </div>
-            <?php endif;?>
-            <div class="col-8"><?=$row["step$i"]?></div>
+          <a class="btn btn-info me-3" href="recipe-all.php"><i class="fa-solid fa-circle-arrow-left me-2"></i>回到所有食譜</a>
+          <a class="btn btn-info" href="recipe-edit.php?recipe_id=<?= $row["id"] ?>"><i class="fa-solid fa-pen-to-square me-2"></i>編輯食譜</a>
         </div>
-        <?php  endfor; ?>
-        <?php endforeach;?>
+        <div>
+          <h2 class="display-3 text-center "><?= $row["title"] ?> </h2>
+          <h5 class="text-center text-info mb-3">作者:<?= $row["user_name"] ?></h5>
+          <div class="py-2 d-flex justify-content-center border-top">
+            <figure class="mt-3">
+              <img class="object-cover shadow rounded" style="width: 600px" src="../recipe/recipeimage/<?= $row["main_image"] ?>" alt="">
+            </figure>
+          </div>
+          <div class="py-2 d-flex justify-content-center">
+            <p class="w-50 text-center"> <?= $row["intro"] ?>
+            </p>
+          </div>
+          <div class="d-flex justify-content-center">
+            <div class="py-2 d-flex justify-content-evenly bg-light w-50 shadow-sm">
+              <div class="text-center text-secondary">
+                <h4><i class="fa-solid fa-user me-2"></i>食譜份量</h4>
+                <p><span class="text-primary"><?= $row["servings"] ?></span> 人份</p>
+              </div>
+              <div class="text-center text-secondary">
+                <h4><i class="fa-solid fa-clock me-2"></i>烹飪時間</h4>
+                <p> <span class="text-primary"><?= $row["cook_time"] ?></span> 分鐘</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-center mt-5">
+            <div class="py-2 d-flex justify-content-evenly bg-light w-50 shadow-sm">
+              <div class="py-2 text-secondary">
+                <h4 class="text-center"><i class="fa-solid fa-carrot me-2"></i>食材</h4>
+                <p class="text-center"><?= $row["ingredient1"] ?></p>
+                <p class="text-center"><?= $row["ingredient2"] ?></p>
+                <p class="text-center"><?= $row["ingredient3"] ?></p>
+                <p class="text-center"><?= $row["ingredient4"] ?></p>
+                <p class="text-center"><?= $row["ingredient5"] ?></p>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="d-flex justify-content-center mt-5">
+            <div class="py-2  bg-light w-50 shadow-sm text-secondary">
+              <h4 class="text-center py-2"><i class="fa-solid fa-shoe-prints me-2"></i>烹飪步驟</h4>
+              <?php for ($i = 1; $i <= 5; $i++) : ?>
+                <div class="py-2">
+                  <?php if ($row["step_image$i"] !== "") : ?>
+                    <div class="d-flex justify-content-center">
+                      <figure class="mb-2 " style="width:400px">
+                        <img class="object-cover shadow rounded" src="../recipe/recipeimage/<?= $row["step_image$i"] ?>" alt="">
+                      </figure>
+                    </div>
+                  <?php endif; ?>
+                  <div class="text-center py-3"><?= $row["step$i"] ?></div>
+                </div>
+              <?php endfor; ?>
+            <?php endforeach; ?>
+            </div>
+          </div>
+
+
+        </div>
     </div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

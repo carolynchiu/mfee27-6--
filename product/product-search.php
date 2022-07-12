@@ -96,8 +96,6 @@ if(count($conditions)>0){
 $resultPage=$conn->query($sql);
 $pageProductCount=$resultPage->num_rows;
 
-echo $sql;
-
 
 
 $sqlAll="SELECT products.* , product_category.name AS category_name  FROM products  JOIN product_category ON products.category_id = product_category.id";

@@ -43,7 +43,7 @@ $userCount=$result->num_rows;
 <html lang="en">
 
 <head>
-    <title>編輯</title>
+    <title>編輯課程</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -94,6 +94,9 @@ $userCount=$result->num_rows;
         .main-content {
             margin-left: var(--aside-width);
             margin-top: 40px;
+        }
+        .image_prev{
+            width: 300px;
         }
     </style>
 </head>
@@ -146,7 +149,12 @@ $userCount=$result->num_rows;
             </tr>
             <tr>
                 <th>更換圖片</th>
-                <td><input class="form-control" type="file" name="file" value=""></td>
+                <td>
+                    <div class="image_prev">
+                        <img class="w-100" src="<?= $row["image"] ?>" alt="">
+                        <input class="form-control" type="file" name="file" value="">
+                    </div>
+                </td>
             </tr>
 
         </table>

@@ -7,39 +7,39 @@ session_start();
 require("../db-connect.php");
 
 // 分頁
-if(isset($_GET["page"])){
-  $page=$_GET["page"];
-}else{
-  $page=1;
+if (isset($_GET["page"])) {
+  $page = $_GET["page"];
+} else {
+  $page = 1;
 }
 
-$sqlAll="SELECT recipe.*, users.name AS user_name FROM recipe 
+$sqlAll = "SELECT recipe.*, users.name AS user_name FROM recipe 
 JOIN users ON recipe.user_id=users.id  WHERE recipe.valid=1";
 // 撈出的資料會是物件，須把它存在result當中
-$resultAll=$conn->query($sqlAll);
+$resultAll = $conn->query($sqlAll);
 // numrows代表回傳的資料筆數
-$recipe_count=$resultAll->num_rows;
+$recipe_count = $resultAll->num_rows;
 
 
-$perPage=6;
-$start=($page-1)*$perPage;
+$perPage = 6;
+$start = ($page - 1) * $perPage;
 
 
 
 
-$sql ="SELECT recipe.*, users.name AS user_name FROM recipe 
+$sql = "SELECT recipe.*, users.name AS user_name FROM recipe 
     JOIN users ON recipe.user_id=users.id  WHERE recipe.valid=1 ORDER BY create_time DESC LIMIT $start, 6 ";
 
-$result=$conn->query($sql);
-$page_recipe_count=$result->num_rows;
-$rows=$result->fetch_all(MYSQLI_ASSOC);
+$result = $conn->query($sql);
+$page_recipe_count = $result->num_rows;
+$rows = $result->fetch_all(MYSQLI_ASSOC);
 
 
-$startItem=($page-1)*$perPage+1;
-$endItem=($page)*$perPage;
-if($endItem>$recipe_count)$endItem=$recipe_count;
+$startItem = ($page - 1) * $perPage + 1;
+$endItem = ($page) * $perPage;
+if ($endItem > $recipe_count) $endItem = $recipe_count;
 
-$totalpage=ceil($recipe_count/$perPage);
+$totalpage = ceil($recipe_count / $perPage);
 
 
 
@@ -108,48 +108,54 @@ $totalpage=ceil($recipe_count/$perPage);
   <?php require("../module/header.php"); ?>
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
-  <div class="py-2">
-      <a href="recipe-create.php"class="btn btn-info">新增食譜</a>
-  </div>
-  <div class="py-2">
-        <form action="recipe-search.php" method="get">
-          <div class="input-group">
-            <input type="text" name="search" class="form-control">
-            <button type="submit" class="btn btn-info">搜尋</button>
-          </div>
-          </form>
-        </div>
-  <div class="py-2">第 <?=$startItem?>-<?=$endItem?> 筆, 共 <?=$recipe_count?> 筆資料</div>
-  <div class="row gy-4">
-    <?php foreach($rows as $row):?>
-        <div class="col-md-4">
-            <figure class="ratio ratio-4x3 mb-2">
-                <img class="object-cover" src="./recipeimage/<?=$row["main_image"]?>" alt="">
-            </figure>
-            <h2 class="mb-2"><?=$row["title"]?></h2>
-            <div class="text-start"><?=$row["user_name"]?></div>
-            <div class="py-2 d-grid">
-                <a class="btn btn-info" href="recipe-detail.php?recipe_id=<?=$row["id"]?>">查看食譜</a>
-            </div>
-            <div class="py-2 d-grid">
-                <a class="btn btn-danger" href="do-delete.php?recipe_id=<?=$row["id"]?>">刪除食譜</a>
-            </div>
-        </div>
-    <?php endforeach;?>
-</div>
+    <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+      <h1><i class="fa-solid fa-utensils me-3"></i></i>所有食譜</h1>
       <div class="py-2">
-        <ul class="pagination">
-          <?php for($i=1; $i<=$totalpage; $i++): ?>
+        <a href="recipe-create.php" class="btn btn-info"><i class="fa-solid fa-circle-plus me-3"></i>新增食譜</a>
+      </div>
+    </div>
+
+    <div class="py-2">
+      <form action="recipe-search.php" method="get">
+        <div class="d-flex justify-content-between mb-3">
+          <div class="py-2">第 <?= $startItem ?>-<?= $endItem ?> 筆, 共 <?= $recipe_count ?> 筆資料</div>
+          <div class="input-group w-50">
+            <input type="text" name="search" class="form-control">
+            <button type="submit" class="btn btn-info"><i class="fa-solid fa-magnifying-glass me-3"></i>搜尋</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row gy-4">
+      <?php foreach ($rows as $row) : ?>
+        <div class="col-md-4">
+          <figure class="ratio ratio-4x3 mb-2">
+            <img class="object-cover" src="./recipeimage/<?= $row["main_image"] ?>" alt="">
+          </figure>
+          <h2 class="mb-2"><?= $row["title"] ?></h2>
+          <div class="text-start"><?= $row["user_name"] ?></div>
+          <div class="py-2 d-grid">
+            <a class="btn btn-info" href="recipe-detail.php?recipe_id=<?= $row["id"] ?>">查看食譜</a>
+          </div>
+          <div class="py-2 d-grid">
+            <a class="btn btn-danger" href="do-delete.php?recipe_id=<?= $row["id"] ?>">刪除食譜</a>
+          </div>
+        </div>
+      <?php endforeach; ?>
+    </div>
+    <div class="py-2">
+      <ul class="pagination">
+        <?php for ($i = 1; $i <= $totalpage; $i++) : ?>
           <!-- 停留頁面的ui反白 -->
           <li class="page-item
-          <?php 
-          if($page==$i) echo"active";
+          <?php
+          if ($page == $i) echo "active";
           ?>
           
-          "><a class="page-link" href="recipe-all.php?page=<?=$i?>"><?=$i?></a></li>
-          <?php endfor; ?>
-        </ul>
-      </div>
+          "><a class="page-link" href="recipe-all.php?page=<?= $i ?>"><?= $i ?></a></li>
+        <?php endfor; ?>
+      </ul>
+    </div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>

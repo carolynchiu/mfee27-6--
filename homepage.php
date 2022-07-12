@@ -117,15 +117,22 @@ require("./db-connect.php");
                 <i class="fa-solid fa-box-archive fa-4x"></i>
               </div>
               <div class="col-auto ">
-                <div class="h2">0</div>
+                <?php
+                $sqlProduct = "SELECT * FROM products WHERE id=$id ";
+                $resultProduct = $conn->query($sqlProduct);
+                $productCount = $resultProduct->num_rows;
+                ?>
+                <div class="h2"><?= $productCount ?></div>
                 <div>商品</div>
               </div>
             </div>
           </div>
           <a href="#">
             <div class="card-footer text-success py-3">
-              <span class="pull-left">查看詳情</span>
-              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              <a href="http://localhost/mfee27-group6/product/products-list.php">
+                <span class="pull-left">查看詳情</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              </a>
               <div class="clearfix"></div>
             </div>
           </a>

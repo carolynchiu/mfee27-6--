@@ -1,6 +1,6 @@
 <?php
 require("../db-connect.php");
-
+$page=isset($_GET["page"])?$_GET["page"]:"" ;
 $id=$_GET["id"];
 
 // $sql="DELETE FROM users WHERE id='$id'";
@@ -17,6 +17,7 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "刪除資料錯誤: " . $conn->error;
 }
-header("location: course.php?&order=3");
+
+header("location: course.php?page=$page&order=3");
 
 ?>

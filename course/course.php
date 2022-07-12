@@ -237,14 +237,14 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
                                 <?php if ($row["valid"] == 0) {
                                     echo "d-inline";
                                 } else echo "d-none"  ?> 
-                                " href="doOn.php?id=<?= $row["id"] ?>">上架 <i class="fa-solid fa-arrow-up"></i></a>
+                                " href="doOn.php?id=<?= $row["id"] ?>&page=<?=$page?>">上架 <i class="fa-solid fa-arrow-up"></i></a>
 
                                 <!-- text-nowrap不換行 -->
                                 <a class="btn text-nowrap
                                 <?php if ($row["valid"] == 1) {
                                     echo "d-inline";
                                 } else echo "d-none"  ?> 
-                                btn-secondary" href="doOff.php?id=<?= $row["id"] ?>">下架 <i class="fa-solid fa-arrow-down"></i></a>
+                                btn-secondary" href="doOff.php?id=<?= $row["id"] ?>&page=<?=$page?>">下架 <i class="fa-solid fa-arrow-down"></i></a>
 
                                 <a class="btn btn-danger" href="doDelete.php?id=<?= $row["id"] ?>"><i class="fa-solid fa-trash-can"></i></a>
                             </td>

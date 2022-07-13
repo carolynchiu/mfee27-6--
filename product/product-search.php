@@ -7,6 +7,7 @@ $searchCategory=isset($_GET["search-category"])?$_GET["search-category"]:"";
 $category=isset($_GET["category"])?$_GET["category"]:"";
 $min=isset($_GET["min"])?$_GET["min"]:"";
 $max=isset($_GET["max"])?$_GET["max"]:"";
+$status=isset($_GET["status"])?$_GET["status"]:"";
 $search=isset($_GET["search"])?$_GET["search"]:"";
 if(($search) == ""){
   $getSearch="";
@@ -42,6 +43,9 @@ if(!empty($category)){
       break;
 
   }
+}
+if($status==1 || $status==0){
+  $conditions[]="products.status != 2";
 }
 if(!empty($max)){
   $conditions[]="products.price <= $max";
@@ -331,7 +335,8 @@ if(isset($_GET["search"])){
               <td><?=$row["price"]?></td>
               <td><?=$row["stock_in_inventory"]?></td>
               <td><?=$row["launch_time"]."<br>";?>~<?=$row["discontinue_time"]?></td>
-              <td><?php if($row["status"]==1){
+              <td><?php 
+              if($row["status"]==1){
                 echo "上架";
               }else{
                 echo "下架";

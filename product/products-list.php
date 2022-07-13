@@ -15,6 +15,7 @@ $searchCategory=isset($_GET["search-category"])?$_GET["search-category"]:"";
 $category=isset($_GET["category"])?$_GET["category"]:"";
 $min=isset($_GET["min"])?$_GET["min"]:"";
 $max=isset($_GET["max"])?$_GET["max"]:"";
+$status=isset($_GET["status"])?$_GET["status"]:"";
 
 $search=isset($_GET["search"])? "LIKE '%$search%'":"";
 
@@ -41,6 +42,9 @@ if(!empty($category)){
       break;
 
   }
+}
+if($status==1 || $status==0){
+  $conditions[]="products.status !=2 ";
 }
 if(!empty($max)){
   $conditions[]="products.price <= $max";
@@ -103,9 +107,9 @@ switch($order){
     default:
     $orderType="ASC";
 }
-  $sqlAll .= " WHERE ".implode(' AND ',$conditions)."  ORDER BY $orderType LIMIT $start, 5";
+  $sqlAll .= " WHERE ".implode(' AND ',$conditions)."  ORDER BY $orderType ";
 }else{
-  $sql .=" ORDER BY $orderType LIMIT $start, 5";
+  $sql .="WHERE  ORDER BY $orderType ";
 }
 
 //選取所有產品

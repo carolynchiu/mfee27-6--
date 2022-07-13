@@ -215,12 +215,12 @@ if(isset($_GET["search"])){
   <main class="main-content p-4">
   <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
       <h1><i class="fa-solid fa-magnifying-glass me-3"></i>商品搜尋結果</h1>
+      <div>
+          <a class="btn btn-info my-2" href="products-list.php"><i class="fa-solid fa-arrow-rotate-left me-3"></i>回產品清單頁面</a>
+        </div>
     </div>
   <div class="container table-responsive">
     <div>
-        <div>
-          <a class="btn btn-info my-2" href="products-list.php"><i class="fa-solid fa-arrow-rotate-left me-3"></i>回產品清單頁面</a>
-        </div>
         <form action="product-search.php" method="get">
           <div class="py-2 d-flex justify-content-between align-items-center ">
             <ul class="nav nav-pills my-2">
@@ -229,7 +229,7 @@ if(isset($_GET["search"])){
               </li>
               <?php foreach ($rowsCategory as $row):?>
               <li>
-                <a class="nav-link category  <?php if($category==$row["id"]) echo "active"?> " href="product-search.php?category=<?=$row["id"]?>&page=<?=$page?>&order=<?=$order?>" id="category" name="category"  >
+                <a class="nav-link category  <?php if($category==$row["id"]) echo "active"?> " href="product-search.php?category=<?=$row["id"]?>&page=<?=$page?>&order=<?=$order?>&search=<?=$search?>&min=<?=$min?>&max=<?=$max?>" id="category" name="category"  >
                 <?php switch($row["name"]){
             case($row["name"]="服飾"):
               echo "<i class='fa-solid fa-shirt'></i>";

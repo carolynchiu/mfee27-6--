@@ -250,7 +250,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
               <label class="form-check-label" for="">依商品編號</label>
               <input class="form-check-input my-0 mx-2" type="radio" name="search-category"  value="id">
               <label class="form-check-label" for="">依商品名稱</label>
-              <input class="form-check-input my-0 mx-2" type="radio" name="search-category" checked  id="" value="name">
+              <input class="form-check-input my-0 mx-2" type="radio" name="search-category"  id="" value="name">
             </div>
               <input type="text" name="search" class="form-control">
               <button type="submit" class="btn btn-info"><i class="fa-solid fa-magnifying-glass me-3"></i>搜尋</button>

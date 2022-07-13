@@ -46,7 +46,7 @@ $userCount = $result->num_rows;
 <html lang="en">
 
 <head>
-    <title>編輯課程</title>
+    <title>查看課程</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -99,7 +99,7 @@ $userCount = $result->num_rows;
             margin-top: 40px;
         }
 
-        .image_prev{
+        .image_prev {
             width: 300px;
         }
 
@@ -115,18 +115,19 @@ $userCount = $result->num_rows;
     <?php require("../module/header.php"); ?>
     <?php require("../module/aside.php"); ?>
     <main class="main-content p-4">
-        <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
-            <h1><i class="fa-solid fa-pen-to-square"></i> 編輯課程</h1>
-        </div>
-
-
-        <div class="container">
-            <div class="py-2">
-                <a class="btn btn-info" href="course.php">返回所有課程</a>
+        <?php if ($userCount > 0) :
+            $row = $result->fetch_assoc();
+        ?>
+            <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+                <h1><i class="fa-solid fa-info"></i> 查看課程<?= $row["id"] ?></h1>
             </div>
-            <?php if ($userCount > 0) :
-                $row = $result->fetch_assoc();
-            ?>
+
+
+            <div class="container">
+                <div class="py-2">
+                    <a class="btn btn-info" href="course.php">返回所有課程</a>
+                </div>
+
                 <table class="table table-bordered table-hover">
                     <tr>
                         <th>課程編號</th>
@@ -165,7 +166,7 @@ $userCount = $result->num_rows;
                             <?php
                             $url = $row["url"];
                             preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match);
-                            echo "https://www.youtube.com/embed/".$match[1];
+                            echo "https://www.youtube.com/embed/" . $match[1];
                             ?>
 
                             " title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -183,7 +184,7 @@ $userCount = $result->num_rows;
             <?php else : ?>
                 沒有該使用者
             <?php endif; ?>
-        </div>
+            </div>
 
 
 

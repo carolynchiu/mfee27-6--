@@ -38,75 +38,94 @@ switch ($order) {
 
 
 ?>
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
+    <head>
+        <title>文章管理</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
 
-<head>
-  <title>Admins</title>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS v5.2.0-beta1 -->
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+            integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            href="../fontawesome-free-6.1.1-web/css/all.min.css"
+        />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="../style/common.css" />
+    </head>
 
-  <!-- Bootstrap CSS v5.2.0-beta1 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <link rel="stylesheet" href="../fontawesome-free-6.1.1-web/css/all.min.css">
-  <link rel="stylesheet" href="../style/common.css">
-</head>
-
-<body>
-  <?php require("../module/header.php"); ?>
-  <?php require("../module/aside.php"); ?>
-  <div class="main-content px-4">
-    <h3>新增文章</h3>
-        <div class="d-flex">
-        <input  class="form-control" id="create" type="text" />
-        <button class="btn btn-primary" id="create-submit">送出</button>
+    <body>
+        <?php require("../module/header.php"); ?>
+        <?php require("../module/aside.php"); ?>
+        <main  class="main-content p-4">
+            <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+                <h1><i class="fa-solid fa-book me-3"></i>所有文章</h1>
+                <div class="d-flex p-4">
+                    <button class="button-standard blue md-3" id="createBtn">新增</button>
+                </div>
+            </div>
+        <div>
+            
+            <table class="table table-bordered border-dark" id="article-data">
+                <thead>
+                <tr class="table-info">
+                    <th>文章編號</th>
+                    <th>使用者</th>
+                    <th>文章標題</th>
+                    <th>發布時間</th>
+                    <th>編輯</th>
+                </tr>
+                </thead>
+                <tbody id="append-target"></tbody>
+            </table>
+            <div id="update-div"></div>
         </div>
-        <table class="table" id="article-data">
-            <tr>
-                <th>文章編號</th>
-                <th>使用者</th>
-                <th>文章標題</th>
-                <th>內文</th>
-                <th>發布時間</th>
-                <th>編輯</th>
-            </tr>
-        </table>
-        <div id="update-div"></div>
-    </div>
-
-
+        </main>
         <script
             src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"
         ></script>
-
+       <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
         <script>
+          
             // 查詢現有資料
             $.ajax({
                 url: "./api/research.php",
                 type: "POST",
             }).then((res) => {
+                console.log(res);
                 // 1. 把res呈現在table裡面 (變成UI)
-                let appendTarget = document.getElementById("article-data");
-                // for 1. 宣告變數0 , 2.結束條件 , 3.每次回圈做完+1
+                let appendTarget = document.getElementById("append-target");
+                    
+                    // for 1. 宣告變數0 , 2.結束條件 , 3.每次回圈做完+1
                 for (let i = 0; i < res.length; i++) {
                     let object = res[i];
                     console.log(object);
                     //#region 推UI
 
                     let tr = document.createElement("tr");
-
+                    tr.classList.add('p-4');
+                    tr.classList.add("data");
                     tr.innerHTML = `
-                        <td>${object.article_id}</td>
-                        <td>${object.user_name}</td>
-                        <td>${object.article_title}</td>
-                        <td>${object.article_text}</td>
-                        <td>${object.create_time}</td>
-                        <td>
-                            <button class="button-standard blue" id="update-${object.id}">修改</button>
-                            <button class="button-standard red" id="delete-${object.id}">刪除</button>
+                        <td class="border">${object.article_id}</td>
+                        <td class="border">${object.user_name}</td>
+                        <td class="border">${object.article_title}</td>    
+                        <td class="border">${object.create_time}</td>
+                        <td class="border">
+                            <button class="button-standard blue" id="update-${object.article_id}">修改</button>
+                            <button class="button-standard red" id="delete-${object.article_id}">刪除</button>
                         </td>
                     `;
                     appendTarget.append(tr);
@@ -114,7 +133,7 @@ switch ($order) {
                     //#region 刪除
                     // 刪除的按鈕ID
                     let deleteBtn = document.getElementById(
-                        `delete-${object.id}`
+                        `delete-${object.article_id}`
                     );
                     // 刪除事件
                     deleteBtn.onclick = function () {
@@ -139,84 +158,34 @@ switch ($order) {
                     //#endregion
                     //#region 更新
                     let updateBtn = document.getElementById(
-                        `update-${object.id}`
+                        `update-${object.article_id}`
                     );
+
                     updateBtn.onclick = function () {
-                        // console.log(object);
-                        function AppendNew() {
-                            // 先得到自己命名的ID的標籤，再存到左邊的變數
-                            let updateDiv =
-                                document.getElementById("update-div");
-                            // 再做出要推的標籤到變數裡
-                            let text = document.createElement("textarea");
-
-                            // updateSubmitBtn=變數                button=標籤
-                            let updateSubmitBtn =
-                                document.createElement("button");
-                            // 方法：要推的目標.append(要推的東西)
-                            // 概念：把要推的東西推到要推的目標內
-                            text.value = object.text;
-                            updateDiv.append(text);
-                            updateSubmitBtn.innerText = "更改";
-
-                            updateSubmitBtn.onclick = function () {
-                                // 已經或得改的目標、改文字
-                                let id = object.id;
-                                let word = text.value;
-                                console.log(id, word);
-                                $.ajax({
-                                    url: "./api/update.php",
-                                    type: "post",
-                                    data: {
-                                        id: id,
-                                        text: word,
-                                    },
-                                }).then(function (updateRes) {
-                                    if (updateRes === "修改成功") {
-                                        location.reload();
-                                    } else {
-                                        alert("修改失敗");
-                                    }
-                                });
-                            };
-
-                            updateDiv.append(updateSubmitBtn);
-                        }
-
-                        let target = document.getElementById("update-div");
-                        target.innerHTML = "";
-                        AppendNew();
+             
+                        let formatted = JSON.stringify(object);
+                        sessionStorage.setItem('article_ref',formatted);
+                        window.location.href = "./edit.php";
                     };
+
+                    
                     //#endregion
                 }
+
+                $("#article-data").DataTable();
             });
+                    //新增按鈕跳轉
+                    let createBtn =document.getElementById('createBtn');
+                    createBtn.onclick = function(){
+                    window.location.href ="./insert.php";
+                    };
 
-            //#region 新增
-            // 新增的方法
-            let createInput = document.getElementById("create");
-            let submitBtn = document.getElementById("create-submit");
-            // 送出按鈕下去的時候
-            submitBtn.onclick = function () {
-                $.ajax("./api/create.php", {
-                    method: "POST",
-                    data: {
-                        text: createInput.value,
-
-                        // 後面要改的
-                        user_id: 1,
-                        // 後面要改的
-                        // create_time: "2022-07-09 12:00:00",
-                    },
-                }).then((res) => {
-                    console.log(res);
-                    if (res === "新增成功") {
-                        location.reload();
-                    }
-                });
-            };
-            //#endregion
+                
         </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-</body>
-
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+            crossorigin="anonymous"
+        ></script>
+    </body>
 </html>

@@ -145,7 +145,9 @@ $detailCount = $resultDetail->num_rows;
           </tr>
           <tr>
             <th>訂單狀態</th>
-            <td><?= $rowsOrder["order_status"] ?></td>
+            <td class="<?php if ($rowsOrder["order_status"] == "已取消") {
+                          echo "text-danger";
+                        } ?>"><?= $rowsOrder["order_status"] ?></td>
           </tr>
           <tr>
             <th>訂單建立時間</th>

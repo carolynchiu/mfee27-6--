@@ -259,7 +259,7 @@ $courseCount = $resultCourse->num_rows;
                       <td><?= $row["create_time"] ?></td>
                       <td><?= $row["user_order_status"] ?></td>
                       <td class="text-center">
-                        <a href="http://localhost/mfee27-group6-V2/order/order-detail.php?id=<?= $row['id'] ?>" class="btn btn-outline-info">訂單明細</a>
+                        <a href="http://localhost/mfee27-group6/order/order-detail.php?id=<?= $row['id'] ?>" class="btn btn-outline-info">訂單明細</a>
                       </td>
                     </tr>
                   <?php endforeach; ?>

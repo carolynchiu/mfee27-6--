@@ -257,7 +257,7 @@ $totalPage = ceil($userCount / $perPage);
         <table class="table table-bordered border-dark">
           <thead>
             <tr class="table-info border-dark border-bottom border-3">
-              <th>編號</th>
+              <th>會員編號</th>
               <th>帳號</th>
               <th>姓名</th>
               <th>性別</th>
@@ -284,7 +284,7 @@ $totalPage = ceil($userCount / $perPage);
                 <td class="text-center">
                   <a href="user.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye me-2"></i>詳細資料</a>
                   <a href="user-edit.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square me-2"></i>修改</a>
-                  <a href="" class="btn btn-sm btn-danger"><i class="fa-solid fa-circle-minus me-2"></i>刪除</a>
+                  <a href="doDelete.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-danger"><i class="fa-solid fa-circle-minus me-2"></i>刪除</a>
                 </td>
                 <!-- 連結資料 -->
               </tr>

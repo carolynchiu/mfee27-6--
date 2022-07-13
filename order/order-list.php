@@ -270,7 +270,7 @@ $pageOrderCount = $result->num_rows; //每頁的使用者
                 <td><?= $row["order_status"] ?></td>
                 <td class="text-center">
                   <a href="order-detail.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye me-2"></i>詳細資料</a>
-                  <a href="" class="btn btn-sm btn-danger"><i class="fa-solid fa-circle-minus me-2"></i>取消</a>
+                  <a href="doDelete.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-danger"><i class="fa-solid fa-circle-minus me-2"></i>取消</a>
                 </td>
               </tr>
             <?php endforeach; ?>

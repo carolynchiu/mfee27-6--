@@ -10,7 +10,7 @@ require("./db-connect.php");
 <html lang="en">
 
 <head>
-  <title>dashboard</title>
+  <title>首頁</title>
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -70,12 +70,8 @@ require("./db-connect.php");
   <?php require("./module/header.php"); ?>
   <?php require("./module/aside.php"); ?>
   <main class="main-content p-4">
-    <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-      <h1>Dashboard</h1>
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-outline-primary">share</button>
-        <button type="button" class="btn btn-outline-primary">export</button>
-      </div>
+    <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+      <h1><i class="fa-solid fa-house me-3"></i>首頁</h1>
     </div>
     <div class="row gy-4">
       <div class="col-lg-4 col-md-6">
@@ -99,8 +95,10 @@ require("./db-connect.php");
           </div>
           <a href="#">
             <div class="card-footer text-primary py-3">
-              <span class="pull-left ">查看詳情</span>
-              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              <a href="http://localhost/mfee27-group6/user/users.php">
+                <span class="pull-left ">查看詳情</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              </a>
               <div class="clearfix"></div>
             </div>
           </a>
@@ -115,15 +113,22 @@ require("./db-connect.php");
                 <i class="fa-solid fa-box-archive fa-4x"></i>
               </div>
               <div class="col-auto ">
-                <div class="h2">0</div>
+                <?php
+                $sqlProduct = "SELECT * FROM products";
+                $resultProduct = $conn->query($sqlProduct);
+                $productCount = $resultProduct->num_rows;
+                ?>
+                <div class="h2"><?= $productCount ?></div>
                 <div>商品</div>
               </div>
             </div>
           </div>
           <a href="#">
             <div class="card-footer text-success py-3">
-              <span class="pull-left">查看詳情</span>
-              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              <a class="link-success" href="http://localhost/mfee27-group6/product/products-list.php">
+                <span class="pull-left">查看詳情</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              </a>
               <div class="clearfix"></div>
             </div>
           </a>
@@ -138,15 +143,22 @@ require("./db-connect.php");
                 <i class="fa-solid fa-file-lines fa-4x"></i>
               </div>
               <div class="col-auto ">
-                <div class="h2">0</div>
+                <?php
+                $sqlOrder = "SELECT * FROM order_list WHERE valid=1";
+                $resultOrder = $conn->query($sqlOrder);
+                $orderCount = $resultOrder->num_rows;
+                ?>
+                <div class="h2"><?= $orderCount ?></div>
                 <div>訂單</div>
               </div>
             </div>
           </div>
           <a href="#">
             <div class="card-footer text-warning py-3">
-              <span class="pull-left">查看詳情</span>
-              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              <a class="link-warning" href="http://localhost/mfee27-group6/order/order-list.php">
+                <span class="pull-left">查看詳情</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              </a>
               <div class="clearfix"></div>
             </div>
           </a>
@@ -160,15 +172,22 @@ require("./db-connect.php");
                 <i class="fa-solid fa-utensils fa-4x"></i>
               </div>
               <div class="col-auto ">
-                <div class="h2">0</div>
+                <?php
+                $sqlRecipe = "SELECT * FROM recipe WHERE valid=1";
+                $resultRecipe = $conn->query($sqlRecipe);
+                $recipeCount = $resultRecipe->num_rows;
+                ?>
+                <div class="h2"><?= $recipeCount ?></div>
                 <div>食譜</div>
               </div>
             </div>
           </div>
           <a href="#">
             <div class="card-footer text-danger py-3">
-              <span class="pull-left">查看詳情</span>
-              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              <a class="link-danger" href="http://localhost/mfee27-group6/recipe/recipe-all.php">
+                <span class="pull-left">查看詳情</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              </a>
               <div class="clearfix"></div>
             </div>
           </a>
@@ -183,15 +202,22 @@ require("./db-connect.php");
                 <i class="fa-solid fa-dumbbell fa-4x"></i>
               </div>
               <div class="col-auto ">
-                <div class="h2">0</div>
+                <?php
+                $sqlCourse = "SELECT * FROM course WHERE valid !=2";
+                $resultCourse = $conn->query($sqlCourse);
+                $courseCount = $resultCourse->num_rows;
+                ?>
+                <div class="h2"><?= $courseCount ?></div>
                 <div>課程</div>
               </div>
             </div>
           </div>
           <a href="#">
             <div class="card-footer text-info py-3">
-              <span class="pull-left">查看詳情</span>
-              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              <a class="link-info" href="http://localhost/mfee27-group6/course/course.php">
+                <span class="pull-left">查看詳情</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              </a>
               <div class="clearfix"></div>
             </div>
           </a>

@@ -1,7 +1,5 @@
 <?php
 session_start();
-
-
 require("../db-connect.php");
 
 
@@ -9,14 +7,13 @@ $searchCategory=isset($_GET["search-category"])?$_GET["search-category"]:"";
 $category=isset($_GET["category"])?$_GET["category"]:"";
 $min=isset($_GET["min"])?$_GET["min"]:"";
 $max=isset($_GET["max"])?$_GET["max"]:"";
+if(isset($_GET["search"])){
+  if(($_GET["search"]) != ""){
+    $search=$_GET["search"];
+  }
+} 
+$getSearch=isset($_GET["search"])? "LIKE '%$search%'":"";
 
-
-if(!isset($_GET["search"])){
-  $search="";
-  $pageProductCount=0;
-}else{
-  $search=$_GET["search"];
-}
 
 //每頁產品
 // sql product所有的欄位和 product_category的名子並生出category_name
@@ -81,12 +78,13 @@ $sql="$query";
 
 
 if(count($conditions)>0){
-  $sql .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+  $sql .= " WHERE ".implode(' AND ',$conditions)." $getSearch  ORDER BY $orderType LIMIT $start, 5";
 }else{
-  $sql .=" WHERE products.name LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+  $sql .=" ORDER BY $orderType LIMIT $start, 5";
 }
 $resultPage=$conn->query($sql);
 $pageProductCount=$resultPage->num_rows;
+
 
 
 
@@ -110,7 +108,9 @@ switch($order){
     default:
     $orderType="ASC";
 }
-  $sqlAll .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+  $sqlAll .= " WHERE ".implode(' AND ',$conditions)." $getSearch  ORDER BY $orderType LIMIT $start, 5";
+}else{
+  $sql .="  $getSearch  ORDER BY $orderType LIMIT $start, 5";
 }
 
 
@@ -131,7 +131,11 @@ $sqlCategory="SELECT * FROM product_category";
 $resultCategory=$conn->query($sqlCategory);
 $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
 
-
+if(isset($_GET["search"])){
+  $search=$_GET["search"];
+}else{
+  $search="";
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -238,11 +242,10 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
               <?php endforeach;?>
             </ul>
             <div class="btn-group">
-              <div class="m-2">排序</div>
-              <a href="product-search.php?page=<?=$page?>&order=1" class="btn btn-primary <?php if($order==1) echo "active" ?>" name="order">id<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-              <a href="product-search.php?page=<?=$page?>&order=2" class="btn btn-primary <?php if($order==2) echo "active" ?>" name="order">id<i class="fa-solid fa-arrow-down-wide-short"></i></a>
-              <a href="product-search.php?page=<?=$page?>&order=3" class="btn btn-primary <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-              <a href="product-search.php?page=<?=$page?>&order=4" class="btn btn-primary <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
+              <a href="product-search.php?page=<?=$page?>&order=1" class="btn btn-info <?php if($order==1) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+              <a href="product-search.php?page=<?=$page?>&order=2" class="btn btn-info <?php if($order==2) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+              <a href="product-search.php?page=<?=$page?>&order=3" class="btn btn-info <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+              <a href="product-search.php?page=<?=$page?>&order=4" class="btn btn-info <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
             </div>
           </div>
           <?php require("price-filter.php") ?>

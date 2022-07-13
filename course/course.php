@@ -158,7 +158,7 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
     <?php require("../module/aside.php"); ?>
     <main class="main-content p-4">
         <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
-            <h1><i class="fa-solid fa-person-running"></i></i> 所有課程</h1>
+            <h1><i class="fa-solid fa-person-running"></i> 所有課程</h1>
             <div class="btn-group" role="group" aria-label="Basic example">
 
                 <a href="create_course.php" type="get" class="btn btn-success">+新增課程</a>
@@ -237,22 +237,22 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
                                 <?php if ($row["valid"] == 0) {
                                     echo "d-inline";
                                 } else echo "d-none"  ?> 
-                                " href="doOn.php?id=<?= $row["id"] ?>">上架 <i class="fa-solid fa-arrow-up"></i></a>
+                                " href="doOn.php?id=<?= $row["id"] ?>&page=<?=$page?>">上架 <i class="fa-solid fa-arrow-up"></i></a>
 
                                 <!-- text-nowrap不換行 -->
                                 <a class="btn text-nowrap
                                 <?php if ($row["valid"] == 1) {
                                     echo "d-inline";
                                 } else echo "d-none"  ?> 
-                                btn-secondary" href="doOff.php?id=<?= $row["id"] ?>">下架 <i class="fa-solid fa-arrow-down"></i></a>
+                                btn-secondary" href="doOff.php?id=<?= $row["id"] ?>&page=<?=$page?>">下架 <i class="fa-solid fa-arrow-down"></i></a>
 
                                 <a class="btn btn-danger" href="doDelete.php?id=<?= $row["id"] ?>"><i class="fa-solid fa-trash-can"></i></a>
                             </td>
 
                             <td>
                                 <?php if ($row["valid"] == 1) {
-                                    echo "<span class=\"text-success fw-bold\"><i class=\"fa-solid fa-circle-check display-6\"></i></span>";
-                                } else echo "<span class=\"text-secondary fw-bold\"><i class=\"fa-solid fa-circle-xmark display-6\"></i></span>"; ?>
+                                    echo "<span class=\"text-success fw-bold\"><i class=\"fa-solid fa-circle-check h3\"></i></span>";
+                                } else echo "<span class=\"text-secondary fw-bold\"><i class=\"fa-solid fa-circle-xmark h3\"></i></span>"; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

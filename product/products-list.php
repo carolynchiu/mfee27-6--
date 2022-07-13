@@ -16,12 +16,7 @@ $category=isset($_GET["category"])?$_GET["category"]:"";
 $min=isset($_GET["min"])?$_GET["min"]:"";
 $max=isset($_GET["max"])?$_GET["max"]:"";
 
-if(!isset($_GET["search"])){
-  $search="";
-  $pageProductCount=0;
-}else{
-  $search=$_GET["search"];
-}
+$search=isset($_GET["search"])? "LIKE '%$search%'":"";
 
 $query="SELECT products.* , product_category.name AS category_name  FROM products  JOIN product_category ON products.category_id = product_category.id";
 $conditions=array();
@@ -79,10 +74,12 @@ switch($order){
 
 
 if(count($conditions)>0){
-  $sql .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+  $sql .= " WHERE ".implode(' AND ',$conditions)." ORDER BY $orderType LIMIT $start, 5";
 }else{
-  $sql .=" WHERE products.name LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+  $sql .=" ORDER BY $orderType LIMIT $start, 5";
 }
+
+
 $resultPage=$conn->query($sql);
 $pageProductCount=$resultPage->num_rows;
 
@@ -106,7 +103,9 @@ switch($order){
     default:
     $orderType="ASC";
 }
-  $sqlAll .= " WHERE ".implode(' AND ',$conditions)." LIKE '%$search%'  ORDER BY $orderType LIMIT $start, 5";
+  $sqlAll .= " WHERE ".implode(' AND ',$conditions)."  ORDER BY $orderType LIMIT $start, 5";
+}else{
+  $sql .=" ORDER BY $orderType LIMIT $start, 5";
 }
 
 //選取所有產品
@@ -114,9 +113,9 @@ $resultAll= $conn->query($sqlAll);
 //產品的總數
 $productsCount=$resultAll->num_rows;
 
-// //開始 
+//開始 
 $startItem=($page-1)*$perPage+1;
-// //結尾
+//結尾
 $endItem=$page*$perPage;
 // if($endItem>$userCount)$endItem=$userCount;
 $totalPage=ceil($productsCount/$perPage);//無條件進位
@@ -203,6 +202,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
     <!-- 頁面標題 -->
     <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
     <h1><i class="fa-solid fa-box-archive me-3"></i>所有商品</h1>
+    <a class="btn btn-info " href="product-add.php"><i class="fa-solid fa-boxes-packing me-2"></i>新增商品</a>
     </div>
   <div class="container table-responsive">
     <div>
@@ -309,7 +309,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
         </li>
       </ul>
     </nav>
-      <a class="btn btn-info " href="product-add.php"><i class="fa-solid fa-boxes-packing me-2"></i>新增商品</a>
+      
     </div>
     <?php if($pageProductCount>0): ?>
         <table class=" table table-bordered  table-hover mt-5">

@@ -124,6 +124,10 @@ switch ($order) {
                             backBtn.onclick = function(){
                                 window.location.href="./" 
                             }
+                            // let submitBtn =document.getElementById('submit');
+                            // submitBtn.onclick=function(){
+                            //     window.location.href="./"
+                            // }
                         </script>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"

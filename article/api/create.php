@@ -27,5 +27,4 @@ if($result){
 }else{
     echo '新增失敗';
 }
-
 ?>

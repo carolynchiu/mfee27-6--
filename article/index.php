@@ -42,7 +42,7 @@ switch ($order) {
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Admins</title>
+        <title>文章管理</title>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta
@@ -68,10 +68,15 @@ switch ($order) {
     <body>
         <?php require("../module/header.php"); ?>
         <?php require("../module/aside.php"); ?>
-        <div class="main-content px-4">
-            <div class="d-flex p-4">
-                <button class="button-standard blue me-4" id="createBtn">新增</button>
+        <main  class="main-content p-4">
+            <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+                <h1><i class="fa-solid fa-book me-3"></i>所有文章</h1>
+                <div class="d-flex p-4">
+                    <button class="button-standard blue md-3" id="createBtn">新增</button>
+                </div>
             </div>
+        <div>
+            
             <table class="table table-bordered border-dark" id="article-data">
                 <thead>
                 <tr class="table-info">
@@ -86,7 +91,7 @@ switch ($order) {
             </table>
             <div id="update-div"></div>
         </div>
-
+        </main>
         <script
             src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="

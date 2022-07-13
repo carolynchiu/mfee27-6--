@@ -40,7 +40,7 @@
             <a class="nav-link" href="http://localhost/mfee27-group6/course/course.php">課程</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">文章</a>
+            <a class="nav-link" href="http://localhost/mfee27-group6/article/index.php">文章</a>
           </li>
           <!-- <li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>

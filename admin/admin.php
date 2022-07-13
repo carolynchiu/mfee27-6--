@@ -110,7 +110,7 @@ $adminCount = $result->num_rows;
         <!-- 回到使用者列表頁 -->
         <div class="py-2 d-flex justify-content-between">
           <div>
-            <a href="admins.php" class="btn btn-info me-2"><i class="fa-solid fa-circle-arrow-left me-2"></i>回到所有使用者</a>
+            <a href="admins.php" class="btn btn-info me-2"><i class="fa-solid fa-circle-arrow-left me-2"></i>回到所有管理員</a>
             <a href="admin-edit.php?id=<?= $row["id"] ?>" class="btn btn-info"><i class="fa-solid fa-user-pen me-2"></i>修改</a>
           </div>
           <a href="doDelete.php?id=<?= $row["id"] ?>" class="btn btn-danger"><i class="fa-solid fa-circle-minus me-2"></i>刪除</a>
@@ -167,7 +167,8 @@ $adminCount = $result->num_rows;
                                   ?>" type="button" class="btn btn-info btn-outline-dark">下一筆<i class="fa-solid fa-circle-chevron-right ms-2"></i></a>
           </div>
         </div>
-        <h3 class="text-danger">管理員資料已刪除</h3>
+        <a href="admins.php" class="btn btn-info me-2"><i class="fa-solid fa-circle-arrow-left me-2"></i>回到所有管理員</a>
+        <h2 class="text-danger mt-3">管理員資料已刪除</h2>
       <?php endif; ?>
       </div>
   </main>

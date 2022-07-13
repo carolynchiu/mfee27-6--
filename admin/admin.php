@@ -14,7 +14,7 @@ $sqlAll = "SELECT * FROM admins";
 $resultAll = $conn->query($sqlAll);
 $allCount = $resultAll->num_rows; //所有管理員筆數
 
-$sql = "SELECT * FROM admins WHERE id=$id";
+$sql = "SELECT * FROM admins WHERE id=$id AND valid = 1";
 $result = $conn->query($sql);
 $adminCount = $result->num_rows;
 

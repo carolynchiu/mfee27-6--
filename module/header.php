@@ -31,7 +31,7 @@
             <a class="nav-link" href="http://localhost/mfee27-group6/order/order-list.php">訂單</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">優惠券</a>
+            <a class="nav-link" href="http://localhost/mfee27-group6/coupon/coupon.php">優惠券</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="http://localhost/mfee27-group6/recipe/recipe-all.php">食譜</a>

@@ -232,12 +232,17 @@ require("./db-connect.php");
                 <i class="fa-solid fa-pen-to-square fa-4x"></i>
               </div>
               <div class="col-auto ">
-                <div class="h2">0</div>
+              <?php
+                $sqlArticle = "SELECT * FROM article ";
+                $resultArticle= $conn->query($sqlArticle);
+                $articleCount = $resultArticle->num_rows;
+                ?>
+                <div class="h2"><?=$articleCount?></div>
                 <div>文章</div>
               </div>
             </div>
           </div>
-          <a href="#">
+          <a href="http://localhost/mfee27-group6/article/index.php">
             <div class="card-footer text-dark py-3">
               <span class="pull-left">查看詳情</span>
               <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

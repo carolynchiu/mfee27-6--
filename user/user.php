@@ -290,8 +290,10 @@ $articleCount = $resultArticle->num_rows;
                         <img class="object-cover" src="../product_image/<?= $row["product_image"] ?>" alt="">
                       </figure>
                       <!-- 可以先把資料寫死再處理資料庫的資料 -->
+                      <h1><?= $row["product_id"] ?></h1>
                       <h2 class="mb-2 h4"><?= $row["product_name"] ?></h2>
                       <div class="text-end text-danger">$<?= $row["product_price"] ?></div>
+                      <div class="text-center"><a href="http://localhost/mfee27-group6/product/product.php?id=<?= $row['id'] ?>" class="btn btn-outline-info">查看商品</a></div>
                     </div>
                   </div>
                 <?php endforeach; ?>

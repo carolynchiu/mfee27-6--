@@ -193,7 +193,7 @@ $detailCount = $resultDetail->num_rows;
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
                       </form>
                     <?php else : ?>
-                      <h3>訂單已出貨無法新增商品</h3>
+                      <h3 class="text-danger">無法新增商品，該訂單已出貨或取消！！！</h3>
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
                     <?php endif; ?>
                   </div>

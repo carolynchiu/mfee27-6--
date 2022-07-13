@@ -203,7 +203,7 @@ require("./db-connect.php");
               </div>
               <div class="col-auto ">
                 <?php
-                $sqlCourse = "SELECT * FROM course WHERE valid=1";
+                $sqlCourse = "SELECT * FROM course WHERE valid !=2";
                 $resultCourse = $conn->query($sqlCourse);
                 $courseCount = $resultCourse->num_rows;
                 ?>

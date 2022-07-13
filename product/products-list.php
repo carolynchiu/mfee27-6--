@@ -192,6 +192,10 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
     .table{
       table-layout:fixed;
     }
+    table.table th,td {
+            vertical-align: middle;
+            text-align: center;
+        }
   </style>
 </head>
 

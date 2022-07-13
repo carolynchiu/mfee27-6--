@@ -38,6 +38,8 @@ if (isset($_GET["category"])){
 $page=isset($_GET["page"])? $_GET["page"] :1;
 $perPage=5; //每頁有5項產品
 $start=($page-1)*$perPage; //起始頁能顯示的產品數
+
+
 //將users.id帶入product_comments.user_id 和products.id 帶入product_comments.product_id
 //然後用users和products的id個別帶入他們的name
 $sql="SELECT product_comments.* ,users.name AS users_name , products.name AS product_name FROM product_comments
@@ -246,14 +248,14 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
                 echo "disabled";
               }
               ?>
-              " href="comment-change.php?id=<?=$row["id"]?>&status=1&search=<?=$search?>">顯示</a>
+              " href="comment-change.php?id=<?=$row["id"]?>&status=1&search=<?=$search?>&page=<?=$page?>">顯示</a>
               <a class="btn btn-info my-2 
               <?php
               if($row["status"]==0){
                 echo "disabled";
               }
               ?>
-              " href="comment-change.php?id=<?=$row["id"]?>&status=0&search=<?=$search?>">隱藏</a></td>
+              " href="comment-change.php?id=<?=$row["id"]?>&status=0&search=<?=$search?>&page=<?=$page?>">隱藏</a></td>
               
             </tr>
             <?php endforeach;?>
@@ -263,21 +265,42 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
         <?php endif; ?>
         </table>
         <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center <?php if($productsCount==0) echo "d-none";?>">
-        <li class="page-item <?php if($page==1)echo "disabled";?>   ">
-          <a class="page-link" href="product-search.php?search=<?=$search?>&page=<?=$page-1?>"><</a>
-        </li>
-        <?php for($i=1;$i<=$totalPage;$i++):?>
-        <li class="page-item">
-          <a class="page-link 
-          <?php if($page==$i)echo "active"; ?>" href="product-search.php?search=<?=$search?>&page=<?=$i?>"><?=$i?></a>
-        </li>
-        <?php endfor;?>
-        <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
-          <a class="page-link" href="product-search.php?search=<?=$search?>&page=<?=$page+1?>">></a>
-        </li>
-      </ul>
-    </nav>
+        <ul class="pagination justify-content-center">
+          <li class="page-item <?php if($page==1)echo "disabled";?>   ">
+            <a class="page-link" href="
+            <?php if(isset($_GET["category"])){
+              echo "product-comment-search.php?category=<?=$category?>&page=<?=$page?>";
+            }else{
+              $previousPage=$page-1;
+              echo "product-comment-search.php?page=$previousPage";
+              }
+              ?>
+            "><</a>
+          </li>
+          <?php for($i=1;$i<=$totalPage;$i++):?>
+          <li class="page-item">
+            <a class="page-link 
+            <?php if($page==$i)echo "active"; ?>" href="
+            <?php if(isset($_GET["category"])){
+              echo "product-comment-search.php?category=<?=$category?>&page=<?=$i?>";
+            }else{
+              echo "product-comment-search.php?page=$i";
+              }
+              ?>"><?=$i?></a>
+          </li>
+          <?php endfor;?>
+          <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
+            <a class="page-link" href="
+            <?php if(isset($_GET["category"])){
+              echo "product-comment-search.php?&category=<?=$category?>&page=<?=$page?>";
+            }else{
+              $nextPage=$page+1;
+              echo "product-comment-search.php?page=$nextPage";
+              }
+              ?>">></a>
+          </li>
+        </ul>
+      </nav>
       </div>
   </main>
   

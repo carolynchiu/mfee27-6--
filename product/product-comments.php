@@ -224,6 +224,43 @@ $totalPage=ceil($commentsCount/$perPage);//無條件進位
             目前沒有資料
           <?php endif;?>
         </table>
+        <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item <?php if($page==1)echo "disabled";?>   ">
+            <a class="page-link" href="
+            <?php if(isset($_GET["category"])){
+              echo "product-comments.php?category=<?=$category?>&page=<?=$page?>";
+            }else{
+              $previousPage=$page-1;
+              echo "product-comments.php?page=$previousPage";
+              }
+              ?>
+            "><</a>
+          </li>
+          <?php for($i=1;$i<=$totalPage;$i++):?>
+          <li class="page-item">
+            <a class="page-link 
+            <?php if($page==$i)echo "active"; ?>" href="
+            <?php if(isset($_GET["category"])){
+              echo "product-comments.php?category=<?=$category?>&page=<?=$i?>";
+            }else{
+              echo "product-comments.php?page=$i";
+              }
+              ?>"><?=$i?></a>
+          </li>
+          <?php endfor;?>
+          <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
+            <a class="page-link" href="
+            <?php if(isset($_GET["category"])){
+              echo "product-comments.php?&category=<?=$category?>&page=<?=$page?>";
+            }else{
+              $nextPage=$page+1;
+              echo "product-comments.php?page=$nextPage";
+              }
+              ?>">></a>
+          </li>
+        </ul>
+      </nav>
       </div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

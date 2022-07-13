@@ -146,7 +146,8 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
             margin-top: 40px;
         }
 
-        table.table th,td {
+        table.table th,
+        td {
             vertical-align: middle;
             text-align: center;
         }
@@ -174,22 +175,30 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
                 <nav class="d-flex justify-content-center" aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link 
-                        <?php if(($page-1)==0){
-                            echo "disabled";
-                        }else echo ""?>
-                        " href="course.php?page=<?= $page-1 ?>">Previous</a></li>
+
+                        <?=
+                        // if (($page - 1) == 0) {
+                        //     echo "disabled";
+                        // } else echo "" 
+                        (($page - 1) == 0) ? "disabled" : "";
+                        ?>
+
+                        " href="course.php?page=<?= $page - 1 ?>">上一頁</a></li>
                         <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
                             <li class="page-item <?php if ($page == $i) echo "active"; ?>">
                                 <a class="page-link" href="course.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a>
                             </li>
                         <?php endfor; ?>
                         <li class="page-item"><a class="page-link
-                        <?php
-                        if($totalPage==$page){
-                            echo "disabled";
-                        }else echo "";
+                        
+                        <?=
+                        // if ($totalPage == $page) {
+                        //     echo "disabled";
+                        // } else echo "";
+                        ($totalPage == $page) ? "disabled" : "";
                         ?>
-                        " href="course.php?page=<?= $page+1 ?>">Next</a></li>
+
+                        " href="course.php?page=<?= $page + 1 ?>">下一頁</a></li>
                     </ul>
                 </nav>
             </div>
@@ -202,7 +211,7 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
                 <div class="dropdown">
                     <a href="course.php?page=<?= $page ?>&order=1" <?php if ($order == 1) echo "active" ?>"><i class="text-secondary fa-solid fa-circle-xmark">已下架</i></a>
                     <a href="course.php?page=<?= $page ?>&order=2" <?php if ($order == 2) echo "active" ?>"><i class="text-success fa-solid fa-circle-check me-2">已上架</i></a>
-                    
+
                     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         排序方式
                     </a>
@@ -213,91 +222,99 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
                     </ul>
                 </div>
 
-        </div>
+            </div>
 
 
 
 
-        <?php if ($pageCourseCount > 0) : ?>
-            <table class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr class="table-info border-dark border-bottom border-3">
-                        <th>課程編號</th>
-                        <th>課程圖片</th>
-                        <th>課程名稱</th>
-                        <th>建立日期</th>
-                        <th>操作</th>
-                        <th>上架狀態</th>
-                        <!-- <th>上/下架</th> -->
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($rows as $row) : ?>
-                        <tr>
-                            <td><?= $row["id"] ?></td>
-                            <td><img src="./upload/<?= $row["image"] ?>" style="width:150px" alt=""></td>
-                            <td><?= $row["name"] ?></td>
-                            <td><?= $row["create_time"] ?></td>
-                            <td style="width:300px">
+            <?php if ($pageCourseCount > 0) : ?>
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr class="table-info border-dark border-bottom border-3">
+                            <th>課程編號</th>
+                            <th>課程圖片</th>
+                            <th>課程名稱</th>
+                            <th>建立日期</th>
+                            <th>操作</th>
+                            <th>上架狀態</th>
+                            <!-- <th>上/下架</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($rows as $row) : ?>
+                            <tr>
+                                <td><?= $row["id"] ?></td>
+                                <td><img src="./upload/<?= $row["image"] ?>" style="width:150px" alt=""></td>
+                                <td><?= $row["name"] ?></td>
+                                <td><?= $row["create_time"] ?></td>
+                                <td style="width:300px">
 
-                                <a class="btn btn-info" href="edit-course.php?id=<?= $row["id"] ?>">
-                                    <i class="fa-solid fa-pen-to-square"></i> 編輯</a>
+                                    <a class="btn btn-info" href="edit-course.php?id=<?= $row["id"] ?>">
+                                    <i class="fa-solid fa-info"></i></i> 查看</a>
 
-                                <a class="btn btn-success text-nowrap 
+                                    <a class="btn btn-success text-nowrap 
                                 <?php if ($row["valid"] == 0) {
                                     echo "d-inline";
                                 } else echo "d-none"  ?> 
-                                " href="doOn.php?id=<?= $row["id"] ?>&page=<?=$page?>">上架 <i class="fa-solid fa-arrow-up"></i></a>
+                                " href="doOn.php?id=<?= $row["id"] ?>&page=<?= $page ?>">上架 <i class="fa-solid fa-arrow-up"></i></a>
 
-                                <!-- text-nowrap不換行 -->
-                                <a class="btn text-nowrap
+                                    <!-- text-nowrap不換行 -->
+                                    <a class="btn text-nowrap
                                 <?php if ($row["valid"] == 1) {
                                     echo "d-inline";
                                 } else echo "d-none"  ?> 
-                                btn-secondary" href="doOff.php?id=<?= $row["id"] ?>&page=<?=$page?>">下架 <i class="fa-solid fa-arrow-down"></i></a>
+                                btn-secondary" href="doOff.php?id=<?= $row["id"] ?>&page=<?= $page ?>">下架 <i class="fa-solid fa-arrow-down"></i></a>
 
-                                <a class="btn btn-danger" href="doDelete.php?id=<?= $row["id"] ?>"><i class="fa-solid fa-trash-can"></i></a>
-                            </td>
+                                    <a class="btn btn-danger" href="doDelete.php?id=<?= $row["id"] ?>"><i class="fa-solid fa-trash-can"></i></a>
+                                </td>
 
-                            <td>
-                                <?php if ($row["valid"] == 1) {
-                                    echo "<span class=\"text-success fw-bold\"><i class=\"fa-solid fa-circle-check h3\"></i></span>";
-                                } else echo "<span class=\"text-secondary fw-bold\"><i class=\"fa-solid fa-circle-xmark h3\"></i></span>"; ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php else : ?>
-            目前沒有資料
-        <?php endif; ?>
+                                <td>
+                                    <?php if ($row["valid"] == 1) {
+                                        echo "<span class=\"text-success fw-bold\"><i class=\"fa-solid fa-circle-check h3\"></i></span>";
+                                    } else echo "<span class=\"text-secondary fw-bold\"><i class=\"fa-solid fa-circle-xmark h3\"></i></span>"; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else : ?>
+                目前沒有資料
+            <?php endif; ?>
 
 
 
         </div>
         <div>
-        <nav class="d-flex justify-content-center" aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link 
-                        <?php if(($page-1)==0){
-                            echo "disabled";
-                        }else echo ""?>
-                        " href="course.php?page=<?= $page-1 ?>">Previous</a></li>
-                        <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                            <li class="page-item <?php if ($page == $i) echo "active"; ?>">
-                                <a class="page-link" href="course.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a>
-                            </li>
-                        <?php endfor; ?>
-                        <li class="page-item"><a class="page-link
-                        <?php
-                        if($totalPage==$page){
-                            echo "disabled";
-                        }else echo "";
+            <nav class="d-flex justify-content-center" aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link 
+
+                        <?=
+                        // if (($page - 1) == 0) {
+                        //     echo "disabled";
+                        // } else echo "" 
+                        (($page - 1) == 0) ? "disabled" : "";
                         ?>
-                        " href="course.php?page=<?= $page+1 ?>">Next</a></li>
-                    </ul>
-                </nav>
-            </div>
+
+                        " href="course.php?page=<?= $page - 1 ?>">上一頁</a></li>
+                    <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                        <li class="page-item <?php if ($page == $i) echo "active"; ?>">
+                            <a class="page-link" href="course.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a>
+                        </li>
+                    <?php endfor; ?>
+                    <li class="page-item"><a class="page-link
+                        
+                        <?=
+                        // if ($totalPage == $page) {
+                        //     echo "disabled";
+                        // } else echo "";
+                        ($totalPage == $page) ? "disabled" : "";
+                        ?>
+
+                        " href="course.php?page=<?= $page + 1 ?>">下一頁</a></li>
+                </ul>
+            </nav>
+        </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 

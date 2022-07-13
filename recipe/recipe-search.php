@@ -10,7 +10,7 @@ if(!isset($_GET["search"])){
 $search=$_GET["search"];
 
 // 模糊比對：
-$sql="SELECT * , users.name AS user_name  FROM recipe JOIN users ON recipe.user_id=users.id WHERE title LIKE'%$search%' AND recipe.valid=1";
+$sql="SELECT recipe.* , users.name AS user_name FROM recipe JOIN users ON recipe.user_id =users.id WHERE title LIKE'%$search%' AND recipe.valid=1";
 
 $result=$conn->query($sql);
 $recipe_Count=$result->num_rows;

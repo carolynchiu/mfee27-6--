@@ -173,20 +173,30 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
             <div>
                 <nav class="d-flex justify-content-center" aria-label="Page navigation example">
                     <ul class="pagination">
-                        <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
+                        <li class="page-item"><a class="page-link 
+                        <?php if(($page-1)==0){
+                            echo "disabled";
+                        }else echo ""?>
+                        " href="course.php?page=<?= $page-1 ?>">Previous</a></li>
                         <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
                             <li class="page-item <?php if ($page == $i) echo "active"; ?>">
                                 <a class="page-link" href="course.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a>
                             </li>
                         <?php endfor; ?>
-                        <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
+                        <li class="page-item"><a class="page-link
+                        <?php
+                        if($totalPage==$page){
+                            echo "disabled";
+                        }else echo "";
+                        ?>
+                        " href="course.php?page=<?= $page+1 ?>">Next</a></li>
                     </ul>
                 </nav>
             </div>
 
             <div class="d-flex justify-content-between h5">
                 <div>
-                    目前顯示第<?= $startItem ?>-<?= $endItem ?>筆，共計<?= $courseCount ?>筆資料
+                    目前顯示第<?= $startItem ?>-<?= $endItem ?>筆，共<?= $courseCount ?>筆資料
                 </div>
 
                 <div class="dropdown">
@@ -266,15 +276,25 @@ $totalPage = ceil($courseCount / $perPage); //無條件進位
 
         </div>
         <div>
-                <nav class="d-flex justify-content-center" aria-label="Page navigation example">
+        <nav class="d-flex justify-content-center" aria-label="Page navigation example">
                     <ul class="pagination">
-                        <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
+                        <li class="page-item"><a class="page-link 
+                        <?php if(($page-1)==0){
+                            echo "disabled";
+                        }else echo ""?>
+                        " href="course.php?page=<?= $page-1 ?>">Previous</a></li>
                         <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
                             <li class="page-item <?php if ($page == $i) echo "active"; ?>">
                                 <a class="page-link" href="course.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a>
                             </li>
                         <?php endfor; ?>
-                        <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
+                        <li class="page-item"><a class="page-link
+                        <?php
+                        if($totalPage==$page){
+                            echo "disabled";
+                        }else echo "";
+                        ?>
+                        " href="course.php?page=<?= $page+1 ?>">Next</a></li>
                     </ul>
                 </nav>
             </div>

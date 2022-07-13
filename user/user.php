@@ -55,6 +55,14 @@ WHERE user_like_course.user_id=$id
 $resultCourse = $conn->query($sqlCourse);
 $courseCount = $resultCourse->num_rows;
 
+// 文章收藏
+$sqlArticle = "SELECT user_like_article.*, users.account AS user_account, article.article_title AS article_title, article.text AS article_text  FROM user_like_article 
+JOIN users ON user_like_article.user_id = users.id 
+JOIN article ON user_like_article.article_id =article.id
+WHERE user_like_article.user_id=$id";
+$resultArticle = $conn->query($sqlArticle);
+$articleCount = $resultArticle->num_rows;
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -339,18 +347,26 @@ $courseCount = $resultCourse->num_rows;
             <?php endif; ?>
           </div>
           <div class="tab-pane fade" id="nav-article" role="tabpanel" aria-labelledby="nav-article-tab">
-            <div class="row gy-4 mt-3">
-              <div class="col-md-3">
-                <div class="card" style="width: 18rem;">
-                  <img src="..." class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+            <?php if ($articleCount > 0) :
+              $rowsArticle = $resultArticle->fetch_all(MYSQLI_ASSOC);
+            ?>
+              <div class="row gy-4 mt-3">
+                <?php foreach ($rowsArticle as $row) : ?>
+                  <div class="col-md-3">
+                    <div class="card">
+                      <h5 class="card-header">文章-<?= $row["article_id"] ?></h5>
+                      <div class="card-body">
+                        <h5 class="card-title"><?= $row["article_title"] ?></h5>
+                        <p class="card-text"><?= $row["article_text"] ?></p>
+                        <a href="#" class="btn btn-primary">查看文章</a>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                <?php endforeach; ?>
               </div>
-            </div>
+            <?php else : ?>
+              沒有課程收藏
+            <?php endif; ?>
           </div>
         </div>
       </div>

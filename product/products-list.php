@@ -283,37 +283,17 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
         <li class="page-item <?php if($page==1)echo "disabled";?>   ">
-          <a class="page-link" href="
-          <?php if(isset($_GET["category"])){
-            echo "products-list.php?order=$order&category=$category&page=$page";
-          }else{
-            $previousPage=$page-1;
-            echo "products-list.php?order=$order&page=$previousPage";
-            }
-            ?>
+          <a class="page-link" href="products-list.php?order=<?=$order?>&category=<?=$category?>&page=<?=$page-1?>
           "><</a>
         </li>
         <?php for($i=1;$i<=$totalPage;$i++):?>
         <li class="page-item">
           <a class="page-link 
-          <?php if($page==$i)echo "active"; ?>" href="
-          <?php if(isset($_GET["category"])){
-            echo "products-list.php?order=$order&category=$category&page=$i";
-          }else{
-            echo "products-list.php?order=$order&page=$i";
-            }
-            ?>"><?=$i?></a>
+          <?php if($page==$i)echo "active"; ?>" href="products-list.php?order=<?=$order?>&category=<?=$category?>&page=<?=$i?>"><?=$i?></a>
         </li>
         <?php endfor;?>
         <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
-          <a class="page-link" href="
-          <?php if(isset($_GET["category"])){
-            echo "products-list.php?order=$order&category=$category&page=$page";
-          }else{
-            $nextPage=$page+1;
-            echo "products-list.php?order=$order&page=$nextPage";
-            }
-            ?>">></a>
+          <a class="page-link" href="products-list.php?order=<?=$order?>&category=<?=$category?>&page=<?=$page+1?>">></a>
         </li>
       </ul>
     </nav>

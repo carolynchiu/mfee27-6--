@@ -229,7 +229,7 @@ if(isset($_GET["search"])){
           <div class="py-2 d-flex justify-content-between align-items-center ">
             <ul class="nav nav-pills my-2">
               <li class="nav-item">
-                <a class="nav-link   <?php if($category=="") echo "active"?>"  aria-current="page" href="product-search.php">全部</a>
+                <a class="nav-link   <?php if($category=="") echo "active"?>"  aria-current="page" href="product-search.php?category=&page=<?=$page?>&min=<?=$min?>&max=<?=$max?>&order=<?=$order?>">全部</a>
               </li>
               <?php foreach ($rowsCategory as $row):?>
               <li>
@@ -249,10 +249,10 @@ if(isset($_GET["search"])){
               <?php endforeach;?>
             </ul>
             <div class="btn-group">
-              <a href="product-search.php?page=<?=$page?>&page=<?=$page?>&order=1" class="btn btn-info <?php if($order==1) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-              <a href="product-search.php?page=<?=$page?>&page=<?=$page?>&order=2" class="btn btn-info <?php if($order==2) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-wide-short"></i></a>
-              <a href="product-search.php?page=<?=$page?>&page=<?=$page?>&order=3" class="btn btn-info <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-              <a href="product-search.php?page=<?=$page?>&page=<?=$page?>&order=4" class="btn btn-info <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
+              <a href="product-search.php?category=<?=$category?>&page=<?=$page?>&min=<?=$min?>&max=<?=$max?>&order=1" class="btn btn-info <?php if($order==1) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+              <a href="product-search.php?category=<?=$category?>&page=<?=$page?>&min=<?=$min?>&max=<?=$max?>&order=2" class="btn btn-info <?php if($order==2) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+              <a href="product-search.php?category=<?=$category?>&page=<?=$page?>&min=<?=$min?>&max=<?=$max?>&order=3" class="btn btn-info <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+              <a href="product-search.php?category=<?=$category?>&page=<?=$page?>&min=<?=$min?>&max=<?=$max?>&order=4" class="btn btn-info <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
             </div>
           </div>
           <?php require("price-filter.php") ?>
@@ -280,6 +280,7 @@ if(isset($_GET["search"])){
             <input type="text" name="search" class="form-control">
             <button type="submit" class="btn btn-info mx-2"><i class="fa-solid fa-magnifying-glass me-3"></i>搜尋</button>
         </div>
+        
       </form>
       <!-- 要改的 -->
     </div>
@@ -304,6 +305,23 @@ if(isset($_GET["search"])){
         }?>
        共 <?=$productsCount?> 筆資料</div>
     </div>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center <?php if($productsCount==0) echo "d-none";?>">
+        <li class="page-item <?php if($page==1)echo "disabled";?>   ">
+          <a class="page-link" href="product-search.php?<?=$category."&"?>
+          search=<?=$search?>&page=<?=$page-1?>&min=<?=$min?>&max=<?=$max?>"><</a>
+        </li>
+        <?php for($i=1;$i<=$totalPage;$i++):?>
+        <li class="page-item">
+          <a class="page-link 
+          <?php if($page==$i)echo "active"; ?>" href="product-search.php?<?=$category."&"?>search=<?=$search?>&page=<?=$i?>&min=<?=$min?>&max=<?=$max?>"><?=$i?></a>
+        </li>
+        <?php endfor;?>
+        <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
+          <a class="page-link" href="product-search.php?<?=$category."&"?>search=<?=$search?>&page=<?=$page+1?>&min=<?=$min?>&max=<?=$max?>">></a>
+        </li>
+      </ul>
+    </nav>
     <?php if($pageProductCount>0): ?>
         <table class="table table-bordered  table-hover mt-5">
           <thead>

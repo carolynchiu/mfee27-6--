@@ -84,7 +84,6 @@ if(count($conditions)>0){
 }
 $resultPage=$conn->query($sql);
 $pageProductCount=$resultPage->num_rows;
-echo $sql;
 
 
 
@@ -108,9 +107,9 @@ switch($order){
     default:
     $orderType="ASC";
 }
-  $sqlAll .= " WHERE ".implode(' AND ',$conditions)." $getSearch  ORDER BY $orderType LIMIT $start, 5";
+  $sqlAll .= " WHERE ".implode(' AND ',$conditions)." $getSearch  ORDER BY $orderType ";
 }else{
-  $sql .="   $getSearch  ORDER BY $orderType LIMIT $start, 5";
+  $sql .=" $getSearch  ORDER BY $orderType";
 }
 
 
@@ -349,13 +348,13 @@ if(isset($_GET["search"])){
         <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center <?php if($productsCount==0) echo "d-none";?>">
         <li class="page-item <?php if($page==1)echo "disabled";?>   ">
-          <a class="page-link" href="product-search.php?<?=$by_category."&"?>
+          <a class="page-link" href="product-search.php?<?=$category."&"?>
           search=<?=$search?>&page=<?=$page-1?>"><</a>
         </li>
         <?php for($i=1;$i<=$totalPage;$i++):?>
         <li class="page-item">
           <a class="page-link 
-          <?php if($page==$i)echo "active"; ?>" href="product-search.php?<?=$by_category."&"?>search=<?=$search?>&page=<?=$i?>"><?=$i?></a>
+          <?php if($page==$i)echo "active"; ?>" href="product-search.php?<?=$category."&"?>search=<?=$search?>&page=<?=$i?>"><?=$i?></a>
         </li>
         <?php endfor;?>
         <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">

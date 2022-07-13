@@ -354,16 +354,16 @@ if(isset($_GET["search"])){
       <ul class="pagination justify-content-center <?php if($productsCount==0) echo "d-none";?>">
         <li class="page-item <?php if($page==1)echo "disabled";?>   ">
           <a class="page-link" href="product-search.php?<?=$category."&"?>
-          search=<?=$search?>&page=<?=$page-1?>"><</a>
+          search=<?=$search?>&page=<?=$page-1?>&min=<?=$min?>&max=<?=$max?>"><</a>
         </li>
         <?php for($i=1;$i<=$totalPage;$i++):?>
         <li class="page-item">
           <a class="page-link 
-          <?php if($page==$i)echo "active"; ?>" href="product-search.php?<?=$category."&"?>search=<?=$search?>&page=<?=$i?>"><?=$i?></a>
+          <?php if($page==$i)echo "active"; ?>" href="product-search.php?<?=$category."&"?>search=<?=$search?>&page=<?=$i?>&min=<?=$min?>&max=<?=$max?>"><?=$i?></a>
         </li>
         <?php endfor;?>
         <li class="page-item <?php if($page==$totalPage) echo "disabled";?> ">
-          <a class="page-link" href="product-search.php?<?=$by_category."&"?>search=<?=$search?>&page=<?=$page+1?>">></a>
+          <a class="page-link" href="product-search.php?<?=$category."&"?>search=<?=$search?>&page=<?=$page+1?>&min=<?=$min?>&max=<?=$max?>">></a>
         </li>
       </ul>
     </nav>

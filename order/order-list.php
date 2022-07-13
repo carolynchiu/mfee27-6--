@@ -267,7 +267,9 @@ $pageOrderCount = $result->num_rows; //每頁的使用者
                 <td><?= $row["user_account"] ?></td>
                 <td><?= $row["coupon_name"] ?></td>
                 <td><?= $row["create_time"] ?></td>
-                <td><?= $row["order_status"] ?></td>
+                <td class="<?php if ($row["order_status"] == "已取消") {
+                              echo "text-danger";
+                            } ?>"><?= $row["order_status"] ?></td>
                 <td class="text-center">
                   <a href="order-detail.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye me-2"></i>詳細資料</a>
                   <a href="doDelete.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-danger"><i class="fa-solid fa-circle-minus me-2"></i>取消</a>

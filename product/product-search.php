@@ -229,7 +229,7 @@ if(isset($_GET["search"])){
               </li>
               <?php foreach ($rowsCategory as $row):?>
               <li>
-                <a class="nav-link category  <?php if($category==$row["id"]) echo "active"?> " href="product-search.php?category=<?=$row["id"]?>" id="category" name="category"  >
+                <a class="nav-link category  <?php if($category==$row["id"]) echo "active"?> " href="product-search.php?category=<?=$row["id"]?>&page=<?=$page?>&order=<?=$order?>" id="category" name="category"  >
                 <?php switch($row["name"]){
             case($row["name"]="服飾"):
               echo "<i class='fa-solid fa-shirt'></i>";
@@ -245,10 +245,10 @@ if(isset($_GET["search"])){
               <?php endforeach;?>
             </ul>
             <div class="btn-group">
-              <a href="product-search.php?page=<?=$page?>&order=1" class="btn btn-info <?php if($order==1) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-              <a href="product-search.php?page=<?=$page?>&order=2" class="btn btn-info <?php if($order==2) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-wide-short"></i></a>
-              <a href="product-search.php?page=<?=$page?>&order=3" class="btn btn-info <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-              <a href="product-search.php?page=<?=$page?>&order=4" class="btn btn-info <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
+              <a href="product-search.php?page=<?=$page?>&page=<?=$page?>&order=1" class="btn btn-info <?php if($order==1) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+              <a href="product-search.php?page=<?=$page?>&page=<?=$page?>&order=2" class="btn btn-info <?php if($order==2) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+              <a href="product-search.php?page=<?=$page?>&page=<?=$page?>&order=3" class="btn btn-info <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+              <a href="product-search.php?page=<?=$page?>&page=<?=$page?>&order=4" class="btn btn-info <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
             </div>
           </div>
           <?php require("price-filter.php") ?>
@@ -326,7 +326,7 @@ if(isset($_GET["search"])){
                 </figure>
               </td>
               <td><?=$row["name"]?></td>
-              <td><?=$row["description"]?></td>
+              <td class="text-truncate"><?=$row["description"]?></td>
               <td><?=$row["category_name"]?></td>
               <td><?=$row["price"]?></td>
               <td><?=$row["stock_in_inventory"]?></td>

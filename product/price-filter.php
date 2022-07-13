@@ -1,4 +1,4 @@
-<div class="py-2">
+<div class="py-2 d-flex justify-content-end">
     <div class= "ms-2 my-2 row align-items-center">
         商品價格 
         <div class="col-auto">

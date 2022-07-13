@@ -217,7 +217,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
         </li>
         <?php foreach ($rowsCategory as $row):?>
         <li>
-          <a class="nav-link <?php if($category==$row["id"]) echo "active"?> "  href="products-list.php?category=<?=$row["id"]?>">
+          <a class="nav-link <?php if($category==$row["id"]) echo "active"?> "  href="products-list.php?category=<?=$row["id"]?>&page=<?=$page?>&order=<?=$order?>">
           <?php switch($row["name"]){
             case($row["name"]="服飾"):
               echo "<i class='fa-solid fa-shirt'></i>";
@@ -234,10 +234,10 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
         <?php endforeach;?>
       </ul>
           <div class="btn-group">
-            <a href="products-list.php?page=<?=$page?>&order=1" class="btn btn-info <?php if($order==1) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-            <a href="products-list.php?page=<?=$page?>&order=2" class="btn btn-info <?php if($order==2) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-wide-short"></i></a>
-            <a href="products-list.php?page=<?=$page?>&order=3" class="btn btn-info <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-            <a href="products-list.php?page=<?=$page?>&order=4" class="btn btn-info <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
+            <a href="products-list.php?category=<?=$category?>&page=<?=$page?>&order=1" class="btn btn-info <?php if($order==1) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+            <a href="products-list.php?category=<?=$category?>&page=<?=$page?>&order=2" class="btn btn-info <?php if($order==2) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+            <a href="products-list.php?category=<?=$category?>&page=<?=$page?>&order=3" class="btn btn-info <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+            <a href="products-list.php?category=<?=$category?>&page=<?=$page?>&order=4" class="btn btn-info <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
           </div>
         </div>
         </div>
@@ -250,7 +250,7 @@ $rowsCategory=$resultCategory->fetch_all(MYSQLI_ASSOC);
               <label class="form-check-label" for="">依商品編號</label>
               <input class="form-check-input my-0 mx-2" type="radio" name="search-category"  value="id">
               <label class="form-check-label" for="">依商品名稱</label>
-              <input class="form-check-input my-0 mx-2" type="radio" name="search-category" id="" value="name">
+              <input class="form-check-input my-0 mx-2" type="radio" name="search-category" checked  id="" value="name">
             </div>
               <input type="text" name="search" class="form-control">
               <button type="submit" class="btn btn-info"><i class="fa-solid fa-magnifying-glass me-3"></i>搜尋</button>

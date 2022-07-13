@@ -11,7 +11,7 @@ if (!isset($_GET["search"])) {
   // $sql = "SELECT id, account, name, email, phone FROM users WHERE account='$search'";
 
   //模糊搜尋 -> LIKE
-  $sql = "SELECT id, account, name, email, phone FROM users  WHERE account LIKE '%$search%'";
+  $sql = "SELECT * FROM users  WHERE account LIKE '%$search%'";
 
   $result = $conn->query($sql);
   $userCount = $result->num_rows;
@@ -83,19 +83,21 @@ if (!isset($_GET["search"])) {
   <?php require("../module/aside.php"); ?>
   <main class="main-content p-4">
     <div class="container">
+      <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
+        <h1><i class="fa-solid fa-magnifying-glass me-2"></i> "<span class="mx-2 text-primary"><?= $search ?></span>"的搜尋結果</h1>
+      </div>
       <div class="py-2">
-        <a href="users.php" class="btn btn-info">Users List</a>
+        <a href="users.php" class="btn btn-info"><i class="fa-solid fa-circle-arrow-left me-2"></i>回到所有使用者</a>
       </div>
       <div class="py-2">
         <form action="user-search.php" method="get">
           <div class="input-group">
             <input type="text" name="search" class="form-control">
-            <button type="submit" class="btn btn-info">搜尋</button>
+            <button type="submit" class="btn btn-info"><i class="fa-solid fa-magnifying-glass me-2"></i>搜尋</button>
           </div>
         </form>
       </div>
       <div class="py-2">
-        <h2><?= $search ?>的搜尋結果</h2>
         <div class="py-2">
           共<?= $userCount ?>筆資料
         </div>
@@ -103,12 +105,13 @@ if (!isset($_GET["search"])) {
       <?php if ($userCount > 0) : ?>
         <table class="table table-bordered">
           <thead>
-            <tr>
-              <th>id</th>
-              <th>account</th>
-              <th>name</th>
-              <th>phone</th>
-              <th>email</th>
+            <tr class="table-info border-dark border-bottom border-3">
+              <th>會員編號</th>
+              <th>帳號</th>
+              <th>姓名</th>
+              <th>性別</th>
+              <th>電話</th>
+              <th>Email</th>
               <th></th>
             </tr>
           </thead>
@@ -120,9 +123,14 @@ if (!isset($_GET["search"])) {
                 <td><?= $row["id"] ?></td>
                 <td><?= $row["account"] ?></td>
                 <td><?= $row["name"] ?></td>
+                <td class="text-center"><?php if ($row["gender"] == 0) {
+                                          echo "<i class='fa-solid fa-mars text-info'></i>";
+                                        } else {
+                                          echo "<i class='fa-solid fa-venus text-danger'></i>";
+                                        } ?></td>
                 <td><?= $row["phone"] ?></td>
                 <td><?= $row["email"] ?></td>
-                <td><a href="user.php?id=<?= $row["id"] ?>" class="btn btn-info">Detail</a></td>
+                <td class="text-center"><a href="user.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye me-2"></i>詳細資料</a></td>
                 <!-- 連結資料 -->
               </tr>
             <?php endwhile; ?>

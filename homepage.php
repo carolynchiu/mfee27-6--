@@ -232,7 +232,12 @@ require("./db-connect.php");
                 <i class="fa-solid fa-pen-to-square fa-4x"></i>
               </div>
               <div class="col-auto ">
-                <div class="h2">0</div>
+              <?php
+                $sqlArticle = "SELECT * FROM article ";
+                $resultArticle= $conn->query($sqlArticle);
+                $articleCount = $resultArticle->num_rows;
+                ?>
+                <div class="h2"><?=$articleCount?></div>
                 <div>文章</div>
               </div>
             </div>

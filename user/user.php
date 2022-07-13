@@ -367,7 +367,7 @@ $articleCount = $resultArticle->num_rows;
                 <?php endforeach; ?>
               </div>
             <?php else : ?>
-              沒有課程收藏
+              沒有文章收藏
             <?php endif; ?>
           </div>
         </div>

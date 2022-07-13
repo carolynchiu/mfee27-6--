@@ -229,7 +229,7 @@ if(isset($_GET["search"])){
               </li>
               <?php foreach ($rowsCategory as $row):?>
               <li>
-                <a class="nav-link category  <?php if($category==$row["id"]) echo "active"?> " href="product-search.php?category=<?=$row["id"]?>&page=<?=$page?>&order=<?=$order?>" id="category" name="category"  >
+                <a class="nav-link category  <?php if($category==$row["id"]) echo "active"?> " href="product-search.php?category=<?=$row["id"]?>&page=<?=$page?>&order=<?=$order?>&search=<?=$search?>&min=<?=$min?>&max=<?=$max?>" id="category" name="category"  >
                 <?php switch($row["name"]){
             case($row["name"]="服飾"):
               echo "<i class='fa-solid fa-shirt'></i>";

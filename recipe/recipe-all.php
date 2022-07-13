@@ -135,10 +135,10 @@ $totalpage = ceil($recipe_count / $perPage);
           <h2 class="mb-2"><?= $row["title"] ?></h2>
           <div class="text-start"><?= $row["user_name"] ?></div>
           <div class="py-2 d-grid">
-            <a class="btn btn-info" href="recipe-detail.php?recipe_id=<?= $row["id"] ?>">查看食譜</a>
+            <a class="btn btn-info" href="recipe-detail.php?recipe_id=<?= $row["id"] ?>"><i class="fa-solid fa-carrot me-2"></i>查看食譜</a>
           </div>
           <div class="py-2 d-grid">
-            <a class="btn btn-danger" href="do-delete.php?recipe_id=<?= $row["id"] ?>">刪除食譜</a>
+            <a class="btn btn-danger" href="do-delete.php?recipe_id=<?= $row["id"] ?>"><i class="fa-solid fa-xmark me-2"></i> 刪除食譜</a>
           </div>
         </div>
       <?php endforeach; ?>

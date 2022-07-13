@@ -14,7 +14,11 @@ if(($search) == ""){
 }else{
   $getSearch="LIKE '%$search%'";
 }
-
+if($searchCategory ==""){
+  $noCategorySearch=" AND products.name LIKE '%$search%'";
+}else{
+  $noCategorySearch="";
+}
 
 //每頁產品
 // sql product所有的欄位和 product_category的名子並生出category_name
@@ -25,9 +29,9 @@ $conditions=array();
 
 if(!empty($searchCategory)){
   if($searchCategory == "id"){
-    $conditions[]="products.id";
+    $conditions[]="products.id $getSearch";
   }else{
-    $conditions[]="products.name";
+    $conditions[]="products.name $getSearch";
   }
 }
 if(!empty($category)){
@@ -82,12 +86,13 @@ $sql="$query";
 
 
 if(count($conditions)>0){
-  $sql .= " WHERE ".implode(' AND ',$conditions)." $getSearch  ORDER BY $orderType LIMIT $start, 5";
+  $sql .= " WHERE ".implode(' AND ',$conditions)." $noCategorySearch   ORDER BY $orderType LIMIT $start, 5";
 }else{
   $sql .="  ORDER BY $orderType LIMIT $start, 5";
 }
 $resultPage=$conn->query($sql);
 $pageProductCount=$resultPage->num_rows;
+
 
 
 
@@ -111,9 +116,9 @@ switch($order){
     default:
     $orderType="ASC";
 }
-  $sqlAll .= " WHERE ".implode(' AND ',$conditions)." $getSearch  ORDER BY $orderType ";
+  $sqlAll .= " WHERE ".implode(' AND ',$conditions)." $noCategorySearch ORDER BY $orderType ";
 }else{
-  $sql .=" $getSearch  ORDER BY $orderType";
+  $sql .="  ORDER BY $orderType";
 }
 
 
@@ -214,8 +219,8 @@ if(isset($_GET["search"])){
 </head>
 
 <body>
-  <?php require("../module/header.php"); ?>
-  <?php require("../module/aside.php"); ?>
+  <?php //require("../module/header.php"); ?>
+  <?php //require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
       <h1><i class="fa-solid fa-magnifying-glass me-3"></i>商品搜尋結果</h1>
@@ -229,11 +234,11 @@ if(isset($_GET["search"])){
           <div class="py-2 d-flex justify-content-between align-items-center ">
             <ul class="nav nav-pills my-2">
               <li class="nav-item">
-                <a class="nav-link   <?php if($category=="") echo "active"?>"  aria-current="page" href="product-search.php?category=&page=<?=$page?>&min=<?=$min?>&max=<?=$max?>&order=<?=$order?>">全部</a>
+                <a class="nav-link   <?php if($category=="") echo "active"?>"  aria-current="page" href="product-search.php?category=&page=<?=$page?>&min=<?=$min?>&max=<?=$max?>&order=<?=$order?>&search=<?=$search?>">全部</a>
               </li>
               <?php foreach ($rowsCategory as $row):?>
               <li>
-                <a class="nav-link category  <?php if($category==$row["id"]) echo "active"?> " href="product-search.php?category=<?=$row["id"]?>&page=<?=$page?>&order=<?=$order?>&search=<?=$search?>&min=<?=$min?>&max=<?=$max?>" id="category" name="category"  >
+                <a class="nav-link category  <?php if($category==$row["id"]) echo "active"?> " href="product-search.php?category=<?=$row["id"]?>&page=<?=$page?>&order=<?=$order?>&search=<?=$search?>&min=<?=$min?>&max=<?=$max?>&search=<?=$search?>" id="category" name="category"  >
                 <?php switch($row["name"]){
             case($row["name"]="服飾"):
               echo "<i class='fa-solid fa-shirt'></i>";
@@ -249,10 +254,10 @@ if(isset($_GET["search"])){
               <?php endforeach;?>
             </ul>
             <div class="btn-group">
-              <a href="product-search.php?category=<?=$category?>&page=<?=$page?>&min=<?=$min?>&max=<?=$max?>&order=1" class="btn btn-info <?php if($order==1) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-              <a href="product-search.php?category=<?=$category?>&page=<?=$page?>&min=<?=$min?>&max=<?=$max?>&order=2" class="btn btn-info <?php if($order==2) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-wide-short"></i></a>
-              <a href="product-search.php?category=<?=$category?>&page=<?=$page?>&min=<?=$min?>&max=<?=$max?>&order=3" class="btn btn-info <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-              <a href="product-search.php?category=<?=$category?>&page=<?=$page?>&min=<?=$min?>&max=<?=$max?>&order=4" class="btn btn-info <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
+              <a href="product-search.php?category=<?=$category?>&page=<?=$page?>&min=<?=$min?>&max=<?=$max?>&search=<?=$search?>&order=1" class="btn btn-info <?php if($order==1) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+              <a href="product-search.php?category=<?=$category?>&page=<?=$page?>&min=<?=$min?>&max=<?=$max?>&search=<?=$search?>&order=2" class="btn btn-info <?php if($order==2) echo "active" ?>" name="order">商品編號<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+              <a href="product-search.php?category=<?=$category?>&page=<?=$page?>&min=<?=$min?>&max=<?=$max?>&search=<?=$search?>&order=3" class="btn btn-info <?php if($order==3) echo "active" ?>" name="order">上架<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+              <a href="product-search.php?category=<?=$category?>&page=<?=$page?>&min=<?=$min?>&max=<?=$max?>&search=<?=$search?>&order=4" class="btn btn-info <?php if($order==4) echo "active" ?>">下架 <i class="fa-solid fa-arrow-down-wide-short"></i></a>
             </div>
           </div>
           <?php require("price-filter.php") ?>

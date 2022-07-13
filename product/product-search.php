@@ -7,12 +7,12 @@ $searchCategory=isset($_GET["search-category"])?$_GET["search-category"]:"";
 $category=isset($_GET["category"])?$_GET["category"]:"";
 $min=isset($_GET["min"])?$_GET["min"]:"";
 $max=isset($_GET["max"])?$_GET["max"]:"";
-if(isset($_GET["search"])){
-  if(($_GET["search"]) != ""){
-    $search=$_GET["search"];
-  }
-} 
-$getSearch=isset($_GET["search"])? "LIKE '%$search%'":"";
+$search=isset($_GET["search"])?$_GET["search"]:"";
+if(($search) == ""){
+  $getSearch="";
+}else{
+  $getSearch="LIKE '%$search%'";
+}
 
 
 //每頁產品
@@ -80,11 +80,11 @@ $sql="$query";
 if(count($conditions)>0){
   $sql .= " WHERE ".implode(' AND ',$conditions)." $getSearch  ORDER BY $orderType LIMIT $start, 5";
 }else{
-  $sql .=" ORDER BY $orderType LIMIT $start, 5";
+  $sql .="  ORDER BY $orderType LIMIT $start, 5";
 }
 $resultPage=$conn->query($sql);
 $pageProductCount=$resultPage->num_rows;
-
+echo $sql;
 
 
 
@@ -110,7 +110,7 @@ switch($order){
 }
   $sqlAll .= " WHERE ".implode(' AND ',$conditions)." $getSearch  ORDER BY $orderType LIMIT $start, 5";
 }else{
-  $sql .="  $getSearch  ORDER BY $orderType LIMIT $start, 5";
+  $sql .="   $getSearch  ORDER BY $orderType LIMIT $start, 5";
 }
 
 
@@ -203,12 +203,16 @@ if(isset($_GET["search"])){
     .table{
       table-layout:fixed;
     }
+    table.table th,td {
+            vertical-align: middle;
+            text-align: center;
+        }
   </style>
 </head>
 
 <body>
-  <?php require("../module/header.php"); ?>
-  <?php require("../module/aside.php"); ?>
+  <?php //require("../module/header.php"); ?>
+  <?php //require("../module/aside.php"); ?>
   <main class="main-content p-4">
   <div class="d-flex justify-content-between align-items-center border-bottom border-dark border-5 pb-2 mb-3">
       <h1><i class="fa-solid fa-magnifying-glass me-3"></i>商品搜尋結果</h1>

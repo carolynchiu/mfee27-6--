@@ -237,7 +237,7 @@ require("./db-connect.php");
               </div>
             </div>
           </div>
-          <a href="#">
+          <a href="http://localhost/mfee27-group6/article/index.php">
             <div class="card-footer text-dark py-3">
               <span class="pull-left">查看詳情</span>
               <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

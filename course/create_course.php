@@ -119,11 +119,11 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                             <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">課程內容description</label>
+                            <label for="exampleInputPassword1" class="form-label">課程內容</label>
                             <textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">影音連結url</label>
+                            <label for="exampleInputPassword1" class="form-label">影音連結</label>
                             <textarea name="url" id="" cols="30" rows="3" class="form-control"></textarea>
                         </div>
                         <div class="mb-3">
